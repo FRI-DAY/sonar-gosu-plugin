@@ -6,7 +6,7 @@ plugins {
     id('maven-publish')
     id('org.sonarqube') version('2.8')
     id('com.github.johnrengelman.shadow') version('5.1.0')
-//    id('net.researchgate.release') version('2.6.0')
+    id('com.github.hierynomus.license') version('0.16.1')
 }
 
 repositories {
@@ -96,4 +96,16 @@ test {
         showStandardStreams = true
         events 'passed', 'skipped', 'failed'
     }
+}
+
+license {
+    header = rootProject.file('LICENSE_HEADER')
+    ext.year = Calendar.getInstance().get(Calendar.YEAR)
+    strictCheck true
+    mapping {
+        java = 'SLASHSTAR_STYLE'
+        gs = 'SLASHSTAR_STYLE'
+        g4 = 'DOUBLESLASH_STYLE'
+    }
+    excludes(['**/*.txt', '**/*.properties', '**/*.xml', '**/*.xsd', '**/*.html', '**/*.vm', '**/*.snap', '**/*.svg', '**/*.jar', '**/*.zip', '**/*.log', '**/*.cnf', '**/*.jks', '**/README', '**/*.interp', '**/*.tokens'])
 }
