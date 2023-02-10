@@ -23,7 +23,7 @@ dependencies {
 
     implementation "org.antlr:antlr4-runtime:${antlrVersion}"
     implementation "org.sonarsource.analyzer-commons:sonar-analyzer-commons:${sonarAnalyzerCommonsVersion}"
-    implementation "org.sonarsource.java:java-surefire:${sonarSourceJavaVersion}"
+    implementation "org.sonarsource.java:java-surefire:${sonarJavaVersion}"
 
     implementation "org.apache.commons:commons-lang3:3.12.0"
     implementation "org.reflections:reflections:0.10.2"
