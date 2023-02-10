@@ -1,5 +1,7 @@
 
 # SonarQube Gosu Plugin
+[![.github/workflows/build.yml](https://github.com/FRI-DAY/sonar-gosu-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/FRI-DAY/sonar-gosu-plugin/actions/workflows/build.yml)
+
 [Gosu Programming Language](https://gosu-lang.github.io/) Plugin for SonarQube.
 
 ## Why ANTLR4?
@@ -21,9 +23,9 @@ In such cases, there is a very useful tool called [ANTLR v4](https://github.com/
 ## Compatibility
 Please find below the compatibility matrix of the plugin:
 
-SonarQube Version | Plugin Version |  Gosu Version 
-------------------|----------------|---------------
-8.9+              | 1.1.0          | 1+ 
+| SonarQube Version | Plugin Version | Gosu Version  |
+|-------------------|----------------|---------------|
+| 8.9+              | 1.0.0          | 1+            |  
 
 
 ## How to contribute? (TODO)
