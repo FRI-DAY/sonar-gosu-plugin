@@ -15,11 +15,12 @@ repositories {
 
 sourceCompatibility = JavaVersion.toVersion(jdkMinVersion)
 targetCompatibility = JavaVersion.toVersion(jdkMinVersion)
+targetCompatibility = JavaVersion.toVersion(jdkMinVersion)
 
 dependencies {
     antlr "org.antlr:antlr4:${antlrVersion}"
 
-    compileOnly "org.sonarsource.sonarqube:sonar-plugin-api:${sonarPluginApiVersion}"
+    compileOnlyApi "org.sonarsource.sonarqube:sonar-plugin-api:${sonarPluginApiVersion}"
 
     implementation "org.antlr:antlr4-runtime:${antlrVersion}"
     implementation "org.sonarsource.analyzer-commons:sonar-analyzer-commons:${sonarAnalyzerCommonsVersion}"
@@ -31,7 +32,10 @@ dependencies {
     implementation "commons-io:commons-io:2.11.0"
 
     testImplementation "org.sonarsource.sonarqube:sonar-testing-harness:${sonarHarnessVersion}"
-    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    testImplementation "org.assertj:assertj-core:3.24.2"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+    testRuntimeOnly "org.sonarsource.sonarqube:sonar-plugin-api:${sonarPluginApiVersion}"
 }
 
 def antlrGeneratedSourcesPath = ['de', 'friday', 'sonarqube', 'gosu', 'antlr']
@@ -89,7 +93,7 @@ jar {
 }
 
 test {
-    useJUnit()
+    useJUnitPlatform()
     testLogging {
         showExceptions = true
         exceptionFormat = 'full'
