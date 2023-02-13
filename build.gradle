@@ -1,3 +1,4 @@
+import com.hierynomus.gradle.license.tasks.LicenseFormat
 
 plugins {
     id('antlr')
@@ -43,6 +44,12 @@ generateGrammarSource {
     maxHeapSize = "128m"
     outputDirectory = file("${buildDir.path}/generated-src/antlr/main/${antlrGeneratedSourcesPath.join("/")}")
     arguments += ["-visitor", "-listener", "-package", antlrGeneratedSourcesPath.join(".")]
+
+    finalizedBy("licenseFormatGeneratedSources")
+}
+
+tasks.register('licenseFormatGeneratedSources', LicenseFormat) {
+    source = generateGrammarSource.outputDirectory
 }
 
 compileJava {
@@ -110,5 +117,5 @@ license {
         gs = 'SLASHSTAR_STYLE'
         g4 = 'DOUBLESLASH_STYLE'
     }
-    excludes(['**/*.txt', '**/build/generated-src/antlr/**', '**/*.properties', '**/*.xml', '**/*.json', '**/*.xsd', '**/*.html', '**/*.vm', '**/*.snap', '**/*.svg', '**/*.jar', '**/*.zip', '**/*.log', '**/*.cnf', '**/*.jks', '**/README', '**/*.interp', '**/*.tokens'])
+    excludes(['', '**/*.txt', '**/*.properties', '**/*.xml', '**/*.json', '**/*.xsd', '**/*.html', '**/*.vm', '**/*.snap', '**/*.svg', '**/*.jar', '**/*.zip', '**/*.log', '**/*.cnf', '**/*.jks', '**/README', '**/*.interp', '**/*.tokens'])
 }
