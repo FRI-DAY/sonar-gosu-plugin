@@ -33,7 +33,7 @@ dependencies {
     testImplementation "org.sonarsource.sonarqube:sonar-testing-harness:${sonarHarnessVersion}"
     testImplementation "org.assertj:assertj-core:3.24.2"
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
     testRuntimeOnly "org.sonarsource.sonarqube:sonar-plugin-api:${sonarPluginApiVersion}"
 }
 
@@ -110,5 +110,5 @@ license {
         gs = 'SLASHSTAR_STYLE'
         g4 = 'DOUBLESLASH_STYLE'
     }
-    excludes(['**/*.txt', '**/*.properties', '**/*.xml', '**/*.json', '**/*.xsd', '**/*.html', '**/*.vm', '**/*.snap', '**/*.svg', '**/*.jar', '**/*.zip', '**/*.log', '**/*.cnf', '**/*.jks', '**/README', '**/*.interp', '**/*.tokens'])
+    excludes(['**/*.txt', '**/build/generated-src/antlr/**', '**/*.properties', '**/*.xml', '**/*.json', '**/*.xsd', '**/*.html', '**/*.vm', '**/*.snap', '**/*.svg', '**/*.jar', '**/*.zip', '**/*.log', '**/*.cnf', '**/*.jks', '**/README', '**/*.interp', '**/*.tokens'])
 }
