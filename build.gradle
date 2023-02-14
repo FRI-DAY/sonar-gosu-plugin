@@ -118,3 +118,5 @@ license {
     }
     excludes(['**/*.gs', '**/*.txt', '**/*.properties', '**/*.xml', '**/*.json', '**/*.xsd', '**/*.html', '**/*.vm', '**/*.snap', '**/*.svg', '**/*.jar', '**/*.zip', '**/*.log', '**/*.cnf', '**/*.jks', '**/README', '**/*.interp', '**/*.tokens'])
 }
+
+licenseMain.shouldRunAfter generateGrammarSource

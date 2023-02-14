@@ -16,7 +16,10 @@
  */
 package de.friday.sonarqube.gosu.plugin.checks;
 
+import com.google.inject.Inject;
 import de.friday.sonarqube.gosu.antlr.GosuParserBaseListener;
+import de.friday.sonarqube.gosu.plugin.issues.Issue;
+import de.friday.sonarqube.gosu.plugin.issues.IssueCollector;
 import org.sonar.api.rule.RuleKey;
 import static de.friday.sonarqube.gosu.language.GosuLanguage.REPOSITORY_KEY;
 
@@ -24,6 +27,9 @@ import static de.friday.sonarqube.gosu.language.GosuLanguage.REPOSITORY_KEY;
  * Base class for all Gosu Sonarqube checks.
  */
 public abstract class AbstractCheckBase extends GosuParserBaseListener {
+
+    @Inject
+    private IssueCollector collector;
 
     /**
      * @return Check Key
@@ -40,4 +46,12 @@ public abstract class AbstractCheckBase extends GosuParserBaseListener {
         return RuleKey.of(REPOSITORY_KEY, getKey());
     }
 
+    /**
+     * Add Issue to the IssueCollector
+     *
+     * @param gosuIssue - Issue with text range and message to be displayed in SonarQube
+     */
+    protected void addIssue(Issue gosuIssue) {
+        collector.addIssue(gosuIssue);
+    }
 }
