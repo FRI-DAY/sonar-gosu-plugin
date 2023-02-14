@@ -18,17 +18,15 @@ package de.friday.test.support.checks.dsl.gosu;
 
 import de.friday.sonarqube.gosu.plugin.checks.AbstractCheckBase;
 import de.friday.sonarqube.gosu.plugin.tools.GosuFileParser;
+import de.friday.test.support.GosuSensorContextTester;
 import de.friday.test.support.checks.dsl.specification.CheckRunner;
 import de.friday.test.support.checks.dsl.specification.SourceCodeFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.sonar.api.batch.fs.InputFile;
-import org.sonar.api.batch.rule.ActiveRules;
-import org.sonar.api.batch.rule.internal.ActiveRulesBuilder;
 import org.sonar.api.batch.sensor.internal.SensorContextTester;
 import org.sonar.api.batch.sensor.issue.Issue;
-import org.sonar.api.rule.RuleKey;
 import org.sonar.check.Rule;
 import org.sonar.plugins.surefire.data.UnitTestIndex;
 
@@ -47,18 +45,12 @@ final class GosuCheckTestRunner implements CheckRunner<List<Issue>> {
     @Override
     public List<Issue> executeCheck() {
         final InputFile gosuInputFile = gosuSourceCodeFile.asInputFile();
-        final SensorContextTester context = createSensorContextTester();
+        final SensorContextTester context = new GosuSensorContextTester(GosuCheckTestResources.getBaseDir(), getRuleKey()).get();
         final List<de.friday.sonarqube.gosu.plugin.issues.Issue> issues = analyse(gosuInputFile, context);
 
         issues.forEach(issue -> issue.createIssue(context, gosuInputFile));
 
         return new ArrayList<>(context.allIssues());
-    }
-
-    private SensorContextTester createSensorContextTester() {
-        final ActiveRulesBuilder activeRulesBuilder = new ActiveRulesBuilder().create(RuleKey.of("gosu", getRuleKey())).activate();
-        final ActiveRules activeRules = activeRulesBuilder.build();
-        return SensorContextTester.create(GosuCheckTestResources.getBaseDir()).setActiveRules(activeRules);
     }
 
     private String getRuleKey() {
