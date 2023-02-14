@@ -1,3 +1,4 @@
+import com.hierynomus.gradle.license.tasks.LicenseFormat
 
 plugins {
     id('antlr')
@@ -19,7 +20,7 @@ targetCompatibility = JavaVersion.toVersion(jdkMinVersion)
 dependencies {
     antlr "org.antlr:antlr4:${antlrVersion}"
 
-    compileOnly "org.sonarsource.sonarqube:sonar-plugin-api:${sonarPluginApiVersion}"
+    compileOnlyApi "org.sonarsource.sonarqube:sonar-plugin-api:${sonarPluginApiVersion}"
 
     implementation "org.antlr:antlr4-runtime:${antlrVersion}"
     implementation "org.sonarsource.analyzer-commons:sonar-analyzer-commons:${sonarAnalyzerCommonsVersion}"
@@ -31,15 +32,24 @@ dependencies {
     implementation "commons-io:commons-io:2.11.0"
 
     testImplementation "org.sonarsource.sonarqube:sonar-testing-harness:${sonarHarnessVersion}"
+    testImplementation "org.assertj:assertj-core:3.24.2"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+    testRuntimeOnly "org.sonarsource.sonarqube:sonar-plugin-api:${sonarPluginApiVersion}"
 }
 
 def antlrGeneratedSourcesPath = ['de', 'friday', 'sonarqube', 'gosu', 'antlr']
 
 generateGrammarSource {
     maxHeapSize = "128m"
-    outputDirectory = file("${buildDir.path}/generated-sources/antlr/main/${antlrGeneratedSourcesPath.join("/")}")
+    outputDirectory = file("${buildDir.path}/generated-src/antlr/main/${antlrGeneratedSourcesPath.join("/")}")
     arguments += ["-visitor", "-listener", "-package", antlrGeneratedSourcesPath.join(".")]
+
+    finalizedBy("licenseFormatGeneratedSources")
+}
+
+tasks.register('licenseFormatGeneratedSources', LicenseFormat) {
+    source = generateGrammarSource.outputDirectory
 }
 
 compileJava {
@@ -89,7 +99,7 @@ jar {
 }
 
 test {
-    useJUnit()
+    useJUnitPlatform()
     testLogging {
         showExceptions = true
         exceptionFormat = 'full'
@@ -107,5 +117,5 @@ license {
         gs = 'SLASHSTAR_STYLE'
         g4 = 'DOUBLESLASH_STYLE'
     }
-    excludes(['**/*.txt', '**/*.properties', '**/*.xml', '**/*.xsd', '**/*.html', '**/*.vm', '**/*.snap', '**/*.svg', '**/*.jar', '**/*.zip', '**/*.log', '**/*.cnf', '**/*.jks', '**/README', '**/*.interp', '**/*.tokens'])
+    excludes(['', '**/*.txt', '**/*.properties', '**/*.xml', '**/*.json', '**/*.xsd', '**/*.html', '**/*.vm', '**/*.snap', '**/*.svg', '**/*.jar', '**/*.zip', '**/*.log', '**/*.cnf', '**/*.jks', '**/README', '**/*.interp', '**/*.tokens'])
 }
