@@ -29,7 +29,11 @@ final class GosuCheckTestResources {
     }
 
     static Path getPathOf(String gosuSourceFileName) {
-        return Paths.get(BASE_DIR.toFile().toPath() + File.separator + gosuSourceFileName);
+        return getPathOf(gosuSourceFileName, BASE_DIR.toFile().getPath());
+    }
+
+    static Path getPathOf(String gosuSourceFileName, String baseDir) {
+        return Paths.get(baseDir + File.separator + gosuSourceFileName);
     }
 
     static String getBaseDirPathAsString() {

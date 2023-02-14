@@ -29,7 +29,7 @@ public class GosuSensorContextTester {
         this.sensorContextTester = create(moduleBaseDir, ruleKey);
     }
 
-    public SensorContextTester create(Path moduleBaseDir, String ruleKey) {
+    private SensorContextTester create(Path moduleBaseDir, String ruleKey) {
         final ActiveRulesBuilder activeRulesBuilder = new ActiveRulesBuilder().create(RuleKey.of("gosu", ruleKey)).activate();
         final ActiveRules activeRules = activeRulesBuilder.build();
         return SensorContextTester.create(moduleBaseDir).setActiveRules(activeRules);
