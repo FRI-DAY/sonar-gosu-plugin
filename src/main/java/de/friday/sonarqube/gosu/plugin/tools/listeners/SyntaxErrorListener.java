@@ -18,14 +18,12 @@ package de.friday.sonarqube.gosu.plugin.tools.listeners;
 
 import com.google.inject.Inject;
 import de.friday.sonarqube.gosu.plugin.Properties;
-import de.friday.sonarqube.gosu.plugin.utils.annotations.UnitTestMissing;
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
 import org.sonar.api.batch.fs.internal.DefaultTextPointer;
 import org.sonar.api.batch.sensor.SensorContext;
 
-@UnitTestMissing
 public class SyntaxErrorListener extends BaseErrorListener {
     private final SensorContext context;
     private final Properties properties;
