@@ -114,8 +114,7 @@ license {
     strictCheck true
     mapping {
         java = 'SLASHSTAR_STYLE'
-        gs = 'SLASHSTAR_STYLE'
         g4 = 'DOUBLESLASH_STYLE'
     }
-    excludes(['', '**/*.txt', '**/*.properties', '**/*.xml', '**/*.json', '**/*.xsd', '**/*.html', '**/*.vm', '**/*.snap', '**/*.svg', '**/*.jar', '**/*.zip', '**/*.log', '**/*.cnf', '**/*.jks', '**/README', '**/*.interp', '**/*.tokens'])
+    excludes(['**/*.gs', '**/*.txt', '**/*.properties', '**/*.xml', '**/*.json', '**/*.xsd', '**/*.html', '**/*.vm', '**/*.snap', '**/*.svg', '**/*.jar', '**/*.zip', '**/*.log', '**/*.cnf', '**/*.jks', '**/README', '**/*.interp', '**/*.tokens'])
 }
