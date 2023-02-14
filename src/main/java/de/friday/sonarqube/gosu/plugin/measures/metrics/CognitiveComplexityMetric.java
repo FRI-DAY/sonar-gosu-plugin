@@ -18,9 +18,8 @@ package de.friday.sonarqube.gosu.plugin.measures.metrics;
 
 import com.google.inject.Inject;
 import de.friday.sonarqube.gosu.antlr.GosuParser;
-import de.friday.sonarqube.gosu.plugin.Properties;
 import de.friday.sonarqube.gosu.language.utils.GosuUtil;
-import de.friday.sonarqube.gosu.plugin.utils.annotations.UnitTestMissing;
+import de.friday.sonarqube.gosu.plugin.Properties;
 import java.util.List;
 import org.antlr.v4.runtime.Token;
 import org.sonar.api.batch.sensor.SensorContext;
@@ -30,7 +29,6 @@ import org.sonar.api.measures.CoreMetrics;
  * Implementation base on Sonarqube documentation:
  * https://www.sonarsource.com/docs/CognitiveComplexity.pdf
  */
-@UnitTestMissing
 public class CognitiveComplexityMetric extends AbstractMetricBase {
     private final SensorContext context;
     private final Properties properties;
