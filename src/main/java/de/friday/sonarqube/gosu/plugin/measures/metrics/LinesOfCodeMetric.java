@@ -19,13 +19,11 @@ package de.friday.sonarqube.gosu.plugin.measures.metrics;
 import com.google.inject.Inject;
 import de.friday.sonarqube.gosu.antlr.GosuParser;
 import de.friday.sonarqube.gosu.plugin.Properties;
-import de.friday.sonarqube.gosu.plugin.utils.annotations.UnitTestMissing;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.fs.internal.DefaultInputFile;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.measures.CoreMetrics;
 
-@UnitTestMissing
 public class LinesOfCodeMetric extends AbstractMetricBase {
     private final Properties properties;
     private final SensorContext context;
