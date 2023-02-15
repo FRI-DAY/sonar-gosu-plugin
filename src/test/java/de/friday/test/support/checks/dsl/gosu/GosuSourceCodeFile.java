@@ -27,19 +27,25 @@ import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
 
 public final class GosuSourceCodeFile implements SourceCodeFile {
     private final String fileName;
+    private final String baseDir;
 
     public GosuSourceCodeFile(String filename) {
+        this(filename, GosuCheckTestResources.getBaseDirPathAsString());
+    }
+
+    public GosuSourceCodeFile(String filename, String baseDir) {
         this.fileName = filename;
+        this.baseDir = baseDir;
     }
 
     @Override
     public InputFile asInputFile() {
         final String sourceFileContent = loadFileContent();
-        return new TestInputFileBuilder(GosuCheckTestResources.getBaseDirPathAsString(), fileName).initMetadata(sourceFileContent).build();
+        return new TestInputFileBuilder(baseDir, fileName).initMetadata(sourceFileContent).build();
     }
 
     private String loadFileContent() {
-        final Path gosuFilePath = GosuCheckTestResources.getPathOf(fileName);
+        final Path gosuFilePath = GosuCheckTestResources.getPathOf(fileName, baseDir);
 
         try (Stream<String> lines = Files.lines(gosuFilePath)) {
             return lines.collect(Collectors.joining(System.lineSeparator()));

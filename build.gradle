@@ -62,11 +62,35 @@ compileTestJava {
     dependsOn generateTestGrammarSource
 }
 
+license {
+    header = rootProject.file('LICENSE_HEADER')
+    ext.year = Calendar.getInstance().get(Calendar.YEAR)
+    strictCheck true
+    mapping {
+        java = 'SLASHSTAR_STYLE'
+        g4 = 'DOUBLESLASH_STYLE'
+    }
+    excludes(['**/*.gs', '**/*.txt', '**/*.properties', '**/*.xml', '**/*.json', '**/*.xsd', '**/*.html', '**/*.vm', '**/*.snap', '**/*.svg', '**/*.jar', '**/*.zip', '**/*.log', '**/*.cnf', '**/*.jks', '**/README', '**/*.interp', '**/*.tokens'])
+}
+
+licenseMain.shouldRunAfter generateGrammarSource
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        showExceptions = true
+        exceptionFormat = 'full'
+        showStandardStreams = true
+        events 'passed', 'skipped', 'failed'
+    }
+}
+
 jacocoTestReport {
     reports {
         xml.enabled true
         csv.enabled false
-        html.enabled false
+        html.enabled true
+        html.outputLocation.set(file("$buildDir/jacocoHtml"))
     }
 }
 
@@ -97,26 +121,3 @@ jar {
         )
     }
 }
-
-test {
-    useJUnitPlatform()
-    testLogging {
-        showExceptions = true
-        exceptionFormat = 'full'
-        showStandardStreams = true
-        events 'passed', 'skipped', 'failed'
-    }
-}
-
-license {
-    header = rootProject.file('LICENSE_HEADER')
-    ext.year = Calendar.getInstance().get(Calendar.YEAR)
-    strictCheck true
-    mapping {
-        java = 'SLASHSTAR_STYLE'
-        g4 = 'DOUBLESLASH_STYLE'
-    }
-    excludes(['**/*.gs', '**/*.txt', '**/*.properties', '**/*.xml', '**/*.json', '**/*.xsd', '**/*.html', '**/*.vm', '**/*.snap', '**/*.svg', '**/*.jar', '**/*.zip', '**/*.log', '**/*.cnf', '**/*.jks', '**/README', '**/*.interp', '**/*.tokens'])
-}
-
-licenseMain.shouldRunAfter generateGrammarSource
