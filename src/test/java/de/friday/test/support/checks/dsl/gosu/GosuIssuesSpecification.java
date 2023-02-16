@@ -63,7 +63,7 @@ final class GosuIssuesSpecification implements IssueSpecification {
     @Override
     public IssueSpecification hasSizeEqualTo(int expectedNumberOfIssues) {
         assertThat(this.numberOfIssuesFound())
-                .as("Expected number of issues found is not what was expected.")
+                .as("Actual number of issues found is not what was expected.")
                 .isEqualTo(expectedNumberOfIssues);
         return this;
     }
@@ -71,7 +71,7 @@ final class GosuIssuesSpecification implements IssueSpecification {
     @Override
     public IssueSpecification areLocatedOn(TextLocations locations) {
         assertThat(this.issuesTextRanges())
-                .as("Expected to find issues on given locations.")
+                .as("Expected to find issues on the given locations.")
                 .isEqualTo(locations.get());
         return this;
     }

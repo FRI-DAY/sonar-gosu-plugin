@@ -36,6 +36,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
     testRuntimeOnly "org.sonarsource.sonarqube:sonar-plugin-api:${sonarPluginApiVersion}"
+    testRuntimeOnly "ch.qos.logback:logback-classic:1.4.5"
 }
 
 def antlrGeneratedSourcesPath = ['de', 'friday', 'sonarqube', 'gosu', 'antlr']
