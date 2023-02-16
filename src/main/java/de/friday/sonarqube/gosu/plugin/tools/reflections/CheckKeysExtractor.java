@@ -34,10 +34,12 @@ public final class CheckKeysExtractor {
     private static final List<String> bugsKeys;
     private static final List<String> vulnerabilitiesKeys;
     private static final Map<String, String> checksToPackages;
-    private static final String METRICS_PACKAGE = "friday.plugin.checks.metrics";
-    private static final String CODE_SMELLS_PACKAGE = "friday.plugin.checks.smells";
-    private static final String VULNERABILITIES_PACKAGE = "friday.plugin.checks.vulnerabilities";
-    private static final String BUGS_PACKAGE = "friday.plugin.checks.bugs";
+
+    private static final String BASE_CHECKS_PACKAGE = "de.friday.sonarqube.gosu.plugin.checks";
+    private static final String METRICS_PACKAGE = BASE_CHECKS_PACKAGE + ".metrics";
+    private static final String CODE_SMELLS_PACKAGE = BASE_CHECKS_PACKAGE + ".smells";
+    private static final String VULNERABILITIES_PACKAGE = BASE_CHECKS_PACKAGE + ".vulnerabilities";
+    private static final String BUGS_PACKAGE = BASE_CHECKS_PACKAGE + ".bugs";
     private static final String METRICS = "metrics";
     private static final String CODE_SMELLS = "smells";
     private static final String VULNERABILITIES = "vulnerabilities";
@@ -49,7 +51,7 @@ public final class CheckKeysExtractor {
         bugsKeys = getKeys(BUGS_PACKAGE);
         vulnerabilitiesKeys = getKeys(VULNERABILITIES_PACKAGE);
 
-        Map<String, String> checksToPackagesMap = new HashMap<>();
+        final Map<String, String> checksToPackagesMap = new HashMap<>();
         for (String check : metricsKeys) {
             checksToPackagesMap.put(check, METRICS);
         }
