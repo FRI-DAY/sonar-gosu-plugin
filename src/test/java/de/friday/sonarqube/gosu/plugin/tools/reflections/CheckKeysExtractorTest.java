@@ -16,26 +16,31 @@
  */
 package de.friday.sonarqube.gosu.plugin.tools.reflections;
 
-import de.friday.sonarqube.gosu.plugin.checks.CheckType;
-import de.friday.sonarqube.gosu.plugin.checks.ChecksRuleKeys;
-import java.util.Map;
 import java.util.Set;
+import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public final class CheckKeysExtractor {
-    private static final Map<String, CheckType> checkKeysToCheckType;
+public class CheckKeysExtractorTest {
 
-    static {
-        checkKeysToCheckType = new ChecksRuleKeys().getRuleKeysByCheckType();
+    @Test
+    void shouldReturnPackageOfCheck() {
+        // given
+        final String ruleKey = "TODOsCheck";
+
+        // when
+        final String checkPackage = CheckKeysExtractor.getCheckPackage(ruleKey);
+
+        // then
+        assertThat(checkPackage).isEqualTo("smells");
     }
 
-    private CheckKeysExtractor() {
+    @Test
+    void shouldReturnAllRuleKeys() {
+        // when
+        final Set<String> allRuleKeys = CheckKeysExtractor.getAllCheckKeys();
+
+        // then
+        assertThat(allRuleKeys).isNotEmpty().hasSize(9);
     }
 
-    public static String getCheckPackage(String checkKey) {
-        return checkKeysToCheckType.get(checkKey).getPackageSuffix();
-    }
-
-    public static Set<String> getAllCheckKeys() {
-        return checkKeysToCheckType.keySet();
-    }
 }

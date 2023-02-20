@@ -14,28 +14,27 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package de.friday.sonarqube.gosu.plugin.tools.reflections;
+package de.friday.sonarqube.gosu.plugin.checks;
 
-import de.friday.sonarqube.gosu.plugin.checks.CheckType;
-import de.friday.sonarqube.gosu.plugin.checks.ChecksRuleKeys;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
-public final class CheckKeysExtractor {
-    private static final Map<String, CheckType> checkKeysToCheckType;
+public class ChecksRuleKeys {
 
-    static {
-        checkKeysToCheckType = new ChecksRuleKeys().getRuleKeysByCheckType();
+    public Map<String, CheckType> getRuleKeysByCheckType() {
+        final Map<String, CheckType> ruleKeysByCheckType = new HashMap<>();
+
+        Arrays.stream(CheckType.values()).forEach(checkType -> addRulesKeysTo(ruleKeysByCheckType, checkType));
+
+        return Collections.unmodifiableMap(ruleKeysByCheckType);
     }
 
-    private CheckKeysExtractor() {
-    }
-
-    public static String getCheckPackage(String checkKey) {
-        return checkKeysToCheckType.get(checkKey).getPackageSuffix();
-    }
-
-    public static Set<String> getAllCheckKeys() {
-        return checkKeysToCheckType.keySet();
+    private void addRulesKeysTo(Map<String, CheckType> ruleKeysByCheckType, CheckType checkType) {
+        checkType.getRuleKeys().forEach(
+                ruleKey -> ruleKeysByCheckType.put(ruleKey, checkType)
+        );
     }
 }
+

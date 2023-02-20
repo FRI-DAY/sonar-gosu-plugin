@@ -37,7 +37,7 @@ public class IssueCollector {
     private SuppressWarningsListener suppressWarningsListener;
     private Map<String, List<TextRange>> suppressWarnings;
 
-    private List<Issue> issues = new ArrayList<>();
+    private final List<Issue> issues = new ArrayList<>();
 
     public void addIssue(Issue issue) {
         issues.add(issue);
@@ -51,7 +51,7 @@ public class IssueCollector {
     }
 
     private List<Issue> filterIssues() {
-        List<Issue> filteredIssues = new ArrayList<>();
+        final List<Issue> filteredIssues = new ArrayList<>();
         for (Issue issue : issues) {
             getUnsuppressedIssue(issue).ifPresent(filteredIssues::add);
         }
@@ -63,9 +63,9 @@ public class IssueCollector {
     }
 
     private boolean isSuppressed(Issue issue) {
-        TextRange issuePosition = issue.getPosition();
-        String issueRuleKey = issue.getRuleKey().rule();
-        String issuePackageTag = getCheckPackageTag(issueRuleKey);
+        final TextRange issuePosition = issue.getPosition();
+        final String issueRuleKey = issue.getRuleKey().rule();
+        final String issuePackageTag = getCheckPackageTag(issueRuleKey);
 
         return isInAllWarnings(issuePosition)
                 || isInPackageWarnings(issuePackageTag, issuePosition)
@@ -73,7 +73,7 @@ public class IssueCollector {
     }
 
     private String getCheckPackageTag(String issueKey) {
-        String directory = CheckKeysExtractor.getCheckPackage(issueKey);
+        final String directory = CheckKeysExtractor.getCheckPackage(issueKey);
         return CODE_SMELLS_DIR.equals(directory) ? CODE_SMELLS_TAG : directory;
     }
 
