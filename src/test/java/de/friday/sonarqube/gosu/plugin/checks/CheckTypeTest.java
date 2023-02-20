@@ -41,7 +41,7 @@ public class CheckTypeTest {
     private Stream<Arguments> checkTypesAndRuleKeysCount() {
         return Stream.of(
                 arguments(CheckType.BUGS, 3),
-                arguments(CheckType.CODE_SMELLS, 1),
+                arguments(CheckType.CODE_SMELLS, 2),
                 arguments(CheckType.METRICS, 3),
                 arguments(CheckType.VULNERABILITIES, 2)
         );

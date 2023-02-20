@@ -67,6 +67,7 @@ class ChecksRuleKeysTest {
         final Map<String, CheckType> codeSmells = new HashMap<>();
 
         codeSmells.put("TODOsCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("AutomaticDowncastCheck", CheckType.CODE_SMELLS);
 
         return codeSmells;
     }
