@@ -71,6 +71,7 @@ class ChecksRuleKeysTest {
         codeSmells.put("CollectionIsEmptyCheck", CheckType.CODE_SMELLS);
         codeSmells.put("DefaultModifiersCheck", CheckType.CODE_SMELLS);
         codeSmells.put("EmptyLineCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("HardcodedEntityFieldValueCheck", CheckType.CODE_SMELLS);
 
         return codeSmells;
     }
