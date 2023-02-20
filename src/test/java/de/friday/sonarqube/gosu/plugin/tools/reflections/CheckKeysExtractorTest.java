@@ -40,7 +40,7 @@ public class CheckKeysExtractorTest {
         final Set<String> allRuleKeys = CheckKeysExtractor.getAllCheckKeys();
 
         // then
-        assertThat(allRuleKeys).isNotEmpty().hasSize(11);
+        assertThat(allRuleKeys).isNotEmpty().hasSize(12);
     }
 
 }
