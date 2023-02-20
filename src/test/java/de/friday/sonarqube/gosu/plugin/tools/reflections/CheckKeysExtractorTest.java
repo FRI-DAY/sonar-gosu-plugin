@@ -28,16 +28,16 @@ public class CheckKeysExtractorTest {
         final String ruleKey = "TODOsCheck";
 
         // when
-        final String checkTypePackage = CheckKeysExtractor.getCheckPackage(ruleKey);
+        final String checkPackage = CheckKeysExtractor.getCheckPackage(ruleKey);
 
         // then
-        assertThat(checkTypePackage).isEqualTo("smells");
+        assertThat(checkPackage).isEqualTo("smells");
     }
 
     @Test
     void shouldReturnAllRuleKeys() {
         // when
-        final Set<String> allRuleKeys = CheckKeysExtractor.getAllKeys();
+        final Set<String> allRuleKeys = CheckKeysExtractor.getAllCheckKeys();
 
         // then
         assertThat(allRuleKeys).isNotEmpty().hasSize(9);
