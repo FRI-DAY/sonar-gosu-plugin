@@ -78,6 +78,7 @@ class ChecksRuleKeysTest {
         codeSmells.put("LoggerCheck", CheckType.CODE_SMELLS);
         codeSmells.put("LoggerLibraryCheck", CheckType.CODE_SMELLS);
         codeSmells.put("MagicNumbersCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("NestedStatementsCheck", CheckType.CODE_SMELLS);
 
         return codeSmells;
     }
