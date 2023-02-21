@@ -77,6 +77,7 @@ class ChecksRuleKeysTest {
         codeSmells.put("InvertedBooleanExpressionsCheck", CheckType.CODE_SMELLS);
         codeSmells.put("LoggerCheck", CheckType.CODE_SMELLS);
         codeSmells.put("LoggerLibraryCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("MagicNumbersCheck", CheckType.CODE_SMELLS);
 
         return codeSmells;
     }
