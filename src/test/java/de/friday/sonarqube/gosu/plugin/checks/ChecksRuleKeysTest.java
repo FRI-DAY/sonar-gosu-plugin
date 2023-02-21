@@ -66,7 +66,6 @@ class ChecksRuleKeysTest {
     private Map<String, CheckType> codeSmells() {
         final Map<String, CheckType> codeSmells = new HashMap<>();
 
-        codeSmells.put("TODOsCheck", CheckType.CODE_SMELLS);
         codeSmells.put("AutomaticDowncastCheck", CheckType.CODE_SMELLS);
         codeSmells.put("CollectionIsEmptyCheck", CheckType.CODE_SMELLS);
         codeSmells.put("DefaultModifiersCheck", CheckType.CODE_SMELLS);
@@ -82,6 +81,8 @@ class ChecksRuleKeysTest {
         codeSmells.put("PublicVariablesCheck", CheckType.CODE_SMELLS);
         codeSmells.put("RethrowInCatchCheck", CheckType.CODE_SMELLS);
         codeSmells.put("ReturnNullCollectionCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("TODOsCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("TooManyParamsCheck", CheckType.CODE_SMELLS);
 
         return codeSmells;
     }
