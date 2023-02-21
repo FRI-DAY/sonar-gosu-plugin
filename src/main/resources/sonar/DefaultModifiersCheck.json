@@ -1,0 +1,16 @@
+{
+  "title": "Redundant modifiers should not be used",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "tags": [
+    "friday-best-practices",
+    "clumsy",
+    "finding"
+  ],
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "1min"
+  },
+  "defaultSeverity": "Minor",
+  "scope": "Main"
+}

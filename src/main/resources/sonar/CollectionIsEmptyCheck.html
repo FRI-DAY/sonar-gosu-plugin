@@ -1,0 +1,40 @@
+<h3>Collections</h3>
+<p>Using <code>Collection.size()</code> to test for emptiness works, but using <code>Collection.isEmpty()</code> or
+    <code>Collection.Empty</code> makes the code more readable and can
+    be more performant. The time complexity of any <code>isEmpty()</code> method implementation should be
+    <code>O(1)</code> whereas some implementations
+    of <code>size()</code> can be <code>O(n)</code>.</p>
+<h3>Queries</h3>
+<p>If you want to know only whether a result or query object fetched anything from the application database, use the
+    <code>Empty</code> property instead of the <code>Count</code> property. The value of the <code>Empty</code> property
+    returns to your Gosu code faster,
+    because the evaluation stops as soon as it counts at least one fetched item. In contrast, the value of the <code>Count</code>
+    property returns to your Gosu only after counting all fetched items.
+</p>
+<h3>Length property</h3>
+<p><code>length</code> property is usually the same as <code>isEmpty()</code> in performance. </p>
+<p><code>isEmpty()</code>, however states what you're actually interested in more clearly</p>
+<h2>Noncompliant Code Example</h2>
+<pre>if (myCollection.size() == 0) {  // Noncompliant
+  /* ... */
+}
+</pre>
+<pre>var result = policyPeriodQuery.select()
+    if (result.Count == 0) {  // Noncompliant
+ /* ... */
+}
+</pre>
+<h2>Compliant Solution</h2>
+<pre>if (myCollection.isEmpty()) {
+  /* ... */
+}
+</pre>
+<pre>if (myCollection.Empty) {
+  /* ... */
+}
+</pre>
+<pre>var result = policyPeriodQuery.select()
+    if (result.Empty) {
+ /* ... */
+}
+</pre>

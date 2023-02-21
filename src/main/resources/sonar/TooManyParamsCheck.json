@@ -1,0 +1,14 @@
+{
+  "title": "Methods should not have too many parameters",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "tags": [
+    "brain-overload"
+  ],
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "20min"
+  },
+  "defaultSeverity": "Major",
+  "scope": "Main"
+}

@@ -1,0 +1,16 @@
+{
+  "title": "Date instantiations should be system clock aware.",
+  "type": "BUG",
+  "status": "ready",
+  "tags": [
+    "pitfall",
+    "cert",
+    "unused"
+  ],
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "10min"
+  },
+  "defaultSeverity": "Major",
+  "scope": "Main"
+}

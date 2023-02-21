@@ -1,0 +1,16 @@
+{
+  "title": "\"if ... else if\" constructs should end with \"else\" clauses",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "tags": [
+    "based-on-misra",
+    "cert",
+    "misra"
+  ],
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "5min"
+  },
+  "defaultSeverity": "Critical",
+  "scope": "Main"
+}

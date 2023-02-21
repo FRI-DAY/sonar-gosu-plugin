@@ -1,0 +1,14 @@
+{
+  "title": "Unnecessary casts should be removed",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "tags": [
+    "brain-overload"
+  ],
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "1min"
+  },
+  "defaultSeverity": "Minor",
+  "scope": "Main"
+}

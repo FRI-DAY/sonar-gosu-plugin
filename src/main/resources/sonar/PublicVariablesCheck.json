@@ -1,0 +1,14 @@
+{
+  "title": "Use public Properties instead of public Variables",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "tags": [
+    "convention"
+  ],
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "2min"
+  },
+  "defaultSeverity": "Minor",
+  "scope": "Main"
+}

@@ -1,0 +1,14 @@
+{
+  "title": "Files should contain an empty newline at the end",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "tags": [
+    "convention"
+  ],
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "1min"
+  },
+  "defaultSeverity": "Minor",
+  "scope": "Main"
+}

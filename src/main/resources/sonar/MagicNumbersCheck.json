@@ -1,0 +1,14 @@
+{
+  "title": "Magic numbers should not be used",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "tags": [
+    "brain-overload"
+  ],
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "1min"
+  },
+  "defaultSeverity": "Major",
+  "scope": "Main"
+}
