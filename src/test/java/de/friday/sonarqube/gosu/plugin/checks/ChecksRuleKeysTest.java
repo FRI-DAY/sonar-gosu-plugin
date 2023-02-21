@@ -66,7 +66,25 @@ class ChecksRuleKeysTest {
     private Map<String, CheckType> codeSmells() {
         final Map<String, CheckType> codeSmells = new HashMap<>();
 
+        codeSmells.put("AutomaticDowncastCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("CollectionIsEmptyCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("DefaultModifiersCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("EmptyLineCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("HardcodedEntityFieldValueCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("IfElseIfCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("InternalImportsCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("InvertedBooleanExpressionsCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("LoggerCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("LoggerLibraryCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("MagicNumbersCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("NestedStatementsCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("PublicVariablesCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("RethrowInCatchCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("ReturnNullCollectionCheck", CheckType.CODE_SMELLS);
         codeSmells.put("TODOsCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("TooManyParamsCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("UnnecessaryImportCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("UnusedParameterCheck", CheckType.CODE_SMELLS);
 
         return codeSmells;
     }

@@ -56,15 +56,17 @@ public interface IssueSpecification {
      * <pre>
      * given("TODOsCheck/ok.gs").whenCheckedAgainst(TODOsCheck.class).then().issuesFound().areEmpty();
      * </pre>
-     * @return The Issue specification
+     * <p>
+     * This is an end assertion.
      */
-    IssueSpecification noIssuesFound();
+    void noIssuesFound();
 
     /**
      * Evaluate if there were no issues found by the Check.
-     * @return The Issue specification
+     *
+     * This is an end assertion.
      */
-    IssueSpecification areEmpty();
+    void areEmpty();
 
     /**
      * Evaluate if the list of issues found by the Check is equal to the expectation.

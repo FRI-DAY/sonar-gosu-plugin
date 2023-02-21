@@ -14,33 +14,24 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package de.friday.sonarqube.gosu.plugin.tools.reflections;
+package de.friday.sonarqube.gosu.plugin.checks.smells;
 
-import java.util.Set;
 import org.junit.jupiter.api.Test;
-import static org.assertj.core.api.Assertions.assertThat;
+import static de.friday.test.support.checks.dsl.gosu.GosuCheckTestDsl.given;
 
-public class CheckKeysExtractorTest {
+class HardcodedEntityFieldValueCheckTest {
 
     @Test
-    void shouldReturnPackageOfCheck() {
-        // given
-        final String ruleKey = "TODOsCheck";
-
-        // when
-        final String checkPackage = CheckKeysExtractor.getCheckPackage(ruleKey);
-
-        // then
-        assertThat(checkPackage).isEqualTo("smells");
+    void findsNoIssuesWhenEntityFieldNameIsNotHardcoded() {
+        given("HardcodedEntityFieldValueCheck/ok.gs")
+                .whenCheckedAgainst(HardcodedEntityFieldValueCheck.class)
+                .then().issuesFound().areEmpty();
     }
 
     @Test
-    void shouldReturnAllRuleKeys() {
-        // when
-        final Set<String> allRuleKeys = CheckKeysExtractor.getAllCheckKeys();
-
-        // then
-        assertThat(allRuleKeys).isNotEmpty().hasSize(27);
+    void findsIssuesWhenEntityFieldNameIsHardcoded() {
+        given("HardcodedEntityFieldValueCheck/nok.gs")
+                .whenCheckedAgainst(HardcodedEntityFieldValueCheck.class)
+                .then().issuesFound().hasSizeEqualTo(3);
     }
-
 }

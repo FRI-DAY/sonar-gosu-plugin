@@ -47,17 +47,15 @@ final class GosuIssuesSpecification implements IssueSpecification {
     }
 
     @Override
-    public IssueSpecification noIssuesFound() {
+    public void noIssuesFound() {
         this.issuesFound().areEmpty();
-        return this;
     }
 
     @Override
-    public IssueSpecification areEmpty() {
+    public void areEmpty() {
         assertThat(this.issues)
                 .as("No issues were expected to be found.")
                 .isEmpty();
-        return this;
     }
 
     @Override
