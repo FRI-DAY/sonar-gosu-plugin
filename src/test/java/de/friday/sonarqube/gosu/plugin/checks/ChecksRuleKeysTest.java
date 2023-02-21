@@ -81,6 +81,7 @@ class ChecksRuleKeysTest {
         codeSmells.put("NestedStatementsCheck", CheckType.CODE_SMELLS);
         codeSmells.put("PublicVariablesCheck", CheckType.CODE_SMELLS);
         codeSmells.put("RethrowInCatchCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("ReturnNullCollectionCheck", CheckType.CODE_SMELLS);
 
         return codeSmells;
     }
