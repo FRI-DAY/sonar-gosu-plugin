@@ -73,6 +73,7 @@ class ChecksRuleKeysTest {
         codeSmells.put("EmptyLineCheck", CheckType.CODE_SMELLS);
         codeSmells.put("HardcodedEntityFieldValueCheck", CheckType.CODE_SMELLS);
         codeSmells.put("IfElseIfCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("InternalImportsCheck", CheckType.CODE_SMELLS);
 
         return codeSmells;
     }
