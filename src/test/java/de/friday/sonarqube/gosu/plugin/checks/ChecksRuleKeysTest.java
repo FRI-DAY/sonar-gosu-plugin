@@ -74,6 +74,7 @@ class ChecksRuleKeysTest {
         codeSmells.put("HardcodedEntityFieldValueCheck", CheckType.CODE_SMELLS);
         codeSmells.put("IfElseIfCheck", CheckType.CODE_SMELLS);
         codeSmells.put("InternalImportsCheck", CheckType.CODE_SMELLS);
+        codeSmells.put("InvertedBooleanExpressionsCheck", CheckType.CODE_SMELLS);
 
         return codeSmells;
     }
