@@ -1,0 +1,14 @@
+{
+  "title": "Boolean checks should not be inverted",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "tags": [
+    "pitfall"
+  ],
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "2min"
+  },
+  "defaultSeverity": "Minor",
+  "scope": "Main"
+}

@@ -1,0 +1,10 @@
+<p>Some code packages contain Guidewire internal methods that are reserved for Guidewire use only. Gosu code
+    written to configure Guidewire must never call an internal method for any reason. Future releases of Guidewire
+    can change or remove an internal method without notification.</p>
+<p>The following packages contain Guidewire internal methods</p>
+<ul>
+    <li>All packages in <code>com.guidewire.*</code></li>
+    <li>Any package whose name or location includes the word <code>internal</code></li>
+</ul>
+<p>Gosu configuration code can safely call methods defined in any <code>gw.* </code>package (except for those packages whose
+    name or location includes the word <code>internal</code>).</p>

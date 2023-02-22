@@ -1,0 +1,9 @@
+{
+  "title": "Track unnecessary import statements",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "tags": [
+    "convention"
+  ],
+  "defaultSeverity": "Minor"
+}

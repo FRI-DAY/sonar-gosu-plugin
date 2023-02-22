@@ -1,0 +1,16 @@
+{
+  "title": "Methods should not be too complex",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "tags": [
+    "brain-overload"
+  ],
+  "remediation": {
+    "func": "Linear with offset",
+    "linearFactor": "1mn",
+    "linearOffset": "10mn",
+    "linearDesc": "per complexity violation over threshold"
+  },
+  "defaultSeverity": "Critical",
+  "scope": "Main"
+}

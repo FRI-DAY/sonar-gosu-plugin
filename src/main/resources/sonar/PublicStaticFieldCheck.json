@@ -1,0 +1,12 @@
+{
+  "title": "\"public static\" fields should be constant",
+  "type": "VULNERABILITY",
+  "status": "ready",
+  "tags": [],
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "10min"
+  },
+  "defaultSeverity": "Minor",
+  "scope": "Main"
+}

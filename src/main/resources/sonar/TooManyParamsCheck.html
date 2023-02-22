@@ -1,0 +1,19 @@
+<p>A long parameter list can indicate that a new structure should be created to wrap the numerous parameters or that the
+    function is doing too many
+    things.</p>
+<h2>Noncompliant Code Example</h2>
+<p>With a maximum number of 4 parameters:</p>
+<pre>public doSomething(param1: int, param2: int, param3: int, param4: String, param5: long) {
+...
+}
+</pre>
+<h2>Compliant Solution</h2>
+<pre>public doSomething(param1: int, param2: int, param3: int, param4: String) {
+...
+}
+</pre>
+<h2>Exceptions</h2>
+<p>
+<ul>
+    <li>Overridden methods</li>
+</ul></p>

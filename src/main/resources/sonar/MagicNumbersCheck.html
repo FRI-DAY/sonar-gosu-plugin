@@ -1,0 +1,26 @@
+<p>A magic number is a number that comes out of nowhere, and is directly used in a statement. Magic numbers are often
+    used, for instance to limit the
+    number of iterations of a loops, to test the value of a property, etc.</p>
+<p>Using magic numbers may seem obvious and straightforward when you're writing a piece of code, but they are much less
+    obvious and straightforward at
+    debugging time.</p>
+<p>That is why magic numbers must be demystified by first being assigned to clearly named variables before being
+    used.</p>
+<p><code>-1</code>, <code>0</code> and <code>1</code> are not considered magic numbers.</p>
+<h2>Noncompliant Code Example</h2>
+<pre>public static void doSomething() {
+	for(i in 0..4){                 // Noncompliant, 4 is a magic number
+		...
+	}
+}
+</pre>
+<h2>Compliant Solution</h2>
+<pre>public static final int NUMBER_OF_CYCLES = 4;
+public static void doSomething() {
+  for(i in 0..NUMBER_OF_CYCLES){
+    ...
+  }
+}
+</pre>
+<h2>Exceptions</h2>
+<p>This rule ignores <code>hashCode</code> methods.</p>

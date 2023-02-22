@@ -1,0 +1,14 @@
+{
+  "title": "Files should not have too many lines of code",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "tags": [
+    "brain-overload"
+  ],
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "1h"
+  },
+  "defaultSeverity": "Major",
+  "scope": "Main"
+}

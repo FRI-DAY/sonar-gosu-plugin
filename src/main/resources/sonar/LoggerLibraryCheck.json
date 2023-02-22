@@ -1,0 +1,14 @@
+{
+  "title": "Project specific logger API should be always used",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "1min"
+  },
+  "tags": [
+    "friday-best-practices"
+  ],
+  "defaultSeverity": "Minor",
+  "scope": "Main"
+}

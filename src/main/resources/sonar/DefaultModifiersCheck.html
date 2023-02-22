@@ -1,0 +1,31 @@
+<p>The functions declared in an <code>interface</code> are <code>abstract</code> by default. Any variables are
+    automatically
+    <code>private</code>. There is no need to explicitly declare them so.</p>
+<p>Similarly, the <code>final</code> modifier is redundant on any method of a <code>final</code> class.
+<p>Properties, functions and top-level types (outer Gosu classes, interfaces, enumerations) are <code>public</code> by
+    default</p>
+<h2>Noncompliant Code Example</h2>
+<pre>public class Vehicle {
+  private var _startDate: Date as StartDate
+
+  public function getDate() {
+      /* ... */
+  }
+}
+</pre>
+<h2>Compliant Solution</h2>
+<pre>class Vehicle {
+  var _startDate: Date as StartDate
+
+  function getDate() {
+      /* ... */
+  }
+}
+</pre>
+
+<h2>See</h2>
+<ul>
+    <li><a href="https://friday-docs.k8s.blue.fridev.de/backend/code-style-guide/#default-modifiers">Code Style
+        Guide</a> - Default Modifiers
+    </li>
+</ul>

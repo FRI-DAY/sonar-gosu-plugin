@@ -1,0 +1,16 @@
+{
+  "title": "Cognitive Complexity of methods should not be too high",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "tags": [
+    "brain-overload"
+  ],
+  "remediation": {
+    "func": "Linear with offset",
+    "linearFactor": "1mn",
+    "linearOffset": "5mn",
+    "linearDesc": "per complexity violation over the threshold"
+  },
+  "defaultSeverity": "Critical",
+  "scope": "Main"
+}

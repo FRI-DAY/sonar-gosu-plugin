@@ -1,0 +1,9 @@
+<p>To get entity value you should not use hardcoded Strings. Instead, get entity value
+by property name.</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre> entity.getFieldValue("LastUpdateTime")
+</pre>
+<h2>Compliant Solution</h2>
+<pre><code>entity.getFieldValue(Person#LastUpdateTime.PropertyInfo.Name)</code>
+</pre>

@@ -1,0 +1,14 @@
+{
+  "title": "Collection.isEmpty()/Collection.Empty should be used to test for emptiness",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "tags": [
+    "clumsy"
+  ],
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "2min"
+  },
+  "defaultSeverity": "Minor",
+  "scope": "Main"
+}

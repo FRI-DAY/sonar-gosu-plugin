@@ -1,0 +1,10 @@
+{
+  "title": "Track uses of internal imports",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "tags": [
+    "convention"
+  ],
+  "defaultSeverity": "Info",
+  "scope": "Main"
+}

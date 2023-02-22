@@ -1,0 +1,14 @@
+{
+  "title": "\"catch\" clauses should not be empty",
+  "type": "VULNERABILITY",
+  "status": "ready",
+  "tags": [
+    "error-handling"
+  ],
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "5min"
+  },
+  "defaultSeverity": "Minor",
+  "scope": "Main"
+}

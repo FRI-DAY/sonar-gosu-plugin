@@ -1,0 +1,15 @@
+{
+  "title": "Unused method parameters should be removed",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "tags": [
+    "based-on-misra",
+    "cert",
+    "unused"
+  ],
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "2min"
+  },
+  "defaultSeverity": "Major"
+}

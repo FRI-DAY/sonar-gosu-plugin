@@ -1,0 +1,13 @@
+{
+  "title": "Hardcoded Strings should not be used to get entity value",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "tags": [
+  ],
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "1min"
+  },
+  "defaultSeverity": "Minor",
+  "scope": "Main"
+}

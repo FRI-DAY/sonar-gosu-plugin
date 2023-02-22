@@ -1,0 +1,14 @@
+{
+  "title": "\"StringBuilder\" and \"StringBuffer\" should not be instantiated with a character",
+  "type": "BUG",
+  "status": "ready",
+  "tags": [
+    "pitfall"
+  ],
+  "remediation": {
+    "func": "Constant\/Issue",
+    "constantCost": "2min"
+  },
+  "defaultSeverity": "Major",
+  "scope": "Main"
+}
