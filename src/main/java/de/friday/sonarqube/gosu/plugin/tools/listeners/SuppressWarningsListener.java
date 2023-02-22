@@ -19,7 +19,6 @@ package de.friday.sonarqube.gosu.plugin.tools.listeners;
 import de.friday.sonarqube.gosu.antlr.GosuParser;
 import de.friday.sonarqube.gosu.antlr.GosuParserBaseListener;
 import de.friday.sonarqube.gosu.plugin.utils.TextRangeUtil;
-import de.friday.sonarqube.gosu.plugin.utils.annotations.UnitTestMissing;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -30,7 +29,6 @@ import java.util.regex.Pattern;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.sonar.api.batch.fs.TextRange;
 
-@UnitTestMissing
 public final class SuppressWarningsListener extends GosuParserBaseListener {
     private static final String SUPPRESS_WARNINGS = "SuppressWarnings";
     private static final Pattern GOSU_SUPPRESS_WARNINGS_KEY_PATTERN = Pattern.compile("gosu:\\w+");
