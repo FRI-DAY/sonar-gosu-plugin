@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="de.friday.suite.util.DateEnhancementTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-07-19T09:15:57" hostname="runner-c9ea9c18-project-2-concurrent-0" time="0.005">
+  <properties/>
+  <testcase name="testShortFormatMonthFullYearWithTwoDigitMonth" classname="de.friday.suite.util.DateEnhancementTest" time="0.005"/>
+  <testcase name="testShortFormatMonthFullYearWithOneDigitMonth" classname="de.friday.suite.util.DateEnhancementTest" time="0.0"/>
+  <system-out><![CDATA[[runner-c9ea9c18-project-2-concurrent-0] [] 2019-07-19 09:15:57,397 INFO [friday.suite.GuidewireRule] GW server for Guidewire Rule already started.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="de.friday.suite.util.validation.iban.IbanValidatorTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-07-19T09:15:57" hostname="runner-c9ea9c18-project-2-concurrent-0" time="0.451">
+  <properties/>
+  <testcase name="checkValidGermanIban" classname="de.friday.suite.util.validation.iban.IbanValidatorTest" time="0.37"/>
+  <testcase name="checkValidFrenchIban" classname="de.friday.suite.util.validation.iban.IbanValidatorTest" time="0.042"/>
+  <testcase name="checkInvalidIban" classname="de.friday.suite.util.validation.iban.IbanValidatorTest" time="0.038"/>
+  <system-out><![CDATA[[runner-c9ea9c18-project-2-concurrent-0] [] 2019-07-19 09:15:57,409 INFO [friday.suite.GuidewireRule] GW server for Guidewire Rule already started.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
