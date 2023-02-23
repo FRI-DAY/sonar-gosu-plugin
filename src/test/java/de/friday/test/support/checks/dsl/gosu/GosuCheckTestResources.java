@@ -16,13 +16,14 @@
  */
 package de.friday.test.support.checks.dsl.gosu;
 
+import de.friday.test.support.TestResourcesDirectories;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 final class GosuCheckTestResources {
 
-    static final Path BASE_DIR = Paths.get("src/test/resources/checks/");
+    static final Path BASE_DIR = Paths.get(TestResourcesDirectories.CHECK_RESOURCES_DIR.getPath());
 
     static Path getBaseDir() {
         return BASE_DIR;

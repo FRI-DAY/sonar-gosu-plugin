@@ -17,6 +17,7 @@
 package de.friday.test.support;
 
 import java.nio.file.Path;
+import java.util.Optional;
 import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.batch.rule.internal.ActiveRulesBuilder;
 import org.sonar.api.batch.sensor.internal.SensorContextTester;
@@ -25,14 +26,26 @@ import org.sonar.api.rule.RuleKey;
 public class GosuSensorContextTester {
     private final SensorContextTester sensorContextTester;
 
-    public GosuSensorContextTester(Path moduleBaseDir, String ruleKey) {
-        this.sensorContextTester = create(moduleBaseDir, ruleKey);
+    public GosuSensorContextTester(Path moduleBaseDir) {
+        this(moduleBaseDir, null);
     }
 
-    private SensorContextTester create(Path moduleBaseDir, String ruleKey) {
-        final ActiveRulesBuilder activeRulesBuilder = new ActiveRulesBuilder().create(RuleKey.of("gosu", ruleKey)).activate();
+    public GosuSensorContextTester(Path moduleBaseDir, String ruleKey) {
+        this.sensorContextTester = create(moduleBaseDir, Optional.ofNullable(ruleKey));
+    }
+
+    private SensorContextTester create(Path moduleBaseDir, Optional<String> ruleKey) {
+        final SensorContextTester sensorContextTester = SensorContextTester.create(moduleBaseDir);
+        ruleKey.ifPresent(key -> activateRules(key, sensorContextTester));
+        return sensorContextTester;
+    }
+
+    private void activateRules(String ruleKey, SensorContextTester sensorContextTester) {
+        final ActiveRulesBuilder activeRulesBuilder = new ActiveRulesBuilder().create(
+                RuleKey.of("gosu", ruleKey)
+        ).activate();
         final ActiveRules activeRules = activeRulesBuilder.build();
-        return SensorContextTester.create(moduleBaseDir).setActiveRules(activeRules);
+        sensorContextTester.setActiveRules(activeRules);
     }
 
     public SensorContextTester get() {
