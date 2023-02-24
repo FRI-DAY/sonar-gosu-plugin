@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="de.friday.ab.vendorservices.exportimport.import.excel.enhancement.ExcelRowEnhancementTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-07-19T09:15:46" hostname="runner-c9ea9c18-project-2-concurrent-0" time="0.082">
+  <properties/>
+  <testcase name="testBlank" classname="de.friday.ab.vendorservices.exportimport.import.excel.enhancement.ExcelRowEnhancementTest" time="0.082"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
