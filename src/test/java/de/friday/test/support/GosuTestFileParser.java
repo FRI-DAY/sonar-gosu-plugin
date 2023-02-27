@@ -22,8 +22,10 @@ import de.friday.sonarqube.gosu.plugin.Properties;
 import de.friday.test.support.checks.dsl.gosu.GosuSourceCodeFile;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.sonar.api.batch.fs.InputFile;
 
 public class GosuTestFileParser {
@@ -37,7 +39,11 @@ public class GosuTestFileParser {
     }
 
     public GosuFileParsed parse() {
-        final CommonTokenStream commonTokenStream = createTokenStreamOf(gosuSourceFilename);
+        return parse(Optional.empty());
+    }
+
+    public GosuFileParsed parse(Optional<ParseTreeListener> listener) {
+        final CommonTokenStream commonTokenStream = createTokenStreamOf(gosuSourceFilename, listener);
 
         gosuParser.start();
 
@@ -54,12 +60,13 @@ public class GosuTestFileParser {
         return new GosuFileParsed(inputFile, properties);
     }
 
-    private CommonTokenStream createTokenStreamOf(String gosuSourceFilename) {
+    private CommonTokenStream createTokenStreamOf(String gosuSourceFilename, Optional<ParseTreeListener> parseListener) {
         try (final InputStream inputStream = this.getClass().getResourceAsStream(gosuSourceFilename)) {
             assert inputStream != null;
 
             gosuLexer.setInputStream(CharStreams.fromStream(inputStream));
             final CommonTokenStream commonTokenStream = new CommonTokenStream(gosuLexer);
+            parseListener.ifPresent(gosuParser::addParseListener);
             gosuParser.setTokenStream(commonTokenStream);
 
             return commonTokenStream;
