@@ -20,6 +20,7 @@ import de.friday.test.support.checks.dsl.specification.SourceCodeFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.sonar.api.batch.fs.InputFile;
@@ -41,7 +42,11 @@ public final class GosuSourceCodeFile implements SourceCodeFile {
     @Override
     public InputFile asInputFile() {
         final String sourceFileContent = loadFileContent();
-        return new TestInputFileBuilder(baseDir, fileName).initMetadata(sourceFileContent).build();
+        return new TestInputFileBuilder(
+                baseDir,
+                Paths.get(baseDir).toFile(),
+                GosuCheckTestResources.getPathOf(fileName, baseDir).toFile()
+        ).initMetadata(sourceFileContent).build();
     }
 
     private String loadFileContent() {

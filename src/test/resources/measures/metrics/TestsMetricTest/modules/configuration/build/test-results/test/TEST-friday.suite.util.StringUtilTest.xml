@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="friday.suite.util.StringUtilTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2019-07-19T09:15:57" hostname="runner-c9ea9c18-project-2-concurrent-0" time="0.006">
+  <properties/>
+  <testcase name="testTrimToFullWordsMiddleOfFirstWord" classname="friday.suite.util.StringUtilTest" time="0.003"/>
+  <testcase name="testTrimToFullWordsLimitToPositionOfSpaceAfterSecondWord" classname="friday.suite.util.StringUtilTest" time="0.0"/>
+  <testcase name="testTrimToFullWordsBeginningOfString" classname="friday.suite.util.StringUtilTest" time="0.002"/>
+  <testcase name="testTrimToFullWordsLimitToPositionOfSpaceAfterFirstWord" classname="friday.suite.util.StringUtilTest" time="0.0"/>
+  <testcase name="testTrimToFullWordsWithLengthGreaterThanText" classname="friday.suite.util.StringUtilTest" time="0.0"/>
+  <testcase name="testTrimToFullWords" classname="friday.suite.util.StringUtilTest" time="0.001"/>
+  <system-out><![CDATA[[runner-c9ea9c18-project-2-concurrent-0] [] 2019-07-19 09:15:57,403 INFO [friday.suite.GuidewireRule] GW server for Guidewire Rule already started.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

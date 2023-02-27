@@ -19,7 +19,8 @@ package de.friday.test.support;
 public enum TestResourcesDirectories {
 
     RESOURCES_DIR("src/test/resources"),
-    CHECK_RESOURCES_DIR("src/test/resources/checks");
+    CHECK_RESOURCES_DIR("src/test/resources/checks"),
+    METRICS_RESOURCES_DIR("src/test/resources/measures/metrics");
 
     private final String path;
 

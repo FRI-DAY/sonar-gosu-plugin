@@ -17,7 +17,7 @@
 package de.friday.test.support.checks.dsl.gosu;
 
 import de.friday.sonarqube.gosu.plugin.checks.AbstractCheckBase;
-import de.friday.sonarqube.gosu.plugin.tools.GosuFileParser;
+import de.friday.sonarqube.gosu.plugin.GosuFileParser;
 import de.friday.test.support.GosuSensorContextTester;
 import de.friday.test.support.checks.dsl.specification.CheckRunner;
 import de.friday.test.support.checks.dsl.specification.SourceCodeFile;

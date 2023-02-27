@@ -19,7 +19,6 @@ package de.friday.sonarqube.gosu.plugin.measures.metrics;
 import com.google.inject.Inject;
 import de.friday.sonarqube.gosu.antlr.GosuParser;
 import de.friday.sonarqube.gosu.plugin.Properties;
-import de.friday.sonarqube.gosu.plugin.utils.annotations.UnitTestMissing;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.measures.CoreMetrics;
@@ -28,10 +27,9 @@ import org.sonar.api.utils.log.Loggers;
 import org.sonar.plugins.surefire.data.UnitTestClassReport;
 import org.sonar.plugins.surefire.data.UnitTestIndex;
 
-@UnitTestMissing
-public class ReportMetric extends AbstractMetricBase {
+public class TestsMetric extends AbstractMetricBase {
 
-    private static final Logger LOGGER = Loggers.get(ReportMetric.class);
+    private static final Logger LOGGER = Loggers.get(TestsMetric.class);
     private final SensorContext context;
     private final Properties properties;
     private final UnitTestIndex index;
@@ -39,41 +37,42 @@ public class ReportMetric extends AbstractMetricBase {
     private String packageName = "";
 
     @Inject
-    public ReportMetric(SensorContext context, Properties properties, UnitTestIndex index) {
+    public TestsMetric(SensorContext context, Properties properties, UnitTestIndex index) {
         this.context = context;
         this.properties = properties;
         this.index = index;
     }
 
     @Override
-    public void exitPackageDeclaration(GosuParser.PackageDeclarationContext ctx) {
-        if (ctx.namespace() == null) {
+    public void exitPackageDeclaration(GosuParser.PackageDeclarationContext packageDeclarationContext) {
+        if (packageDeclarationContext.namespace() == null) {
             return;
         }
-        packageName = ctx.namespace().getText();
+        packageName = packageDeclarationContext.namespace().getText();
     }
 
     @Override
-    public void exitClassSignature(GosuParser.ClassSignatureContext ctx) {
-        processReportForClass(ctx.identifier().getText());
+    public void exitClassSignature(GosuParser.ClassSignatureContext classSignatureContext) {
+        processReportForClass(classSignatureContext.identifier().getText());
     }
 
     private void processReportForClass(String className) {
-        UnitTestClassReport report = index.get(packageName + '.' + className);
-        if (report == null) {
+        final UnitTestClassReport unitTestClassReport = index.get(packageName + '.' + className);
+        if (unitTestClassReport == null) {
             return;
         }
-        if (report.getTests() > 0) {
-            saveMetrics(report);
+        if (unitTestClassReport.getTests() > 0) {
+            saveMetrics(unitTestClassReport);
         }
-        if (report.getNegativeTimeTestNumber() > 0) {
-            LOGGER.warn("There is {} test(s) reported with negative time by surefire, total duration may not be accurate.", report.getNegativeTimeTestNumber());
+        if (unitTestClassReport.getNegativeTimeTestNumber() > 0) {
+            LOGGER.warn("There is {} test(s) reported with negative time by surefire, total duration may not be accurate.", unitTestClassReport.getNegativeTimeTestNumber());
         }
     }
 
     private void saveMetrics(UnitTestClassReport report) {
-        InputFile inputFile = properties.getFile();
-        int testsCount = report.getTests() - report.getSkipped();
+        final InputFile inputFile = properties.getFile();
+        final int testsCount = report.getTests() - report.getSkipped();
+
         saveMetric(context, inputFile, CoreMetrics.SKIPPED_TESTS, report.getSkipped());
         saveMetric(context, inputFile, CoreMetrics.TESTS, testsCount);
         saveMetric(context, inputFile, CoreMetrics.TEST_ERRORS, report.getErrors());
