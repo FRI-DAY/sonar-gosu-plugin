@@ -33,7 +33,8 @@ public abstract class AbstractMetricBase extends GosuParserBaseListener {
             GosuLexer.OR,
             GosuLexer.DISJ,
             GosuLexer.BITAND,
-            GosuLexer.BITOR));
+            GosuLexer.BITOR)
+    );
 
     public static boolean isComplexityOperator(int type) {
         return GOSU_COMPLEXITY_OPERATORS.contains(type);

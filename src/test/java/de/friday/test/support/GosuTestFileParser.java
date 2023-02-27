@@ -18,15 +18,27 @@ package de.friday.test.support;
 
 import de.friday.sonarqube.gosu.antlr.GosuLexer;
 import de.friday.sonarqube.gosu.antlr.GosuParser;
+import de.friday.sonarqube.gosu.plugin.GosuFileParser;
 import de.friday.sonarqube.gosu.plugin.Properties;
+import de.friday.sonarqube.gosu.plugin.reports.ReportsDirectories;
+import de.friday.sonarqube.gosu.plugin.reports.ReportsScanner;
 import de.friday.test.support.checks.dsl.gosu.GosuSourceCodeFile;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.sonar.api.batch.fs.InputFile;
+import org.sonar.api.batch.fs.internal.DefaultFileSystem;
+import org.sonar.api.batch.sensor.internal.SensorContextTester;
+import org.sonar.api.config.Configuration;
+import org.sonar.api.config.internal.MapSettings;
+import org.sonar.api.scan.filesystem.PathResolver;
+import org.sonar.plugins.surefire.data.UnitTestIndex;
 
 public class GosuTestFileParser {
     private final GosuLexer gosuLexer = new GosuLexer(null);
@@ -57,7 +69,7 @@ public class GosuTestFileParser {
         ).asInputFile();
         final Properties properties = new Properties(inputFile, commonTokenStream);
 
-        return new GosuFileParsed(inputFile, properties);
+        return new GosuFileParsed(inputFile, properties, null);
     }
 
     private CommonTokenStream createTokenStreamOf(String gosuSourceFilename, Optional<ParseTreeListener> parseListener) {
@@ -75,13 +87,45 @@ public class GosuTestFileParser {
         }
     }
 
+    public GosuFileParsed parseWithSensorContext(TestResourcesDirectories baseDir, String packageName) {
+        final InputFile inputFile = new GosuSourceCodeFile(gosuSourceFilename, baseDir.getPath()).asInputFile();
+        final SensorContextTester context = new GosuSensorContextTester(Paths.get(baseDir.getPath())).get();
+        final Properties properties = parse(baseDir, packageName, inputFile, context);
+
+        return new GosuFileParsed(inputFile, properties, context);
+    }
+
+    private Properties parse(TestResourcesDirectories baseDir, String packageName, InputFile inputFile, SensorContextTester context) {
+        try {
+            GosuFileParser gosuFileParser = new GosuFileParser(inputFile, context, getUnitTestIndex(baseDir, packageName));
+            gosuFileParser.parse();
+            return gosuFileParser.getProperties();
+        } catch (IOException e) {
+            throw new RuntimeException("Error trying to parse " + gosuSourceFilename, e);
+        }
+    }
+
+    private UnitTestIndex getUnitTestIndex(TestResourcesDirectories baseDir, String packageName) {
+        Configuration settings = new MapSettings().asConfig();
+        ReportsScanner scanner = new ReportsScanner(settings);
+        DefaultFileSystem fs = new DefaultFileSystem(new File(baseDir.getPath() + File.separator + packageName));
+        PathResolver pathResolver = new PathResolver();
+
+        List<File> dirs = new ReportsDirectories(settings, fs, pathResolver).get();
+
+        return scanner.createIndex(dirs);
+    }
+
     public static class GosuFileParsed {
         private final InputFile inputFile;
         private final Properties properties;
 
-        public GosuFileParsed(InputFile inputFile, Properties properties) {
+        private final SensorContextTester sensorContext;
+
+        public GosuFileParsed(InputFile inputFile, Properties properties, SensorContextTester context) {
             this.inputFile = inputFile;
             this.properties = properties;
+            this.sensorContext = context;
         }
 
         public Properties getSourceFileProperties() {
@@ -90,6 +134,10 @@ public class GosuTestFileParser {
 
         public InputFile getInputFile() {
             return inputFile;
+        }
+
+        public SensorContextTester getSensorContext() {
+            return sensorContext;
         }
     }
 
