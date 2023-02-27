@@ -16,6 +16,7 @@
  */
 package de.friday.test.support.checks.dsl.gosu;
 
+import de.friday.sonarqube.gosu.language.GosuLanguage;
 import de.friday.test.support.checks.dsl.specification.SourceCodeFile;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -46,7 +47,7 @@ public final class GosuSourceCodeFile implements SourceCodeFile {
                 baseDir,
                 Paths.get(baseDir).toFile(),
                 GosuCheckTestResources.getPathOf(fileName, baseDir).toFile()
-        ).initMetadata(sourceFileContent).build();
+        ).initMetadata(sourceFileContent).setLanguage(GosuLanguage.KEY).build();
     }
 
     private String loadFileContent() {
