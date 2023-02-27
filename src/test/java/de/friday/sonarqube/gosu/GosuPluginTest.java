@@ -16,13 +16,31 @@
  */
 package de.friday.sonarqube.gosu;
 
-import org.junit.Test;
-import static org.junit.Assert.assertTrue;
+import de.friday.test.support.SonarServerVersionSupported;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.sonar.api.Plugin;
+import org.sonar.api.SonarQubeSide;
+import org.sonar.api.SonarRuntime;
+import org.sonar.api.internal.SonarRuntimeImpl;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class GosuPluginTest {
-    @Test
-    public void testSomeLibraryMethod() {
-        GosuPlugin classUnderTest = new GosuPlugin();
-        assertTrue("someLibraryMethod should return 'true'", classUnderTest.someLibraryMethod());
+
+    @ParameterizedTest
+    @EnumSource(SonarServerVersionSupported.class)
+    public void shouldAddGosuExtensionsToSonarServer(SonarServerVersionSupported sonarServerVersion) {
+        // given
+        final SonarRuntime runtime = SonarRuntimeImpl.forSonarQube(sonarServerVersion.getVersion(), SonarQubeSide.SERVER);
+        final Plugin.Context context = new Plugin.Context(runtime);
+
+        // when
+        assertThatCode(() -> new GosuPlugin().define(context)).doesNotThrowAnyException();
+
+        // then
+        assertThat(context.getExtensions()).hasSize(6);
     }
 }

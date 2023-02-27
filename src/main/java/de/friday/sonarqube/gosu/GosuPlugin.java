@@ -15,8 +15,25 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 package de.friday.sonarqube.gosu;
-public class GosuPlugin {
-    public boolean someLibraryMethod() {
-        return true;
+
+import de.friday.sonarqube.gosu.language.GosuLangProperties;
+import de.friday.sonarqube.gosu.language.GosuLanguage;
+import de.friday.sonarqube.gosu.plugin.GosuQualityProfile;
+import de.friday.sonarqube.gosu.plugin.GosuRulesDefinition;
+import de.friday.sonarqube.gosu.plugin.GosuSensor;
+import org.sonar.api.Plugin;
+
+
+public class GosuPlugin implements Plugin {
+
+    public void define(Context context) {
+        context.addExtensions(
+                GosuLanguage.class,
+                GosuLangProperties.class,
+                GosuSensor.class,
+                GosuRulesDefinition.class,
+                GosuLangProperties.getProperties(),
+                GosuQualityProfile.class
+        );
     }
 }
