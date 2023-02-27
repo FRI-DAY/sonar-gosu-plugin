@@ -40,7 +40,7 @@ import static org.junit.jupiter.params.provider.Arguments.of;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class MeasuresTest {
-    private static final Path BASE_DIR = Paths.get(TestResourcesDirectories.RESOURCES_DIR.getPath());
+    private static final Path BASE_DIR = TestResourcesDirectories.RESOURCES_DIR.getPath();
 
     private SensorContextTester context;
 

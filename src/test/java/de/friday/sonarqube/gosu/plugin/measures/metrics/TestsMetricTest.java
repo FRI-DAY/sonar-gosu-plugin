@@ -65,6 +65,6 @@ public class TestsMetricTest {
     }
 
     private String unitTextKeyOf(String testSourceFileName) {
-        return METRICS_RESOURCES_DIR.getPath() + ":" + testSourceFileName;
+        return METRICS_RESOURCES_DIR.getPathAsString() + ":" + testSourceFileName;
     }
 }

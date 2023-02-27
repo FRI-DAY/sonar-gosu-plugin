@@ -26,7 +26,6 @@ import de.friday.test.support.checks.dsl.gosu.GosuSourceCodeFile;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import org.antlr.v4.runtime.CharStreams;
@@ -65,7 +64,7 @@ public class GosuTestFileParser {
 
         final InputFile inputFile = new GosuSourceCodeFile(
                 gosuSourceFilename,
-                TestResourcesDirectories.RESOURCES_DIR.getPath()
+                TestResourcesDirectories.RESOURCES_DIR.getPathAsString()
         ).asInputFile();
         final Properties properties = new Properties(inputFile, commonTokenStream);
 
@@ -88,8 +87,8 @@ public class GosuTestFileParser {
     }
 
     public GosuFileParsed parseWithSensorContext(TestResourcesDirectories baseDir, String packageName) {
-        final InputFile inputFile = new GosuSourceCodeFile(gosuSourceFilename, baseDir.getPath()).asInputFile();
-        final SensorContextTester context = new GosuSensorContextTester(Paths.get(baseDir.getPath())).get();
+        final InputFile inputFile = new GosuSourceCodeFile(gosuSourceFilename, baseDir.getPathAsString()).asInputFile();
+        final SensorContextTester context = new GosuSensorContextTester(baseDir.getPath()).get();
         final Properties properties = parse(baseDir, packageName, inputFile, context);
 
         return new GosuFileParsed(inputFile, properties, context);
@@ -108,7 +107,7 @@ public class GosuTestFileParser {
     private UnitTestIndex getUnitTestIndex(TestResourcesDirectories baseDir, String packageName) {
         Configuration settings = new MapSettings().asConfig();
         ReportsScanner scanner = new ReportsScanner(settings);
-        DefaultFileSystem fs = new DefaultFileSystem(new File(baseDir.getPath() + File.separator + packageName));
+        DefaultFileSystem fs = new DefaultFileSystem(new File(baseDir.getPathAsString() + File.separator + packageName));
         PathResolver pathResolver = new PathResolver();
 
         List<File> dirs = new ReportsDirectories(settings, fs, pathResolver).get();

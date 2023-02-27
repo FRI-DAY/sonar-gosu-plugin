@@ -23,7 +23,7 @@ import java.nio.file.Paths;
 
 final class GosuCheckTestResources {
 
-    static final Path BASE_DIR = Paths.get(TestResourcesDirectories.CHECK_RESOURCES_DIR.getPath());
+    static final Path BASE_DIR = TestResourcesDirectories.CHECK_RESOURCES_DIR.getPath();
 
     static Path getBaseDir() {
         return BASE_DIR;
