@@ -16,7 +16,7 @@
  */
 package de.friday.sonarqube.gosu.plugin.measures;
 
-import de.friday.sonarqube.gosu.plugin.Properties;
+import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import de.friday.sonarqube.gosu.plugin.measures.tools.GosuDuplicates;
 import de.friday.sonarqube.gosu.plugin.measures.tools.GosuHighlighting;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -26,23 +26,23 @@ import org.sonar.api.batch.sensor.cpd.NewCpdTokens;
 import org.sonar.api.batch.sensor.highlighting.NewHighlighting;
 
 public final class Measures {
-    private final Properties properties;
+    private final GosuFileProperties gosuFileProperties;
 
-    private Measures(Properties properties) {
-        this.properties = properties;
+    private Measures(GosuFileProperties gosuFileProperties) {
+        this.gosuFileProperties = gosuFileProperties;
     }
 
-    public static Measures of(Properties properties) {
-        return new Measures(properties);
+    public static Measures of(GosuFileProperties gosuFileProperties) {
+        return new Measures(gosuFileProperties);
     }
 
     public void addProcessedTokensTo(SensorContext context) {
-        final NewCpdTokens cpdTokens = context.newCpdTokens().onFile(properties.getFile());
-        final NewHighlighting highlighting = context.newHighlighting().onFile(properties.getFile());
-        final CommonTokenStream tokenStream = properties.getTokenStream();
+        final NewCpdTokens cpdTokens = context.newCpdTokens().onFile(gosuFileProperties.getFile());
+        final NewHighlighting highlighting = context.newHighlighting().onFile(gosuFileProperties.getFile());
+        final CommonTokenStream tokenStream = gosuFileProperties.getTokenStream();
 
         for (Token token : tokenStream.getTokens()) {
-            GosuHighlighting.highlightToken(token, highlighting, properties);
+            GosuHighlighting.highlightToken(token, highlighting, gosuFileProperties);
             GosuDuplicates.addCopyAndPasteDetectionToken(token, cpdTokens);
         }
 

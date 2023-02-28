@@ -17,7 +17,7 @@
 package de.friday.sonarqube.gosu.plugin.tools.listeners;
 
 import com.google.inject.Inject;
-import de.friday.sonarqube.gosu.plugin.Properties;
+import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
@@ -26,18 +26,18 @@ import org.sonar.api.batch.sensor.SensorContext;
 
 public class SyntaxErrorListener extends BaseErrorListener {
     private final SensorContext context;
-    private final Properties properties;
+    private final GosuFileProperties gosuFileProperties;
 
     @Inject
-    public SyntaxErrorListener(SensorContext context, Properties properties) {
+    public SyntaxErrorListener(SensorContext context, GosuFileProperties gosuFileProperties) {
         this.context = context;
-        this.properties = properties;
+        this.gosuFileProperties = gosuFileProperties;
     }
 
     @Override
     public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
         context.newAnalysisError()
-                .onFile(properties.getFile())
+                .onFile(gosuFileProperties.getFile())
                 .at(new DefaultTextPointer(line, charPositionInLine))
                 .message(msg)
                 .save();

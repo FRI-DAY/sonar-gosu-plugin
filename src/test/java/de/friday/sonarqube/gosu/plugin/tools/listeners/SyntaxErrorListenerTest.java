@@ -17,7 +17,7 @@
 package de.friday.sonarqube.gosu.plugin.tools.listeners;
 
 import de.friday.sonarqube.gosu.antlr.GosuLexer;
-import de.friday.sonarqube.gosu.plugin.Properties;
+import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import de.friday.test.support.GosuSensorContextTester;
 import de.friday.test.support.checks.dsl.gosu.GosuSourceCodeFile;
 import de.friday.test.support.checks.dsl.specification.SourceCodeFile;
@@ -67,9 +67,9 @@ public class SyntaxErrorListenerTest {
         return new GosuSensorContextTester(LISTENERS_TEST_RESOURCES_DIR, "SomeRuleKey").get();
     }
 
-    private Properties aProperties() {
+    private GosuFileProperties aProperties() {
         final SourceCodeFile file = new GosuSourceCodeFile("syntax/GosuFile.gs", LISTENERS_TEST_RESOURCES_DIR.toFile().getPath());
-        return new Properties(file.asInputFile(), null);
+        return new GosuFileProperties(file.asInputFile(), null);
     }
 
     private static class DummyRecognitionException extends RecognitionException {

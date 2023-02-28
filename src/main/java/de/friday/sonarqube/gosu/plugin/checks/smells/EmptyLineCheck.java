@@ -18,7 +18,7 @@ package de.friday.sonarqube.gosu.plugin.checks.smells;
 
 import com.google.inject.Inject;
 import de.friday.sonarqube.gosu.antlr.GosuParser;
-import de.friday.sonarqube.gosu.plugin.Properties;
+import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import de.friday.sonarqube.gosu.plugin.checks.AbstractCheckBase;
 import de.friday.sonarqube.gosu.plugin.issues.GosuIssue;
 import java.util.List;
@@ -29,16 +29,16 @@ import org.sonar.check.Rule;
 public class EmptyLineCheck extends AbstractCheckBase {
     static final String KEY = "EmptyLineCheck";
 
-    private Properties properties;
+    private GosuFileProperties gosuFileProperties;
 
     @Inject
-    EmptyLineCheck(Properties properties) {
-        this.properties = properties;
+    EmptyLineCheck(GosuFileProperties gosuFileProperties) {
+        this.gosuFileProperties = gosuFileProperties;
     }
 
     @Override
     public void exitStart(GosuParser.StartContext ctx) {
-        List<Token> tokens = properties.getTokenStream().getTokens();
+        List<Token> tokens = gosuFileProperties.getTokenStream().getTokens();
         int lastTokenIndex = tokens.size() - 1;
         Token eofToken = tokens.get(lastTokenIndex);
 

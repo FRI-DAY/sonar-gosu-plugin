@@ -18,7 +18,7 @@ package de.friday.sonarqube.gosu.plugin.checks.vulnerabilities;
 
 import com.google.inject.Inject;
 import de.friday.sonarqube.gosu.antlr.GosuParser;
-import de.friday.sonarqube.gosu.plugin.Properties;
+import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import de.friday.sonarqube.gosu.plugin.checks.AbstractCheckBase;
 import de.friday.sonarqube.gosu.plugin.issues.GosuIssue;
 import java.util.List;
@@ -29,11 +29,11 @@ import org.sonar.check.Rule;
 public class EmptyCatchCheck extends AbstractCheckBase {
     static final String KEY = "EmptyCatchCheck";
     private static final int NUMBER_OF_BRACES = 2;
-    private final Properties properties;
+    private final GosuFileProperties gosuFileProperties;
 
     @Inject
-    EmptyCatchCheck(Properties properties) {
-        this.properties = properties;
+    EmptyCatchCheck(GosuFileProperties gosuFileProperties) {
+        this.gosuFileProperties = gosuFileProperties;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class EmptyCatchCheck extends AbstractCheckBase {
         final List<GosuParser.StatementContext> statements = ctx.statementBlock().statement();
 
         if (statements.isEmpty()) {
-            final List<Token> tokens = properties.getTokenStream()
+            final List<Token> tokens = gosuFileProperties.getTokenStream()
                     .getTokens(
                             ctx.statementBlock().LBRACE().getSymbol().getTokenIndex(),
                             ctx.statementBlock().RBRACE().getSymbol().getTokenIndex()

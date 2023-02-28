@@ -19,7 +19,7 @@ package de.friday.sonarqube.gosu.plugin.checks.metrics;
 import com.google.inject.Inject;
 import de.friday.sonarqube.gosu.antlr.GosuParser;
 import de.friday.sonarqube.gosu.language.utils.GosuUtil;
-import de.friday.sonarqube.gosu.plugin.Properties;
+import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import de.friday.sonarqube.gosu.plugin.checks.AbstractCheckBase;
 import de.friday.sonarqube.gosu.plugin.issues.GosuIssue;
 import de.friday.sonarqube.gosu.plugin.issues.SecondaryIssue;
@@ -45,11 +45,11 @@ public class CognitiveComplexityCheck extends AbstractCheckBase {
     private List<SecondaryIssue> secondaryIssuesList = new ArrayList<>();
 
     private CognitiveComplexityMetric metric;
-    private Properties properties;
+    private GosuFileProperties gosuFileProperties;
 
     @Inject
-    CognitiveComplexityCheck(CognitiveComplexityMetric metric, Properties properties) {
-        this.properties = properties;
+    CognitiveComplexityCheck(CognitiveComplexityMetric metric, GosuFileProperties gosuFileProperties) {
+        this.gosuFileProperties = gosuFileProperties;
         this.metric = metric;
     }
 
@@ -161,7 +161,7 @@ public class CognitiveComplexityCheck extends AbstractCheckBase {
     }
 
     private void addSecondariesInsideExpression(GosuParser.ExpressionContext context) {
-        List<Token> tokenList = properties
+        List<Token> tokenList = gosuFileProperties
                 .getTokenStream()
                 .get(context.getStart().getTokenIndex(), GosuUtil.getStopToken(context).getTokenIndex());
 

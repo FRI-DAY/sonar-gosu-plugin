@@ -19,7 +19,7 @@ package de.friday.sonarqube.gosu.plugin.measures.metrics;
 import com.google.inject.Inject;
 import de.friday.sonarqube.gosu.antlr.GosuParser;
 import de.friday.sonarqube.gosu.language.utils.GosuUtil;
-import de.friday.sonarqube.gosu.plugin.Properties;
+import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import java.util.List;
 import org.antlr.v4.runtime.Token;
 import org.sonar.api.batch.sensor.SensorContext;
@@ -27,14 +27,14 @@ import org.sonar.api.measures.CoreMetrics;
 
 public class CyclomaticComplexityMetric extends AbstractMetricBase {
     private final SensorContext context;
-    private final Properties properties;
+    private final GosuFileProperties gosuFileProperties;
     private int classComplexity;
     private int methodComplexity;
 
     @Inject
-    public CyclomaticComplexityMetric(SensorContext context, Properties properties) {
+    public CyclomaticComplexityMetric(SensorContext context, GosuFileProperties gosuFileProperties) {
         this.context = context;
-        this.properties = properties;
+        this.gosuFileProperties = gosuFileProperties;
     }
 
     public int getMethodComplexity() {
@@ -93,13 +93,13 @@ public class CyclomaticComplexityMetric extends AbstractMetricBase {
 
     @Override
     public void exitStart(GosuParser.StartContext ctx) {
-        saveMetric(context, properties.getFile(), CoreMetrics.COMPLEXITY, classComplexity);
+        saveMetric(context, gosuFileProperties.getFile(), CoreMetrics.COMPLEXITY, classComplexity);
     }
 
     private void calculateComplexity(GosuParser.ExpressionContext context) {
         int initialComplexity = 1;
 
-        List<Token> tokenList = properties
+        List<Token> tokenList = gosuFileProperties
                 .getTokenStream()
                 .get(context.getStart().getTokenIndex(), GosuUtil.getStopToken(context).getTokenIndex());
 

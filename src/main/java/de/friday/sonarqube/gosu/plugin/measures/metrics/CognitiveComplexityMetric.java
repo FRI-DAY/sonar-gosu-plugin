@@ -19,7 +19,7 @@ package de.friday.sonarqube.gosu.plugin.measures.metrics;
 import com.google.inject.Inject;
 import de.friday.sonarqube.gosu.antlr.GosuParser;
 import de.friday.sonarqube.gosu.language.utils.GosuUtil;
-import de.friday.sonarqube.gosu.plugin.Properties;
+import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import java.util.List;
 import org.antlr.v4.runtime.Token;
 import org.sonar.api.batch.sensor.SensorContext;
@@ -31,15 +31,15 @@ import org.sonar.api.measures.CoreMetrics;
  */
 public class CognitiveComplexityMetric extends AbstractMetricBase {
     private final SensorContext context;
-    private final Properties properties;
+    private final GosuFileProperties gosuFileProperties;
     private int classComplexity;
     private int methodComplexity;
     private int nestedLevel;
 
     @Inject
-    public CognitiveComplexityMetric(SensorContext context, Properties properties) {
+    public CognitiveComplexityMetric(SensorContext context, GosuFileProperties gosuFileProperties) {
         this.context = context;
-        this.properties = properties;
+        this.gosuFileProperties = gosuFileProperties;
     }
 
     public int getMethodComplexity() {
@@ -186,7 +186,7 @@ public class CognitiveComplexityMetric extends AbstractMetricBase {
 
     @Override
     public void exitStart(GosuParser.StartContext ctx) {
-        saveMetric(context, properties.getFile(), CoreMetrics.COGNITIVE_COMPLEXITY, classComplexity);
+        saveMetric(context, gosuFileProperties.getFile(), CoreMetrics.COGNITIVE_COMPLEXITY, classComplexity);
     }
 
     private void initialize() {
@@ -196,7 +196,7 @@ public class CognitiveComplexityMetric extends AbstractMetricBase {
 
     private void calculateComplexity(GosuParser.ExpressionContext context, int nestedLevel) {
         int initialComplexity = 1 + nestedLevel;
-        List<Token> tokenList = properties
+        List<Token> tokenList = gosuFileProperties
                 .getTokenStream()
                 .get(context.getStart().getTokenIndex(), GosuUtil.getStopToken(context).getTokenIndex());
 

@@ -19,7 +19,7 @@ package de.friday.test.support;
 import de.friday.sonarqube.gosu.antlr.GosuLexer;
 import de.friday.sonarqube.gosu.antlr.GosuParser;
 import de.friday.sonarqube.gosu.plugin.GosuFileParser;
-import de.friday.sonarqube.gosu.plugin.Properties;
+import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import de.friday.sonarqube.gosu.plugin.reports.ReportsDirectories;
 import de.friday.sonarqube.gosu.plugin.reports.ReportsScanner;
 import de.friday.test.support.checks.dsl.gosu.GosuSourceCodeFile;
@@ -66,9 +66,9 @@ public class GosuTestFileParser {
                 gosuSourceFilename,
                 TestResourcesDirectories.RESOURCES_DIR.getPathAsString()
         ).asInputFile();
-        final Properties properties = new Properties(inputFile, commonTokenStream);
+        final GosuFileProperties gosuFileProperties = new GosuFileProperties(inputFile, commonTokenStream);
 
-        return new GosuFileParsed(inputFile, properties, null);
+        return new GosuFileParsed(inputFile, gosuFileProperties, null);
     }
 
     private CommonTokenStream createTokenStreamOf(String gosuSourceFilename, Optional<ParseTreeListener> parseListener) {
@@ -89,12 +89,12 @@ public class GosuTestFileParser {
     public GosuFileParsed parseWithSensorContext(TestResourcesDirectories baseDir, String packageName) {
         final InputFile inputFile = new GosuSourceCodeFile(gosuSourceFilename, baseDir.getPathAsString()).asInputFile();
         final SensorContextTester context = new GosuSensorContextTester(baseDir.getPath()).get();
-        final Properties properties = parse(baseDir, packageName, inputFile, context);
+        final GosuFileProperties gosuFileProperties = parse(baseDir, packageName, inputFile, context);
 
-        return new GosuFileParsed(inputFile, properties, context);
+        return new GosuFileParsed(inputFile, gosuFileProperties, context);
     }
 
-    private Properties parse(TestResourcesDirectories baseDir, String packageName, InputFile inputFile, SensorContextTester context) {
+    private GosuFileProperties parse(TestResourcesDirectories baseDir, String packageName, InputFile inputFile, SensorContextTester context) {
         try {
             GosuFileParser gosuFileParser = new GosuFileParser(inputFile, context, getUnitTestIndex(baseDir, packageName));
             gosuFileParser.parse();
@@ -117,18 +117,18 @@ public class GosuTestFileParser {
 
     public static class GosuFileParsed {
         private final InputFile inputFile;
-        private final Properties properties;
+        private final GosuFileProperties gosuFileProperties;
 
         private final SensorContextTester sensorContext;
 
-        public GosuFileParsed(InputFile inputFile, Properties properties, SensorContextTester context) {
+        public GosuFileParsed(InputFile inputFile, GosuFileProperties gosuFileProperties, SensorContextTester context) {
             this.inputFile = inputFile;
-            this.properties = properties;
+            this.gosuFileProperties = gosuFileProperties;
             this.sensorContext = context;
         }
 
-        public Properties getSourceFileProperties() {
-            return properties;
+        public GosuFileProperties getSourceFileProperties() {
+            return gosuFileProperties;
         }
 
         public InputFile getInputFile() {

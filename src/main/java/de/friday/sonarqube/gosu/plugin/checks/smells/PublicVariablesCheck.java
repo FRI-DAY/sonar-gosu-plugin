@@ -18,7 +18,7 @@ package de.friday.sonarqube.gosu.plugin.checks.smells;
 
 import com.google.inject.Inject;
 import de.friday.sonarqube.gosu.antlr.GosuParser;
-import de.friday.sonarqube.gosu.plugin.Properties;
+import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import de.friday.sonarqube.gosu.plugin.checks.AbstractCheckBase;
 import de.friday.sonarqube.gosu.plugin.issues.GosuIssue;
 import java.util.List;
@@ -29,11 +29,11 @@ import org.sonar.check.Rule;
 public class PublicVariablesCheck extends AbstractCheckBase {
     static final String KEY = "PublicVariablesCheck";
 
-    private Properties properties;
+    private GosuFileProperties gosuFileProperties;
 
     @Inject
-    PublicVariablesCheck(Properties properties) {
-        this.properties = properties;
+    PublicVariablesCheck(GosuFileProperties gosuFileProperties) {
+        this.gosuFileProperties = gosuFileProperties;
     }
 
     @Override
@@ -72,7 +72,7 @@ public class PublicVariablesCheck extends AbstractCheckBase {
         int lastAnnotationIndex = annotations.size() - 1;
         Token annotationStopToken = annotations.get(lastAnnotationIndex).getStop();
         int firstTokenToHighlightIndex = annotationStopToken.getTokenIndex() + 1;
-        return properties.getToken(firstTokenToHighlightIndex);
+        return gosuFileProperties.getToken(firstTokenToHighlightIndex);
     }
 
     @Override

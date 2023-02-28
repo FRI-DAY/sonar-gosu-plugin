@@ -20,11 +20,11 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Token;
 import org.sonar.api.batch.fs.InputFile;
 
-public class Properties {
+public class GosuFileProperties {
     private final InputFile file;
     private final CommonTokenStream tokenStream;
 
-    public Properties(InputFile file, CommonTokenStream tokenStream) {
+    public GosuFileProperties(InputFile file, CommonTokenStream tokenStream) {
         this.file = file;
         this.tokenStream = tokenStream;
     }
