@@ -19,7 +19,7 @@ package de.friday.sonarqube.gosu.plugin.checks.smells;
 import com.google.inject.Inject;
 import de.friday.sonarqube.gosu.antlr.GosuLexer;
 import de.friday.sonarqube.gosu.antlr.GosuParser;
-import de.friday.sonarqube.gosu.plugin.Properties;
+import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import de.friday.sonarqube.gosu.plugin.checks.AbstractCheckBase;
 import de.friday.sonarqube.gosu.plugin.issues.GosuIssue;
 import java.util.Arrays;
@@ -36,16 +36,16 @@ import static de.friday.sonarqube.gosu.plugin.checks.smells.TODOsCheck.KEY;
 public class TODOsCheck extends AbstractCheckBase {
     static final String KEY = "TODOsCheck";
     private Set<Integer> commentTokens = new HashSet<>(Arrays.asList(GosuLexer.COMMENT, GosuLexer.LINE_COMMENT));
-    private Properties properties;
+    private GosuFileProperties gosuFileProperties;
 
     @Inject
-    TODOsCheck(Properties properties) {
-        this.properties = properties;
+    TODOsCheck(GosuFileProperties gosuFileProperties) {
+        this.gosuFileProperties = gosuFileProperties;
     }
 
     @Override
     public void exitStart(GosuParser.StartContext ctx) {
-        final List<Token> tokens = properties.getTokenStream()
+        final List<Token> tokens = gosuFileProperties.getTokenStream()
                 .getTokens()
                 .stream()
                 .filter(token -> commentTokens.contains(token.getType()))

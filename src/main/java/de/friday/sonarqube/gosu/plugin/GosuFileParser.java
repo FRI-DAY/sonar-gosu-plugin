@@ -34,7 +34,7 @@ import org.sonar.plugins.surefire.data.UnitTestIndex;
 public class GosuFileParser {
     private final GosuParser gosuParser = new GosuParser(null);
     private final GosuLexer gosuLexer = new GosuLexer(null);
-    private final Properties properties;
+    private final GosuFileProperties gosuFileProperties;
     private final SensorContext context;
     private final UnitTestIndex unitTestIndex;
     private final IssueCollector collector = new IssueCollector();
@@ -44,7 +44,7 @@ public class GosuFileParser {
         this.inputFile = inputFile;
         this.context = context;
         this.unitTestIndex = index;
-        this.properties = initializeTokenStream();
+        this.gosuFileProperties = initializeTokenStream();
     }
 
     public List<Issue> parse() {
@@ -56,16 +56,16 @@ public class GosuFileParser {
     }
 
     private GosuParserContext initializeParserContext() {
-        final AnalysisModule analysisModule = new AnalysisModule(context, properties, collector, unitTestIndex);
+        final AnalysisModule analysisModule = new AnalysisModule(context, gosuFileProperties, collector, unitTestIndex);
         return new GosuParserContext(context, analysisModule, inputFile, gosuParser);
     }
 
-    private Properties initializeTokenStream() throws IOException {
+    private GosuFileProperties initializeTokenStream() throws IOException {
         try (InputStream stream = inputFile.inputStream()) {
             gosuLexer.setInputStream(CharStreams.fromStream(stream));
             CommonTokenStream tokenStream = new CommonTokenStream(gosuLexer);
             gosuParser.setTokenStream(tokenStream);
-            return new Properties(inputFile, tokenStream);
+            return new GosuFileProperties(inputFile, tokenStream);
         }
     }
 
@@ -77,7 +77,7 @@ public class GosuFileParser {
         return collector.getIssues();
     }
 
-    public Properties getProperties() {
-        return new Properties(properties.getFile(), properties.getTokenStream());
+    public GosuFileProperties getProperties() {
+        return new GosuFileProperties(gosuFileProperties.getFile(), gosuFileProperties.getTokenStream());
     }
 }

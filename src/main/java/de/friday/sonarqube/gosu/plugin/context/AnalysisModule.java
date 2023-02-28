@@ -19,7 +19,7 @@ package de.friday.sonarqube.gosu.plugin.context;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 import com.google.inject.multibindings.Multibinder;
-import de.friday.sonarqube.gosu.plugin.Properties;
+import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import de.friday.sonarqube.gosu.plugin.checks.AbstractCheckBase;
 import de.friday.sonarqube.gosu.plugin.issues.IssueCollector;
 import de.friday.sonarqube.gosu.plugin.measures.metrics.CognitiveComplexityMetric;
@@ -35,13 +35,13 @@ import org.sonar.plugins.surefire.data.UnitTestIndex;
 
 public class AnalysisModule extends AbstractModule {
     private final SensorContext context;
-    private final Properties properties;
+    private final GosuFileProperties gosuFileProperties;
     private final IssueCollector issueCollector;
     private final UnitTestIndex unitTestIndex;
 
-    public AnalysisModule(SensorContext context, Properties properties, IssueCollector issueCollector, UnitTestIndex unitTestIndex) {
+    public AnalysisModule(SensorContext context, GosuFileProperties gosuFileProperties, IssueCollector issueCollector, UnitTestIndex unitTestIndex) {
         this.context = context;
-        this.properties = properties;
+        this.gosuFileProperties = gosuFileProperties;
         this.issueCollector = issueCollector;
         this.unitTestIndex = unitTestIndex;
     }
@@ -57,7 +57,7 @@ public class AnalysisModule extends AbstractModule {
 
     private void bindBasicModuleFields() {
         bind(SensorContext.class).toInstance(context);
-        bind(Properties.class).toInstance(properties);
+        bind(GosuFileProperties.class).toInstance(gosuFileProperties);
         bind(IssueCollector.class).toInstance(issueCollector);
         bind(UnitTestIndex.class).toInstance(unitTestIndex);
     }

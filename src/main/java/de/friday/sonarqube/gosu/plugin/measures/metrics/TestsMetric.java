@@ -18,7 +18,7 @@ package de.friday.sonarqube.gosu.plugin.measures.metrics;
 
 import com.google.inject.Inject;
 import de.friday.sonarqube.gosu.antlr.GosuParser;
-import de.friday.sonarqube.gosu.plugin.Properties;
+import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.measures.CoreMetrics;
@@ -31,15 +31,15 @@ public class TestsMetric extends AbstractMetricBase {
 
     private static final Logger LOGGER = Loggers.get(TestsMetric.class);
     private final SensorContext context;
-    private final Properties properties;
+    private final GosuFileProperties gosuFileProperties;
     private final UnitTestIndex index;
 
     private String packageName = "";
 
     @Inject
-    public TestsMetric(SensorContext context, Properties properties, UnitTestIndex index) {
+    public TestsMetric(SensorContext context, GosuFileProperties gosuFileProperties, UnitTestIndex index) {
         this.context = context;
-        this.properties = properties;
+        this.gosuFileProperties = gosuFileProperties;
         this.index = index;
     }
 
@@ -70,7 +70,7 @@ public class TestsMetric extends AbstractMetricBase {
     }
 
     private void saveMetrics(UnitTestClassReport report) {
-        final InputFile inputFile = properties.getFile();
+        final InputFile inputFile = gosuFileProperties.getFile();
         final int testsCount = report.getTests() - report.getSkipped();
 
         saveMetric(context, inputFile, CoreMetrics.SKIPPED_TESTS, report.getSkipped());

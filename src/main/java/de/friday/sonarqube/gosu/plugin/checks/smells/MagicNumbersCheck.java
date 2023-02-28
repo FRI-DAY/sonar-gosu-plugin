@@ -19,7 +19,7 @@ package de.friday.sonarqube.gosu.plugin.checks.smells;
 import com.google.inject.Inject;
 import de.friday.sonarqube.gosu.antlr.GosuLexer;
 import de.friday.sonarqube.gosu.antlr.GosuParser;
-import de.friday.sonarqube.gosu.plugin.Properties;
+import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import de.friday.sonarqube.gosu.plugin.checks.AbstractCheckBase;
 import de.friday.sonarqube.gosu.plugin.issues.GosuIssue;
 import java.util.Arrays;
@@ -44,7 +44,7 @@ public class MagicNumbersCheck extends AbstractCheckBase {
     private String approvedNumbers = DEFAULT_NUMBERS;
     private final List<String> numbers = Arrays.asList(approvedNumbers.split(",", -1));
     private IN_HASHCODE hashCodeFlag = IN_HASHCODE.FALSE;
-    private Properties properties;
+    private GosuFileProperties gosuFileProperties;
 
     private enum IN_HASHCODE {
         TRUE,
@@ -52,8 +52,8 @@ public class MagicNumbersCheck extends AbstractCheckBase {
     }
 
     @Inject
-    MagicNumbersCheck(Properties properties) {
-        this.properties = properties;
+    MagicNumbersCheck(GosuFileProperties gosuFileProperties) {
+        this.gosuFileProperties = gosuFileProperties;
     }
 
     @Override
@@ -76,7 +76,7 @@ public class MagicNumbersCheck extends AbstractCheckBase {
             return;
         }
         int equalsTokenIndex = ctx.EQUALS().getSymbol().getTokenIndex();
-        Token token = properties.getToken(equalsTokenIndex + 1);
+        Token token = gosuFileProperties.getToken(equalsTokenIndex + 1);
 
         if (token.getType() == GosuLexer.NumberLiteral) {
             tryAddIssue(token);
@@ -90,7 +90,7 @@ public class MagicNumbersCheck extends AbstractCheckBase {
             return;
         }
         int equalsTokenIndex = ctx.EQUALS().getSymbol().getTokenIndex();
-        Token token = properties.getToken(equalsTokenIndex + 1);
+        Token token = gosuFileProperties.getToken(equalsTokenIndex + 1);
 
         if (token.getType() == GosuLexer.NumberLiteral) {
             tryAddIssue(token);

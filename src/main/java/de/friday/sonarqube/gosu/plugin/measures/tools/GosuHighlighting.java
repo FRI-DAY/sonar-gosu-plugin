@@ -17,7 +17,7 @@
 package de.friday.sonarqube.gosu.plugin.measures.tools;
 
 import de.friday.sonarqube.gosu.antlr.GosuLexer;
-import de.friday.sonarqube.gosu.plugin.Properties;
+import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import de.friday.sonarqube.gosu.plugin.utils.TextRangeUtil;
 import org.antlr.v4.runtime.Token;
 import org.sonar.api.batch.fs.TextRange;
@@ -29,7 +29,7 @@ public final class GosuHighlighting {
     private GosuHighlighting() {
     }
 
-    public static void highlightToken(Token token, NewHighlighting highlighting, Properties properties) {
+    public static void highlightToken(Token token, NewHighlighting highlighting, GosuFileProperties gosuFileProperties) {
         switch (token.getType()) {
             case GosuLexer.EOF:
             case GosuLexer.IDENTIFIER:
@@ -53,7 +53,7 @@ public final class GosuHighlighting {
                 addHighlighting(token, TypeOfText.CONSTANT, highlighting);
                 break;
             case GosuLexer.AT:
-                addHighlightingForAnnotation(token, highlighting, properties);
+                addHighlightingForAnnotation(token, highlighting, gosuFileProperties);
                 break;
             case GosuLexer.CONJ:
             case GosuLexer.DISJ:
@@ -66,8 +66,8 @@ public final class GosuHighlighting {
         }
     }
 
-    private static void addHighlightingForAnnotation(Token token, NewHighlighting highlighting, Properties properties) {
-        final Token nextToken = properties.getTokenStream().get(token.getTokenIndex() + 1);
+    private static void addHighlightingForAnnotation(Token token, NewHighlighting highlighting, GosuFileProperties gosuFileProperties) {
+        final Token nextToken = gosuFileProperties.getTokenStream().get(token.getTokenIndex() + 1);
         final TextRange textRange = TextRangeUtil.fromTokens(token, nextToken);
         addHighlighting(textRange, TypeOfText.ANNOTATION, highlighting);
     }

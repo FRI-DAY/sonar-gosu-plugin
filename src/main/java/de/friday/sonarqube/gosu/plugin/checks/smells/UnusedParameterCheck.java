@@ -20,7 +20,7 @@ import com.google.inject.Inject;
 import de.friday.sonarqube.gosu.antlr.GosuLexer;
 import de.friday.sonarqube.gosu.antlr.GosuParser;
 import de.friday.sonarqube.gosu.language.utils.GosuUtil;
-import de.friday.sonarqube.gosu.plugin.Properties;
+import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import de.friday.sonarqube.gosu.plugin.checks.AbstractCheckBase;
 import de.friday.sonarqube.gosu.plugin.issues.GosuIssue;
 import de.friday.sonarqube.gosu.plugin.issues.SecondaryIssue;
@@ -42,7 +42,7 @@ public class UnusedParameterCheck extends AbstractCheckBase {
     static final String KEY = "UnusedParameterCheck";
     private static final boolean DEFAULT_ADD_ISSUE_IF_ANNOTATED = false;
     private static final List<String> approvedAnnotations = Arrays.asList("@SuppressWarning(\"unchecked\")", "@SuppressWarning(\"rawtypes\")");
-    private final Properties properties;
+    private final GosuFileProperties gosuFileProperties;
     private Deque<Boolean> isInFinalClass = new ArrayDeque<>();
     private Map<Integer, Set<String>> parameters = new HashMap<>();
     private int nestedLevel = -1;
@@ -55,8 +55,8 @@ public class UnusedParameterCheck extends AbstractCheckBase {
     private boolean isCheckingAnnotations = DEFAULT_ADD_ISSUE_IF_ANNOTATED;
 
     @Inject
-    public UnusedParameterCheck(Properties properties) {
-        this.properties = properties;
+    public UnusedParameterCheck(GosuFileProperties gosuFileProperties) {
+        this.gosuFileProperties = gosuFileProperties;
     }
 
     @Override
@@ -151,7 +151,7 @@ public class UnusedParameterCheck extends AbstractCheckBase {
     }
 
     private boolean hasNoParamsInJavadoc(Token firstToken) {
-        Token prevToken = properties.getToken(firstToken.getTokenIndex() - 1);
+        Token prevToken = gosuFileProperties.getToken(firstToken.getTokenIndex() - 1);
         if (prevToken.getType() == GosuLexer.COMMENT) {
             String javadoc = prevToken.getText();
             return !javadoc.contains("@param");

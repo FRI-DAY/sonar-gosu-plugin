@@ -19,7 +19,7 @@ package de.friday.sonarqube.gosu.plugin.checks.metrics;
 import com.google.inject.Inject;
 import de.friday.sonarqube.gosu.antlr.GosuParser;
 import de.friday.sonarqube.gosu.language.utils.GosuUtil;
-import de.friday.sonarqube.gosu.plugin.Properties;
+import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import de.friday.sonarqube.gosu.plugin.checks.AbstractCheckBase;
 import de.friday.sonarqube.gosu.plugin.issues.GosuIssue;
 import de.friday.sonarqube.gosu.plugin.issues.SecondaryIssue;
@@ -44,12 +44,12 @@ public class CyclomaticComplexityCheck extends AbstractCheckBase {
             defaultValue = "" + DEFAULT_METHOD_THRESHOLD)
     private int max = DEFAULT_METHOD_THRESHOLD;
     private List<SecondaryIssue> secondaryIssuesList = new ArrayList<>();
-    private Properties properties;
+    private GosuFileProperties gosuFileProperties;
     private CyclomaticComplexityMetric metric;
 
     @Inject
-    CyclomaticComplexityCheck(Properties properties, CyclomaticComplexityMetric metric) {
-        this.properties = properties;
+    CyclomaticComplexityCheck(GosuFileProperties gosuFileProperties, CyclomaticComplexityMetric metric) {
+        this.gosuFileProperties = gosuFileProperties;
         this.metric = metric;
     }
 
@@ -146,7 +146,7 @@ public class CyclomaticComplexityCheck extends AbstractCheckBase {
     }
 
     private void addSecondariesInsideExpression(GosuParser.ExpressionContext context) {
-        List<Token> tokenList = properties
+        List<Token> tokenList = gosuFileProperties
                 .getTokenStream()
                 .get(context.getStart().getTokenIndex(), GosuUtil.getStopToken(context).getTokenIndex());
 
