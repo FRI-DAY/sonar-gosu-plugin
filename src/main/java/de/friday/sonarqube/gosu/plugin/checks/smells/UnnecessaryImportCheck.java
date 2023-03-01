@@ -20,10 +20,12 @@ import de.friday.sonarqube.gosu.antlr.GosuParser;
 import de.friday.sonarqube.gosu.plugin.checks.AbstractCheckBase;
 import de.friday.sonarqube.gosu.plugin.issues.GosuIssue;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.ParseTree;
 import org.sonar.check.Rule;
 
 @Rule(key = UnnecessaryImportCheck.KEY)
@@ -42,16 +44,31 @@ public class UnnecessaryImportCheck extends AbstractCheckBase {
     }
 
     @Override
-    public void exitPackageDeclaration(GosuParser.PackageDeclarationContext ctx) {
-        currentPackage = ctx.namespace().getText();
+    public void exitPackageDeclaration(GosuParser.PackageDeclarationContext context) {
+        currentPackage = context.namespace().getText();
     }
 
     @Override
-    public void exitUsesStatement(GosuParser.UsesStatementContext ctx) {
-        String usesStatement = ctx.namespace().getText();
+    public void exitUsesStatement(GosuParser.UsesStatementContext context) {
+        if (isNamespaceAvailable(context)) {
+            final String usesStatement = context.namespace().getText();
+            checkUnnecessaryImport(usesStatement, context);
+            allImports.add(usesStatement);
+        }
+    }
 
-        checkUnnecessaryImport(usesStatement, ctx);
-        allImports.add(usesStatement);
+    @Override
+    public void exitUsesFeatureLiteral(GosuParser.UsesFeatureLiteralContext context) {
+        final List<String> staticImportClasses = context.children.stream()
+                .map(ParseTree::getPayload)
+                .filter(currentPackage -> currentPackage instanceof ParserRuleContext)
+                .map(parserRuleContext -> ((ParserRuleContext) parserRuleContext).getText())
+                .collect(Collectors.toList());
+        allReferencedClasses.addAll(staticImportClasses);
+    }
+
+    private boolean isNamespaceAvailable(GosuParser.UsesStatementContext context) {
+        return context.namespace() != null;
     }
 
     @Override
@@ -76,7 +93,8 @@ public class UnnecessaryImportCheck extends AbstractCheckBase {
 
         allImportedClasses.removeAll(allReferencedClasses);
         allImportedClasses.forEach(unusedImport ->
-                addIssueWithMessage("There is unused import of " + unusedImport + ".", ctx));
+                addIssueWithMessage("There is unused import of " + unusedImport + ".", ctx)
+        );
     }
 
     private void checkUnnecessaryImport(String usesStatement, GosuParser.UsesStatementContext ctx) {
