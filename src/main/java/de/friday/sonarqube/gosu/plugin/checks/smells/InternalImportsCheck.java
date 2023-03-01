@@ -36,37 +36,50 @@ public class InternalImportsCheck extends AbstractCheckBase {
 
     @Override
     public void exitUsesStatement(GosuParser.UsesStatementContext ctx) {
-        GosuParser.NamespaceContext importName = ctx.namespace();
+        final GosuParser.NamespaceContext importName = ctx.namespace();
         saveIfInternalImport(importName);
     }
 
     @Override
-    public void exitClassOrInterfaceType(GosuParser.ClassOrInterfaceTypeContext ctx) {
-        saveIfInternalImport(ctx.namespace());
+    public void exitClassOrInterfaceType(GosuParser.ClassOrInterfaceTypeContext context) {
+        saveIfInternalImport(context.namespace());
     }
 
     @Override
-    public void exitMethodCall(GosuParser.MethodCallContext ctx) {
-        ParserRuleContext parent = ctx.getParent();
-        if (!(parent instanceof GosuParser.MemberAccessContext)) {
+    public void exitMethodCall(GosuParser.MethodCallContext context) {
+        final ParserRuleContext parent = context.getParent();
+        if (isNotMemberAccessContext(parent)) {
             return;
         }
 
         saveIfInternalImport(parent);
     }
 
+    private boolean isNotMemberAccessContext(ParserRuleContext parent) {
+        return !(parent instanceof GosuParser.MemberAccessContext);
+    }
+
     private void saveIfInternalImport(ParserRuleContext namespace) {
-        if (isInternal(namespace.getText())) {
-            addNewOccurrence(new SecondaryIssue(namespace, "internal import"));
+        if (isNull(namespace)) return;
+
+        if (isInternalPackage(namespace.getText())) {
+            addNewOccurrence(new SecondaryIssue(namespace, "Internal import used"));
         }
     }
 
-    private static boolean isInternal(String namespace) {
-        return namespace.startsWith(COM_GUIDEWIRE)
-                || (namespace.contains(INTERNAL) && isGwPackage(namespace));
+    private boolean isNull(ParserRuleContext parent) {
+        return parent == null;
     }
 
-    private static boolean isGwPackage(String namespace) {
+    private boolean isInternalPackage(String namespace) {
+        return namespace.startsWith(COM_GUIDEWIRE) || isInternalGuidewirePackage(namespace);
+    }
+
+    private boolean isInternalGuidewirePackage(String namespace) {
+        return namespace.contains(INTERNAL) && isGuidewirePackage(namespace);
+    }
+
+    private boolean isGuidewirePackage(String namespace) {
         return namespace.contains("gw") || namespace.contains("guidewire");
     }
 
