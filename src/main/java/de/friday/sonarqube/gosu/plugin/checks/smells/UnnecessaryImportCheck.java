@@ -37,6 +37,7 @@ public class UnnecessaryImportCheck extends AbstractCheckBase {
     private final Set<String> allReferencedClasses = new HashSet<>();
     private String currentPackage;
     private boolean afterUsesStatements = false;
+    private GosuParser.UsesStatementListContext usesStatementContext;
 
     @Override
     protected String getKey() {
@@ -73,12 +74,13 @@ public class UnnecessaryImportCheck extends AbstractCheckBase {
 
     @Override
     public void exitUsesStatementList(GosuParser.UsesStatementListContext ctx) {
+        usesStatementContext = ctx;
         afterUsesStatements = true;
     }
 
     @Override
-    public void exitIdentifier(GosuParser.IdentifierContext ctx) {
-        String identifier = ctx.getText();
+    public void exitIdentifier(GosuParser.IdentifierContext identifierContext) {
+        final String identifier = identifierContext.getText();
 
         if (afterUsesStatements && identifier.matches("[A-Z].*")) {
             allReferencedClasses.add(identifier);
@@ -86,14 +88,14 @@ public class UnnecessaryImportCheck extends AbstractCheckBase {
     }
 
     @Override
-    public void exitClassBody(GosuParser.ClassBodyContext ctx) {
+    public void exitStart(GosuParser.StartContext ctx) {
         final Set<String> allImportedClasses = allImports.stream()
                 .map(this::getClassName)
                 .collect(Collectors.toSet());
 
         allImportedClasses.removeAll(allReferencedClasses);
         allImportedClasses.forEach(unusedImport ->
-                addIssueWithMessage("There is unused import of " + unusedImport + ".", ctx)
+                addIssueWithMessage("There is unused import of " + unusedImport + ".", usesStatementContext)
         );
     }
 
@@ -137,7 +139,8 @@ public class UnnecessaryImportCheck extends AbstractCheckBase {
         addIssue(new GosuIssue.GosuIssueBuilder(this)
                 .withMessage(message)
                 .onContext(ctx)
-                .build());
+                .build()
+        );
     }
 
     String getClassName(String usesStatement) {
