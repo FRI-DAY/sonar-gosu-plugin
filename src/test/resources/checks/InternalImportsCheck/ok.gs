@@ -3,6 +3,9 @@ package checks.InternalImportsCheck
 uses com.friday.pl.system.bundle.TransactionUtil
 uses friday.internal.packages.*
 uses com.friday.*
+uses de.friday.database.Relop
+
+uses Relop#Equals
 
 class ok {
   function withInternalImport() {
