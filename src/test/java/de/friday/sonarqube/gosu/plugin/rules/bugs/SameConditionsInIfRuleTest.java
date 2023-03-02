@@ -19,20 +19,20 @@ package de.friday.sonarqube.gosu.plugin.rules.bugs;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class SameConditionsInIfCheckTest {
+class SameConditionsInIfRuleTest {
 
     @Test
     void findsNoIssuesWhenIfConditionsAreNotDuplicated() {
-        given("SameConditionsInIfCheck/ok.gs")
-                .whenCheckedAgainst(SameConditionsInIfCheck.class)
+        given("SameConditionsInIfRule/ok.gs")
+                .whenCheckedAgainst(SameConditionsInIfRule.class)
                 .then()
                 .noIssuesFound();
     }
 
     @Test
     void findsIssuesWhenIfConditionsAreDuplicated() {
-        given("SameConditionsInIfCheck/nok.gs")
-                .whenCheckedAgainst(SameConditionsInIfCheck.class)
+        given("SameConditionsInIfRule/nok.gs")
+                .whenCheckedAgainst(SameConditionsInIfRule.class)
                 .then()
                 .issuesFound()
                 .hasSizeEqualTo(4);

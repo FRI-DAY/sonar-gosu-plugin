@@ -1,4 +1,4 @@
-package checks.SameConditionsInIfCheck
+package checks.SameConditionsInIfRule
 
 class ok {
 

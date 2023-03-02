@@ -16,7 +16,7 @@
  */
 package de.friday.sonarqube.gosu.plugin.tools.listeners;
 
-import de.friday.sonarqube.gosu.plugin.rules.bugs.SameConditionsInIfCheck;
+import de.friday.sonarqube.gosu.plugin.rules.bugs.SameConditionsInIfRule;
 import de.friday.sonarqube.gosu.plugin.rules.metrics.CognitiveComplexityCheck;
 import de.friday.sonarqube.gosu.plugin.rules.metrics.LinesOfCodeCheck;
 import de.friday.sonarqube.gosu.plugin.rules.smells.TODOsCheck;
@@ -57,14 +57,14 @@ class SuppressWarningsListenerTest {
     @Test
     void shouldSuppressBugsWarnings() {
         given("SuppressWarningsListener/BugsWarnings.gs")
-                .whenCheckedAgainst(SameConditionsInIfCheck.class)
+                .whenCheckedAgainst(SameConditionsInIfRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void shouldSuppressVulnerabilitiesWarnings() {
         given("SuppressWarningsListener/BugsWarnings.gs")
-                .whenCheckedAgainst(SameConditionsInIfCheck.class)
+                .whenCheckedAgainst(SameConditionsInIfRule.class)
                 .then().issuesFound().areEmpty();
     }
 

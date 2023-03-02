@@ -46,7 +46,7 @@ class RulesKeysTest {
     private Map<String, RuleType> bugs() {
         final Map<String, RuleType> bugChecks = new HashMap<>();
 
-        bugChecks.put("SameConditionsInIfCheck", RuleType.BUGS);
+        bugChecks.put("SameConditionsInIfRule", RuleType.BUGS);
         bugChecks.put("StringBuilderInstantiationCheck", RuleType.BUGS);
         bugChecks.put("SystemClockUnawareDateCheck", RuleType.BUGS);
 

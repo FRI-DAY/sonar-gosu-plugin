@@ -24,9 +24,9 @@ import java.util.HashSet;
 import java.util.Set;
 import org.sonar.check.Rule;
 
-@Rule(key = SameConditionsInIfCheck.KEY)
-public class SameConditionsInIfCheck extends BaseGosuRule {
-    static final String KEY = "SameConditionsInIfCheck";
+@Rule(key = SameConditionsInIfRule.KEY)
+public class SameConditionsInIfRule extends BaseGosuRule {
+    static final String KEY = "SameConditionsInIfRule";
     private int counter;
     private HashMap<Integer, Set<String>> ifExpressions = new HashMap<>();
 
