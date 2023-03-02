@@ -38,6 +38,13 @@ public class UnnecessaryImportCheckTest {
     }
 
     @Test
+    void findsIssuesWhenUnnecessaryImportIsFoundOnClassWithInnerClass() {
+        given("UnnecessaryImportCheck/nokWithInnerClass.gs")
+                .whenCheckedAgainst(UnnecessaryImportCheck.class)
+                .then().issuesFound().hasSizeEqualTo(1);
+    }
+
+    @Test
     void getClassNameThrowsExceptionWhenNoPackageIsProvided() {
         assertThatThrownBy(
                 () -> new UnnecessaryImportCheck().getClassName("JustClassName")

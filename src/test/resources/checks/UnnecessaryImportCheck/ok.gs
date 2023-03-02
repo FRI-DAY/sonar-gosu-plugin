@@ -15,4 +15,10 @@ class ok {
     gdvWrapper.doSth(Equals, Restriction#NotIn, SomeProduct)
   }
 
+  static class MyInnerClass {
+
+  }
+
+  class AnotherInnerClass {}
+
 }
