@@ -82,7 +82,7 @@ class RulesKeysTest {
         codeSmells.put("RethrowInCatchRule", RuleType.CODE_SMELLS);
         codeSmells.put("ReturnNullCollectionRule", RuleType.CODE_SMELLS);
         codeSmells.put("TODOsRule", RuleType.CODE_SMELLS);
-        codeSmells.put("TooManyParamsCheck", RuleType.CODE_SMELLS);
+        codeSmells.put("TooManyParamsRule", RuleType.CODE_SMELLS);
         codeSmells.put("UnnecessaryImportRule", RuleType.CODE_SMELLS);
         codeSmells.put("UnusedParameterCheck", RuleType.CODE_SMELLS);
 

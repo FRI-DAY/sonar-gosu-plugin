@@ -1,4 +1,4 @@
-package checks.TooManyParamsCheck
+package checks.TooManyParamsRule
 
 class ok {
 

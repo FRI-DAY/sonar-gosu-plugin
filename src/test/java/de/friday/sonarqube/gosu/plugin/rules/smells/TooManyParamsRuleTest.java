@@ -19,19 +19,19 @@ package de.friday.sonarqube.gosu.plugin.rules.smells;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class TooManyParamsCheckTest {
+class TooManyParamsRuleTest {
 
     @Test
     void findsNoIssuesWhenNumberOfParametersIsWithinThreshold() {
-        given("TooManyParamsCheck/ok.gs")
-                .whenCheckedAgainst(TooManyParamsCheck.class)
+        given("TooManyParamsRule/ok.gs")
+                .whenCheckedAgainst(TooManyParamsRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsNoIssuesWhenNumberOfParametersIsAboveThreshold() {
-        given("TooManyParamsCheck/nok.gs")
-                .whenCheckedAgainst(TooManyParamsCheck.class)
+        given("TooManyParamsRule/nok.gs")
+                .whenCheckedAgainst(TooManyParamsRule.class)
                 .then().issuesFound().hasSizeEqualTo(27);
     }
 

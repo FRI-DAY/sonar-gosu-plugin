@@ -29,9 +29,9 @@ import org.sonar.api.batch.fs.TextRange;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
 
-@Rule(key = TooManyParamsCheck.KEY)
-public class TooManyParamsCheck extends BaseGosuRule {
-    static final String KEY = "TooManyParamsCheck";
+@Rule(key = TooManyParamsRule.KEY)
+public class TooManyParamsRule extends BaseGosuRule {
+    static final String KEY = "TooManyParamsRule";
     private static final int CONSTRUCTOR_MAX = 7;
     private static final int METHOD_MAX = 7;
 
