@@ -37,9 +37,9 @@ import org.antlr.v4.runtime.Token;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
 
-@Rule(key = UnusedParameterCheck.KEY)
-public class UnusedParameterCheck extends BaseGosuRule {
-    static final String KEY = "UnusedParameterCheck";
+@Rule(key = UnusedParameterRule.KEY)
+public class UnusedParameterRule extends BaseGosuRule {
+    static final String KEY = "UnusedParameterRule";
     private static final boolean DEFAULT_ADD_ISSUE_IF_ANNOTATED = false;
     private static final List<String> approvedAnnotations = Arrays.asList("@SuppressWarning(\"unchecked\")", "@SuppressWarning(\"rawtypes\")");
     private final GosuFileProperties gosuFileProperties;
@@ -55,7 +55,7 @@ public class UnusedParameterCheck extends BaseGosuRule {
     private boolean isCheckingAnnotations = DEFAULT_ADD_ISSUE_IF_ANNOTATED;
 
     @Inject
-    public UnusedParameterCheck(GosuFileProperties gosuFileProperties) {
+    public UnusedParameterRule(GosuFileProperties gosuFileProperties) {
         this.gosuFileProperties = gosuFileProperties;
     }
 

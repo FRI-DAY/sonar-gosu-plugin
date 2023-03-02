@@ -19,40 +19,40 @@ package de.friday.sonarqube.gosu.plugin.rules.smells;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class UnusedParameterCheckTest {
+class UnusedParameterRuleTest {
 
     @Test
     void findsNoIssuesWhenNoUnnecessaryParameterIsFound() {
-        given("UnusedParameterCheck/ok.gs")
-                .whenCheckedAgainst(UnusedParameterCheck.class)
+        given("UnusedParameterRule/ok.gs")
+                .whenCheckedAgainst(UnusedParameterRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsNoIssuesWhenUnnecessaryParameterIsFoundOnAbstractClass() {
-        given("UnusedParameterCheck/abstractClass.gs")
-                .whenCheckedAgainst(UnusedParameterCheck.class)
+        given("UnusedParameterRule/abstractClass.gs")
+                .whenCheckedAgainst(UnusedParameterRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsIssuesWhenUnnecessaryParameterIsFound() {
-        given("UnusedParameterCheck/nok.gs")
-                .whenCheckedAgainst(UnusedParameterCheck.class)
+        given("UnusedParameterRule/nok.gs")
+                .whenCheckedAgainst(UnusedParameterRule.class)
                 .then().issuesFound().hasSizeEqualTo(16);
     }
 
     @Test
     void findsIssuesWhenUnnecessaryParameterIsFoundOnFinalClass() {
-        given("UnusedParameterCheck/finalClass.gs")
-                .whenCheckedAgainst(UnusedParameterCheck.class)
+        given("UnusedParameterRule/finalClass.gs")
+                .whenCheckedAgainst(UnusedParameterRule.class)
                 .then().issuesFound().hasSizeEqualTo(4);
     }
 
     @Test
     void findsIssuesWhenUnnecessaryParameterIsFoundOnEnhancements() {
-        given("UnusedParameterCheck/stringEnhancement.gsx")
-                .whenCheckedAgainst(UnusedParameterCheck.class)
+        given("UnusedParameterRule/stringEnhancement.gsx")
+                .whenCheckedAgainst(UnusedParameterRule.class)
                 .then().issuesFound().hasSizeEqualTo(2);
     }
 }

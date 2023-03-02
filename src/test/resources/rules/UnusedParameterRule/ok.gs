@@ -1,4 +1,4 @@
-package checks.UnusedParameterCheck
+package checks.UnusedParameterRule
 
 class ok {
 

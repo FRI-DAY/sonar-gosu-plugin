@@ -1,4 +1,4 @@
-package checks.UnusedParameterCheck
+package checks.UnusedParameterRule
 
 final class finalClass implements PDFGenerationClient {
 
