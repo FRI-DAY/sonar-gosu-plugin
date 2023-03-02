@@ -1,4 +1,4 @@
-package checks.AutomaticDowncastCheck
+package checks.AutomaticDowncastRule
 uses java.util.Date
 
 class complexSwitch {

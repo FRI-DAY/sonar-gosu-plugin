@@ -19,33 +19,33 @@ package de.friday.sonarqube.gosu.plugin.rules.smells;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class AutomaticDowncastCheckTest {
+class AutomaticDowncastRuleTest {
 
     @Test
     void findsNoIssuesWhenNoUnnecessaryCastIsFound() {
-        given("AutomaticDowncastCheck/ok.gs")
-                .whenCheckedAgainst(AutomaticDowncastCheck.class)
+        given("AutomaticDowncastRule/ok.gs")
+                .whenCheckedAgainst(AutomaticDowncastRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsIssuesWhenUnnecessaryCastIsFound() {
-        given("AutomaticDowncastCheck/simpleCast.gs")
-                .whenCheckedAgainst(AutomaticDowncastCheck.class)
+        given("AutomaticDowncastRule/simpleCast.gs")
+                .whenCheckedAgainst(AutomaticDowncastRule.class)
                 .then().issuesFound().hasSizeEqualTo(1);
     }
 
     @Test
     void findsNoIssuesWhenUnnecessaryCastIsNotFoundOnSwitchStatements() {
-        given("AutomaticDowncastCheck/complexSwitch.gs")
-                .whenCheckedAgainst(AutomaticDowncastCheck.class)
+        given("AutomaticDowncastRule/complexSwitch.gs")
+                .whenCheckedAgainst(AutomaticDowncastRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsIssuesWhenUnnecessaryCastIsFoundOnSwitchStatements() {
-        given("AutomaticDowncastCheck/simpleSwitch.gs")
-                .whenCheckedAgainst(AutomaticDowncastCheck.class)
+        given("AutomaticDowncastRule/simpleSwitch.gs")
+                .whenCheckedAgainst(AutomaticDowncastRule.class)
                 .then().issuesFound().hasSizeEqualTo(2);
     }
 }

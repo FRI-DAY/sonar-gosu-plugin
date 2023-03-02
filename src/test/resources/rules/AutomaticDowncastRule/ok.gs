@@ -1,4 +1,4 @@
-package checks.AutomaticDowncastCheck
+package checks.AutomaticDowncastRule
 
 class ok {
 
