@@ -22,9 +22,9 @@ import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
 import de.friday.sonarqube.gosu.plugin.issues.GosuIssue;
 import org.sonar.check.Rule;
 
-@Rule(key = InvertedBooleanExpressionsCheck.KEY)
-public class InvertedBooleanExpressionsCheck extends BaseGosuRule {
-    static final String KEY = "InvertedBooleanExpressionsCheck";
+@Rule(key = InvertedBooleanExpressionsRule.KEY)
+public class InvertedBooleanExpressionsRule extends BaseGosuRule {
+    static final String KEY = "InvertedBooleanExpressionsRule";
 
     @Override
     public void exitUnaryExpressionNot(GosuParser.UnaryExpressionNotContext ctx) {

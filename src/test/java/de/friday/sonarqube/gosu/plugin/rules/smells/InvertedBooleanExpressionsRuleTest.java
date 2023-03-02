@@ -19,19 +19,19 @@ package de.friday.sonarqube.gosu.plugin.rules.smells;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class InvertedBooleanExpressionsCheckTest {
+class InvertedBooleanExpressionsRuleTest {
 
     @Test
     void findsNoIssuesWhenBooleanExpressionIsNotInverted() {
-        given("InvertedBooleanExpressionsCheck/ok.gs")
-                .whenCheckedAgainst(InvertedBooleanExpressionsCheck.class)
+        given("InvertedBooleanExpressionsRule/ok.gs")
+                .whenCheckedAgainst(InvertedBooleanExpressionsRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsNoIssuesWhenBooleanExpressionIsInverted() {
-        given("InvertedBooleanExpressionsCheck/nok.gs")
-                .whenCheckedAgainst(InvertedBooleanExpressionsCheck.class)
+        given("InvertedBooleanExpressionsRule/nok.gs")
+                .whenCheckedAgainst(InvertedBooleanExpressionsRule.class)
                 .then().issuesFound().hasSizeEqualTo(3);
     }
 }

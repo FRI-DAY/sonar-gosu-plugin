@@ -1,4 +1,4 @@
-package checks.InvertedBooleanExpressionsCheck
+package checks.InvertedBooleanExpressionsRule
 
 class nok {
 
