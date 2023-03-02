@@ -19,47 +19,47 @@ package de.friday.sonarqube.gosu.plugin.rules.smells;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class LoggerCheckTest {
+class LoggerRuleTest {
 
     @Test
     void findsNoIssueWhenLoggerIsInstantiatedCorrectly() {
-        given("LoggerCheck/ok.gs")
-                .whenCheckedAgainst(LoggerCheck.class)
+        given("LoggerRule/ok.gs")
+                .whenCheckedAgainst(LoggerRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsNoIssueWhenLoggerIsCreatedWithClassHoldingTheLogger() {
-        given("LoggerCheck/ok_logger.gs")
-                .whenCheckedAgainst(LoggerCheck.class)
+        given("LoggerRule/ok_logger.gs")
+                .whenCheckedAgainst(LoggerRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsNoIssueWhenLoggerDoNotHaveExplicitPrivateModifier() {
-        given("LoggerCheck/ok_log.gs")
-                .whenCheckedAgainst(LoggerCheck.class)
+        given("LoggerRule/ok_log.gs")
+                .whenCheckedAgainst(LoggerRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsIssuesWhenLoggerIsCreatedWithDifferentClassThanTheOneUsingTheLogger() {
-        given("LoggerCheck/nok.gs")
-                .whenCheckedAgainst(LoggerCheck.class)
+        given("LoggerRule/nok.gs")
+                .whenCheckedAgainst(LoggerRule.class)
                 .then().issuesFound().hasSizeEqualTo(12);
     }
 
     @Test
     void findsIssuesWhenLoggerHaveExplicitDefaultModifiers() {
-        given("LoggerCheck/nok_modifiers.gs")
-                .whenCheckedAgainst(LoggerCheck.class)
+        given("LoggerRule/nok_modifiers.gs")
+                .whenCheckedAgainst(LoggerRule.class)
                 .then().issuesFound().hasSizeEqualTo(2);
     }
 
     @Test
     void findsIssuesWhenLogger4jIsUsedDirectly() {
-        given("LoggerCheck/log4jLogger.gs")
-                .whenCheckedAgainst(LoggerCheck.class)
+        given("LoggerRule/log4jLogger.gs")
+                .whenCheckedAgainst(LoggerRule.class)
                 .then().issuesFound().hasSizeEqualTo(3);
     }
 }

@@ -26,14 +26,14 @@ import org.sonar.api.utils.log.Loggers;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
 
-@Rule(key = LoggerCheck.KEY)
-public class LoggerCheck extends BaseGosuRule {
-    static final String KEY = "LoggerCheck";
+@Rule(key = LoggerRule.KEY)
+public class LoggerRule extends BaseGosuRule {
+    static final String KEY = "LoggerRule";
     private static final String DEFAULT_LOGGER_REGEX = "LOG(?:GER)?";
     private static final String LOGGER = "Logger";
     private static final String GET_LOGGER = "getLogger";
     private static final String CLASS_SUFFIX = "\\.[Cc]lass";
-    private static final Logger LOG = Loggers.get(LoggerCheck.class);
+    private static final Logger LOG = Loggers.get(LoggerRule.class);
     private static final Pattern MATCH_ALL_LOGGERS_PATTERN = Pattern.compile("\\w+");
     @RuleProperty(
             key = "format",
@@ -48,7 +48,7 @@ public class LoggerCheck extends BaseGosuRule {
         try {
             loggerPattern = Pattern.compile(regex);
         } catch (PatternSyntaxException e) {
-            LOG.error("LoggerCheck - wrong syntax of \"format\" property - " + regex, e);
+            LOG.error("LoggerRule - wrong syntax of \"format\" property - " + regex, e);
             loggerPattern = MATCH_ALL_LOGGERS_PATTERN;
         }
     }
