@@ -1,4 +1,4 @@
-package checks.CollectionIsEmptyCheck
+package checks.CollectionIsEmptyRule
 
 class ok {
 

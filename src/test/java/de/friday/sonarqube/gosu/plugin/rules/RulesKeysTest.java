@@ -67,7 +67,7 @@ class RulesKeysTest {
         final Map<String, RuleType> codeSmells = new HashMap<>();
 
         codeSmells.put("AutomaticDowncastRule", RuleType.CODE_SMELLS);
-        codeSmells.put("CollectionIsEmptyCheck", RuleType.CODE_SMELLS);
+        codeSmells.put("CollectionIsEmptyRule", RuleType.CODE_SMELLS);
         codeSmells.put("DefaultModifiersCheck", RuleType.CODE_SMELLS);
         codeSmells.put("EmptyLineCheck", RuleType.CODE_SMELLS);
         codeSmells.put("HardcodedEntityFieldValueCheck", RuleType.CODE_SMELLS);

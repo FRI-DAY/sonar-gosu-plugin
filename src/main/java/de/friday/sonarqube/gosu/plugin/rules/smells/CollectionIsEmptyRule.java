@@ -23,9 +23,9 @@ import java.util.Arrays;
 import java.util.List;
 import org.sonar.check.Rule;
 
-@Rule(key = CollectionIsEmptyCheck.KEY)
-public class CollectionIsEmptyCheck extends BaseGosuRule {
-    static final String KEY = "CollectionIsEmptyCheck";
+@Rule(key = CollectionIsEmptyRule.KEY)
+public class CollectionIsEmptyRule extends BaseGosuRule {
+    static final String KEY = "CollectionIsEmptyRule";
     private List<String> countingMethods = Arrays.asList(".getCount()", ".Count", ".size()", ".length", ".length()");
 
     @Override

@@ -19,19 +19,19 @@ package de.friday.sonarqube.gosu.plugin.rules.smells;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class CollectionIsEmptyCheckTest {
+class CollectionIsEmptyRuleTest {
 
     @Test
     void findsNoIssuesWhenCollectionIsNotEmpty() {
-        given("CollectionIsEmptyCheck/ok.gs")
-                .whenCheckedAgainst(CollectionIsEmptyCheck.class)
+        given("CollectionIsEmptyRule/ok.gs")
+                .whenCheckedAgainst(CollectionIsEmptyRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsIssuesWhenCollectionIsEmpty() {
-        given("CollectionIsEmptyCheck/nok.gs")
-                .whenCheckedAgainst(CollectionIsEmptyCheck.class)
+        given("CollectionIsEmptyRule/nok.gs")
+                .whenCheckedAgainst(CollectionIsEmptyRule.class)
                 .then().issuesFound().hasSizeEqualTo(4);
     }
 }
