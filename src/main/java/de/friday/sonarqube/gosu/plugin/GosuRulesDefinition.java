@@ -42,7 +42,7 @@ public class GosuRulesDefinition implements RulesDefinition {
                 sonarRuntime
         );
 
-        ruleMetadataLoader.addRulesByAnnotatedClass(repository, new ArrayList<>(ClassExtractor.getChecks().values()));
+        ruleMetadataLoader.addRulesByAnnotatedClass(repository, new ArrayList<>(ClassExtractor.getRules().values()));
         repository.rules().forEach(rule -> rule.setActivatedByDefault(true));
         repository.done();
     }

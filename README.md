@@ -18,7 +18,7 @@ In such cases, there is a very useful tool called [ANTLR v4](https://github.com/
 
 ## Getting Started (TODO)
 
-### Writing custom checks (TODO)
+### Writing custom rules (TODO)
 
 ## Compatibility
 Please find below the compatibility matrix of the plugin:

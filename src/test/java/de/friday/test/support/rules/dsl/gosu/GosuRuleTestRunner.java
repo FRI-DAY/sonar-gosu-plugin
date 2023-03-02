@@ -31,7 +31,7 @@ import org.sonar.check.Rule;
 import org.sonar.plugins.surefire.data.UnitTestIndex;
 
 /**
- * Check runner for Gosu rules that implements the BaseGosuRule class.
+ * Runner for Gosu rules that implements the BaseGosuRule class.
  */
 final class GosuRuleTestRunner implements RuleRunner<List<Issue>> {
     private final Class<? extends BaseGosuRule> rule;

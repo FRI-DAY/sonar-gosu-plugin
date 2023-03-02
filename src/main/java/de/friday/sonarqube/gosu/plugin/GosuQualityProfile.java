@@ -42,8 +42,8 @@ public class GosuQualityProfile extends ProfileDefinition {
         return rulesProfile;
     }
 
-    private void activateRule(String checkKey) {
-        final Optional<Rule> rule = Optional.ofNullable(Rule.create(GosuLanguage.REPOSITORY_KEY, checkKey));
+    private void activateRule(String ruleKey) {
+        final Optional<Rule> rule = Optional.ofNullable(Rule.create(GosuLanguage.REPOSITORY_KEY, ruleKey));
         rule.ifPresent(value -> rulesProfile.activateRule(value, null));
     }
 

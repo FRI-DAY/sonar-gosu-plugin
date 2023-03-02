@@ -104,7 +104,7 @@ public class GosuParserContext {
     private Optional<Class<? extends BaseGosuRule>> getCheckClass(ActiveRule activeRule) {
         final String activeRuleKey = activeRule.ruleKey().rule();
 
-        return ClassExtractor.getCheckForScope(activeRuleKey, inputFile.type());
+        return ClassExtractor.getRuleForScope(activeRuleKey, inputFile.type());
     }
 
     private List<BaseGosuRule> bindChecksWithSonarAnnotations(List<BaseGosuRule> activeChecks) {

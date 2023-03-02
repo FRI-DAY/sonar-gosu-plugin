@@ -25,15 +25,15 @@ import org.sonar.api.batch.fs.InputFile;
 class ClassExtractorTest {
     @Test
     void testTODOsRule() {
-        Optional<Class<? extends BaseGosuRule>> enabledForMainCheck
-                = ClassExtractor.getCheckForScope("TODOsRule", InputFile.Type.MAIN);
-        Optional<Class<? extends BaseGosuRule>> disabledForTestsCheck
-                = ClassExtractor.getCheckForScope("TODOsRule", InputFile.Type.TEST);
-        Optional<Class<? extends BaseGosuRule>> nonExistentCheck
-                = ClassExtractor.getCheckForScope("TODOzCheck", InputFile.Type.MAIN);
+        Optional<Class<? extends BaseGosuRule>> enabledForMainRule
+                = ClassExtractor.getRuleForScope("TODOsRule", InputFile.Type.MAIN);
+        Optional<Class<? extends BaseGosuRule>> disabledForTestsRule
+                = ClassExtractor.getRuleForScope("TODOsRule", InputFile.Type.TEST);
+        Optional<Class<? extends BaseGosuRule>> nonExistentRule
+                = ClassExtractor.getRuleForScope("TODOzCheck", InputFile.Type.MAIN);
 
-        Assertions.assertThat(enabledForMainCheck).isPresent();
-        Assertions.assertThat(disabledForTestsCheck).isEmpty();
-        Assertions.assertThat(nonExistentCheck).isEmpty();
+        Assertions.assertThat(enabledForMainRule).isPresent();
+        Assertions.assertThat(disabledForTestsRule).isEmpty();
+        Assertions.assertThat(nonExistentRule).isEmpty();
     }
 }

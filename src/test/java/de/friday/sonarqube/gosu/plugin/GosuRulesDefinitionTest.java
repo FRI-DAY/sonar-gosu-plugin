@@ -45,7 +45,7 @@ class GosuRulesDefinitionTest {
         assertThat(repository.name()).isNotNull().isEqualTo("SonarAnalyzer");
         assertThat(repository.key()).isEqualTo(GosuLanguage.REPOSITORY_KEY);
         assertThat(repository.language()).isEqualTo(GosuLanguage.KEY);
-        assertThat(repository.rules()).hasSize(ClassExtractor.getChecks().size()).allSatisfy(
+        assertThat(repository.rules()).hasSize(ClassExtractor.getRules().size()).allSatisfy(
                 rule -> {
                     assertThat(rule.activatedByDefault()).isTrue();
                     assertThat(rule.name()).isNotBlank();

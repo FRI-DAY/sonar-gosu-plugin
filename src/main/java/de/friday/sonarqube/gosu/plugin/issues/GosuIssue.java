@@ -18,7 +18,6 @@ package de.friday.sonarqube.gosu.plugin.issues;
 
 import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
 import de.friday.sonarqube.gosu.plugin.utils.TextRangeUtil;
-import de.friday.sonarqube.gosu.plugin.utils.annotations.UnitTestMissing;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -31,7 +30,6 @@ import org.sonar.api.batch.sensor.issue.NewIssue;
 import org.sonar.api.batch.sensor.issue.NewIssueLocation;
 import org.sonar.api.rule.RuleKey;
 
-@UnitTestMissing
 public final class GosuIssue implements Issue {
 
     private TextRange textRange;
@@ -87,8 +85,8 @@ public final class GosuIssue implements Issue {
         private RuleKey ruleKey;
         private int gap = -1;
 
-        public GosuIssueBuilder(BaseGosuRule check) {
-            this.ruleKey = check.getRuleKey();
+        public GosuIssueBuilder(BaseGosuRule rule) {
+            this.ruleKey = rule.getRuleKey();
         }
 
         public GosuIssueBuilder withSecondaryIssues(Iterable<SecondaryIssue> secondaries) {

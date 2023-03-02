@@ -41,10 +41,10 @@ public final class ClassExtractor {
         final Set<Class<? extends BaseGosuRule>> allClasses = reflections.getSubTypesOf(BaseGosuRule.class);
         final Map<String, Class<? extends BaseGosuRule>> keysToClasses = new HashMap<>();
 
-        for (Class<? extends BaseGosuRule> checkClass : allClasses) {
-            final String key = checkClass.getAnnotation(Rule.class).key();
-            keysToClasses.put(key, checkClass);
-            addRuleByScope(checkClass, key);
+        for (Class<? extends BaseGosuRule> ruleClass : allClasses) {
+            final String key = ruleClass.getAnnotation(Rule.class).key();
+            keysToClasses.put(key, ruleClass);
+            addRuleByScope(ruleClass, key);
         }
     }
 
@@ -75,7 +75,7 @@ public final class ClassExtractor {
         }
     }
 
-    public static Map<String, Class<? extends BaseGosuRule>> getChecks() {
+    public static Map<String, Class<? extends BaseGosuRule>> getRules() {
         return Collections.unmodifiableMap(new HashMap<>(allRules));
     }
 
@@ -83,7 +83,7 @@ public final class ClassExtractor {
         return metrics;
     }
 
-    public static Optional<Class<? extends BaseGosuRule>> getCheckForScope(String key, InputFile.Type type) {
+    public static Optional<Class<? extends BaseGosuRule>> getRuleForScope(String key, InputFile.Type type) {
         switch (type) {
             case MAIN:
                 return Optional.ofNullable(mainSourcesRules.get(key));

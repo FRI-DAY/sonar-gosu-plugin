@@ -34,14 +34,14 @@ public interface RuleSpecification extends RuleRunner {
      * </pre>
      * This runs the TODOsRule against the ok.gs source code file and return the list of issues found.
      * </p>
-     * @param sourceCodeFile Source code file to run the check against
+     * @param sourceCodeFile Source code file to run the rule against
      * @return The Rule specification
      */
     RuleSpecification given(SourceCodeFile sourceCodeFile);
 
     /**
      *
-     * Specify the source code file to be analysed by the Check.
+     * Specify the source code file to be analysed by the RUle.
      * <p>
      * E.g.
      * <pre>
@@ -49,14 +49,14 @@ public interface RuleSpecification extends RuleRunner {
      * </pre>
      * This runs the TODOsRule against the nok.gs source code file and return the list of issues found.
      * </p>
-     * @param sourceCodeFileName Source code file name to run the check against
-     * @return The Check specification
+     * @param sourceCodeFileName Source code file name to run the rule against
+     * @return The Rule specification
      */
     RuleSpecification given(String sourceCodeFileName);
 
     /**
      *
-     * Specify the Check that it be used to run the analyses on the source code file.
+     * Specify the Rule that it be used to run the analyses on the source code file.
      * <p>
      * E.g.
      * <pre>
@@ -64,16 +64,16 @@ public interface RuleSpecification extends RuleRunner {
      * </pre>
      * This runs the TODOsRule against the ok.gs source code file and return the list of issues found.
      * </p>
-     * @param checkClass Source code file to run the check against
-     * @return The Check specification
+     * @param ruleClass Source code file to run the rule against
+     * @return The Rule specification
      */
-    RuleSpecification whenCheckedAgainst(Class<? extends BaseGosuRule> checkClass);
+    RuleSpecification whenCheckedAgainst(Class<? extends BaseGosuRule> ruleClass);
 
     /**
-     * Returns the issue specification so that you can set up the expectations on the issues returned by the Check.
+     * Returns the issue specification so that you can set up the expectations on the issues returned by the Rule.
      * E.g.
      * <pre>
-     * given("TODOsRule/ok.gs").whenCheckedAgainst(TODOsRule.class).then().issuesFound().areEmpty();g
+     * given("TODOsRule/ok.gs").whenCheckedAgainst(TODOsRule.class).then().issuesFound().areEmpty();
      * </pre>
      *
      * @return The issue specificaiton

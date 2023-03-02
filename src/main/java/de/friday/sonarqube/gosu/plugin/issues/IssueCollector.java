@@ -20,7 +20,6 @@ import com.google.inject.Inject;
 
 import de.friday.sonarqube.gosu.plugin.tools.listeners.SuppressWarningsListener;
 import de.friday.sonarqube.gosu.plugin.tools.reflections.RulesKeysExtractor;
-import de.friday.sonarqube.gosu.plugin.utils.annotations.UnitTestMissing;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -28,11 +27,10 @@ import java.util.Map;
 import java.util.Optional;
 import org.sonar.api.batch.fs.TextRange;
 
-@UnitTestMissing
 public class IssueCollector {
     private static final String CODE_SMELLS_TAG = "code_smells";
     private static final String CODE_SMELLS_DIR = "smells";
-    private static final String ALL_CHECKS_TAG = "all";
+    private static final String ALL_RULES_TAG = "all";
     @Inject
     private SuppressWarningsListener suppressWarningsListener;
     private Map<String, List<TextRange>> suppressWarnings;
@@ -65,27 +63,27 @@ public class IssueCollector {
     private boolean isSuppressed(Issue issue) {
         final TextRange issuePosition = issue.getPosition();
         final String issueRuleKey = issue.getRuleKey().rule();
-        final String issuePackageTag = getCheckPackageTag(issueRuleKey);
+        final String issuePackageTag = getRulePackageTag(issueRuleKey);
 
         return isInAllWarnings(issuePosition)
                 || isInPackageWarnings(issuePackageTag, issuePosition)
-                || isInCheckWarnings(issueRuleKey, issuePosition);
+                || isInRuleWarnings(issueRuleKey, issuePosition);
     }
 
-    private String getCheckPackageTag(String issueKey) {
+    private String getRulePackageTag(String issueKey) {
         final String directory = RulesKeysExtractor.getRulePackage(issueKey);
         return CODE_SMELLS_DIR.equals(directory) ? CODE_SMELLS_TAG : directory;
     }
 
     private boolean isInAllWarnings(TextRange issueTextRange) {
-        return compareTextRanges(suppressWarnings.get(ALL_CHECKS_TAG), issueTextRange);
+        return compareTextRanges(suppressWarnings.get(ALL_RULES_TAG), issueTextRange);
     }
 
     private boolean isInPackageWarnings(String issuePackageTag, TextRange issueTextRange) {
         return compareTextRanges(suppressWarnings.get(issuePackageTag), issueTextRange);
     }
 
-    private boolean isInCheckWarnings(String issueRuleKey, TextRange issueTextRange) {
+    private boolean isInRuleWarnings(String issueRuleKey, TextRange issueTextRange) {
         return compareTextRanges(suppressWarnings.get(issueRuleKey), issueTextRange);
     }
 

@@ -40,7 +40,7 @@ public abstract class BaseGosuRule extends GosuParserBaseListener {
      * Returns a Gosu Rule specific Rule Key
      * Used to associate with the Rule description
      *
-     * @return Check Rule Key
+     * @return Rule Key
      */
     public RuleKey getRuleKey() {
         return RuleKey.of(REPOSITORY_KEY, getKey());

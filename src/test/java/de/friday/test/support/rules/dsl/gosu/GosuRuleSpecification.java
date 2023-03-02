@@ -51,9 +51,9 @@ public class GosuRuleSpecification implements RuleSpecification {
     }
 
     @Override
-    public RuleSpecification whenCheckedAgainst(Class<? extends BaseGosuRule> checkClass) {
-        Objects.requireNonNull(checkClass, "Check class can not be null.");
-        this.checkClass = checkClass;
+    public RuleSpecification whenCheckedAgainst(Class<? extends BaseGosuRule> ruleClass) {
+        Objects.requireNonNull(ruleClass, "Check class can not be null.");
+        this.checkClass = ruleClass;
         return this;
     }
 

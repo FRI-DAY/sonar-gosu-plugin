@@ -31,9 +31,9 @@ public class RulesKeys {
         return Collections.unmodifiableMap(ruleKeysByRuleType);
     }
 
-    private void addRulesKeysTo(Map<String, RuleType> ruleKeysByCheckType, RuleType ruleType) {
+    private void addRulesKeysTo(Map<String, RuleType> ruleKeysByRuleType, RuleType ruleType) {
         ruleType.getRuleKeys().forEach(
-                ruleKey -> ruleKeysByCheckType.put(ruleKey, ruleType)
+                ruleKey -> ruleKeysByRuleType.put(ruleKey, ruleType)
         );
     }
 }

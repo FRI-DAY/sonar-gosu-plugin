@@ -72,7 +72,7 @@ public class AnalysisModule extends AbstractModule {
     private void bindChecks() {
         final Multibinder<BaseGosuRule> checksMultibinder = Multibinder.newSetBinder(binder(), BaseGosuRule.class);
 
-        for (Class<? extends BaseGosuRule> check : ClassExtractor.getChecks().values()) {
+        for (Class<? extends BaseGosuRule> check : ClassExtractor.getRules().values()) {
             checksMultibinder.addBinding().to(check);
         }
     }
