@@ -21,19 +21,19 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class RethrowInCatchCheckTest {
+class RethrowInCatchRuleTest {
 
     @Test
     void findsNoIssuesWhenCatchBlockHandleCaughtException() {
-        given("RethrowInCatchCheck/ok.gs")
-                .whenCheckedAgainst(RethrowInCatchCheck.class)
+        given("RethrowInCatchRule/ok.gs")
+                .whenCheckedAgainst(RethrowInCatchRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findIssuesWhenCatchBlockJustRethrowException() {
-        given("RethrowInCatchCheck/nok.gs")
-                .whenCheckedAgainst(RethrowInCatchCheck.class)
+        given("RethrowInCatchRule/nok.gs")
+                .whenCheckedAgainst(RethrowInCatchRule.class)
                 .then()
                 .issuesFound().hasSizeEqualTo(2)
                 .and().areLocatedOn(

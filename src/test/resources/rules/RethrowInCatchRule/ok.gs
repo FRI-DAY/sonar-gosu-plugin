@@ -1,4 +1,4 @@
-package checks.RethrowInCatchCheck
+package checks.RethrowInCatchRule
 
 class ok {
   var logger : Logger

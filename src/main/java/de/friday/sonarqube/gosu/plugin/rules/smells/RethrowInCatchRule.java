@@ -24,9 +24,9 @@ import java.util.Collections;
 import java.util.List;
 import org.sonar.check.Rule;
 
-@Rule(key = RethrowInCatchCheck.KEY)
-public class RethrowInCatchCheck extends BaseGosuRule {
-    static final String KEY = "RethrowInCatchCheck";
+@Rule(key = RethrowInCatchRule.KEY)
+public class RethrowInCatchRule extends BaseGosuRule {
+    static final String KEY = "RethrowInCatchRule";
 
     @Override
     public void exitCatchClause(GosuParser.CatchClauseContext ctx) {
