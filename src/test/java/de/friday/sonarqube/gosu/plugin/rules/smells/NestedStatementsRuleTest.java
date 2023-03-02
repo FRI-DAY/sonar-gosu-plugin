@@ -21,19 +21,19 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class NestedStatementsCheckTest {
+class NestedStatementsRuleTest {
 
     @Test
     void findsNoIssuesWhenStatementsAreNotNested() {
-        given("NestedStatementsCheck/ok.gs")
-                .whenCheckedAgainst(NestedStatementsCheck.class)
+        given("NestedStatementsRule/ok.gs")
+                .whenCheckedAgainst(NestedStatementsRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsIssuesWhenStatementsAreNested() {
-        given("NestedStatementsCheck/nok.gs")
-                .whenCheckedAgainst(NestedStatementsCheck.class)
+        given("NestedStatementsRule/nok.gs")
+                .whenCheckedAgainst(NestedStatementsRule.class)
                 .then()
                 .issuesFound().hasSizeEqualTo(16)
                 .and().areLocatedOn(

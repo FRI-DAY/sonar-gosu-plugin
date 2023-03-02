@@ -28,9 +28,9 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
 
-@Rule(key = NestedStatementsCheck.KEY)
-public class NestedStatementsCheck extends BaseGosuRule {
-    static final String KEY = "NestedStatementsCheck";
+@Rule(key = NestedStatementsRule.KEY)
+public class NestedStatementsRule extends BaseGosuRule {
+    static final String KEY = "NestedStatementsRule";
     private static final int DEFAULT_NESTED_LEVEL = 3;
     @RuleProperty(
             key = "Max",

@@ -1,4 +1,4 @@
-package checks.NestedStatementsCheck
+package checks.NestedStatementsRule
 
 class nok {
 
