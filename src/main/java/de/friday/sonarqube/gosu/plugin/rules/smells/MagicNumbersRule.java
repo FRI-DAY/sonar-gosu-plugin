@@ -30,9 +30,9 @@ import org.antlr.v4.runtime.Token;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
 
-@Rule(key = MagicNumbersCheck.KEY)
-public class MagicNumbersCheck extends BaseGosuRule {
-    static final String KEY = "MagicNumbersCheck";
+@Rule(key = MagicNumbersRule.KEY)
+public class MagicNumbersRule extends BaseGosuRule {
+    static final String KEY = "MagicNumbersRule";
     private static final int TWO_LETTERS_SUFFIX_LENGTH = 2;
     private static final String DEFAULT_NUMBERS = "-1,0,1";
     @SuppressWarnings("squid:S4784")
@@ -52,7 +52,7 @@ public class MagicNumbersCheck extends BaseGosuRule {
     }
 
     @Inject
-    MagicNumbersCheck(GosuFileProperties gosuFileProperties) {
+    MagicNumbersRule(GosuFileProperties gosuFileProperties) {
         this.gosuFileProperties = gosuFileProperties;
     }
 

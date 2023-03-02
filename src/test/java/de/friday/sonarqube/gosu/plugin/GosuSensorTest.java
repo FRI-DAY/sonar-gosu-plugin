@@ -97,7 +97,7 @@ class GosuSensorTest {
 
     private SensorContextTester createSensorContextTesterFor(String fileName, boolean isCancelled) {
         final SourceCodeFile sourceCodeFile = new GosuSourceCodeFile(fileName, TestResourcesDirectories.SENSOR_RESOURCES_DIR.getPathAsString());
-        final GosuSensorContextTester sensorContextTester = new GosuSensorContextTester(TestResourcesDirectories.SENSOR_RESOURCES_DIR.getPath(), "MagicNumbersCheck");
+        final GosuSensorContextTester sensorContextTester = new GosuSensorContextTester(TestResourcesDirectories.SENSOR_RESOURCES_DIR.getPath(), "MagicNumbersRule");
         final SensorContextTester sensorContext = sensorContextTester.get();
         sensorContext.setCancelled(isCancelled);
         sensorContext.fileSystem().add(sourceCodeFile.asInputFile());

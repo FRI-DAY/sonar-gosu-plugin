@@ -1,4 +1,4 @@
-package checks.MagicNumbersCheck
+package checks.MagicNumbersRule
 
 class nok {
   public static final var ACTIVITY_DESC_FIELD_LENGTH: int = 1333 + 234

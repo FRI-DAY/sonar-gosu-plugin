@@ -21,19 +21,19 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class MagicNumbersCheckTest {
+class MagicNumbersRuleTest {
 
     @Test
     void findsNoIssuesWhenNoMagicNumbersAreFound() {
-        given("MagicNumbersCheck/ok.gs")
-                .whenCheckedAgainst(MagicNumbersCheck.class)
+        given("MagicNumbersRule/ok.gs")
+                .whenCheckedAgainst(MagicNumbersRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsNoIssuesWhenMagicNumbersAreFound() {
-        given("MagicNumbersCheck/nok.gs")
-                .whenCheckedAgainst(MagicNumbersCheck.class)
+        given("MagicNumbersRule/nok.gs")
+                .whenCheckedAgainst(MagicNumbersRule.class)
                 .then().issuesFound().hasSizeEqualTo(8)
                 .and().areLocatedOn(
                         GosuIssueLocations.of(
