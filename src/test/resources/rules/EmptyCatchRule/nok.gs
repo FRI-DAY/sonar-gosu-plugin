@@ -1,16 +1,15 @@
-package checks.EmptyCatchCheck
+package checks.EmptyCatchRule
 
-class ok {
+class nok {
   var logger : Logger
 
   function someFunc() {
     try{
-     //DoSomething
+      //DoSomething
     } catch (ex : IndexOutOfBoundsException){
-      logger.LogError(ex)
-      throw ex
+
     } catch (ex : Exception) {
-      //Some Action
+
     }
   }
 }

@@ -92,7 +92,7 @@ class RulesKeysTest {
     private Map<String, RuleType> vulnerabilities() {
         final Map<String, RuleType> vulnerabilities = new HashMap<>();
 
-        vulnerabilities.put("EmptyCatchCheck", RuleType.VULNERABILITIES);
+        vulnerabilities.put("EmptyCatchRule", RuleType.VULNERABILITIES);
         vulnerabilities.put("PublicStaticFieldCheck", RuleType.VULNERABILITIES);
 
         return vulnerabilities;

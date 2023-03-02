@@ -25,14 +25,14 @@ import java.util.List;
 import org.antlr.v4.runtime.Token;
 import org.sonar.check.Rule;
 
-@Rule(key = EmptyCatchCheck.KEY)
-public class EmptyCatchCheck extends BaseGosuRule {
-    static final String KEY = "EmptyCatchCheck";
+@Rule(key = EmptyCatchRule.KEY)
+public class EmptyCatchRule extends BaseGosuRule {
+    static final String KEY = "EmptyCatchRule";
     private static final int NUMBER_OF_BRACES = 2;
     private final GosuFileProperties gosuFileProperties;
 
     @Inject
-    EmptyCatchCheck(GosuFileProperties gosuFileProperties) {
+    EmptyCatchRule(GosuFileProperties gosuFileProperties) {
         this.gosuFileProperties = gosuFileProperties;
     }
 

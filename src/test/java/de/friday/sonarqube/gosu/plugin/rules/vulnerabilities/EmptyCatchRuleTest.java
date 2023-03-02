@@ -21,19 +21,19 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class EmptyCatchCheckTest {
+class EmptyCatchRuleTest {
 
     @Test
     void findsNoIssuesWhenCatchIsNotEmpty() {
-        given("EmptyCatchCheck/ok.gs")
-                .whenCheckedAgainst(EmptyCatchCheck.class)
+        given("EmptyCatchRule/ok.gs")
+                .whenCheckedAgainst(EmptyCatchRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsIssuesWhenCatchIsEmpty() {
-        given("EmptyCatchCheck/nok.gs")
-                .whenCheckedAgainst(EmptyCatchCheck.class)
+        given("EmptyCatchRule/nok.gs")
+                .whenCheckedAgainst(EmptyCatchRule.class)
                 .then()
                 .issuesFound()
                 .hasSizeEqualTo(2)
