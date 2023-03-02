@@ -21,40 +21,40 @@ import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class UnnecessaryImportCheckTest {
+public class UnnecessaryImportRuleTest {
 
     @Test
     void findsNoIssuesWhenNoUnnecessaryImportIsFound() {
-        given("UnnecessaryImportCheck/ok.gs")
-                .whenCheckedAgainst(UnnecessaryImportCheck.class)
+        given("UnnecessaryImportRule/ok.gs")
+                .whenCheckedAgainst(UnnecessaryImportRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsIssuesWhenUnnecessaryImportIsFound() {
-        given("UnnecessaryImportCheck/nok.gs")
-                .whenCheckedAgainst(UnnecessaryImportCheck.class)
+        given("UnnecessaryImportRule/nok.gs")
+                .whenCheckedAgainst(UnnecessaryImportRule.class)
                 .then().issuesFound().hasSizeEqualTo(6);
     }
 
     @Test
     void findsIssuesWhenUnnecessaryImportIsFoundOnClassWithInnerClass() {
-        given("UnnecessaryImportCheck/nokWithInnerClass.gs")
-                .whenCheckedAgainst(UnnecessaryImportCheck.class)
+        given("UnnecessaryImportRule/nokWithInnerClass.gs")
+                .whenCheckedAgainst(UnnecessaryImportRule.class)
                 .then().issuesFound().hasSizeEqualTo(1);
     }
 
     @Test
     void getClassNameThrowsExceptionWhenNoPackageIsProvided() {
         assertThatThrownBy(
-                () -> new UnnecessaryImportCheck().getClassName("JustClassName")
+                () -> new UnnecessaryImportRule().getClassName("JustClassName")
         ).isInstanceOf(IllegalArgumentException.class).hasMessage("No package found.");
     }
 
     @Test
     void getClassNameReturnsClassNameWhenFullQualifiedClassNameIsProvided() {
         assertThat(
-                new UnnecessaryImportCheck().getClassName("de.friday.claims.SomeClass")
+                new UnnecessaryImportRule().getClassName("de.friday.claims.SomeClass")
         ).isEqualTo("SomeClass");
     }
 }

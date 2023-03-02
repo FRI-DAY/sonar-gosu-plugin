@@ -28,10 +28,10 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.sonar.check.Rule;
 
-@Rule(key = UnnecessaryImportCheck.KEY)
-public class UnnecessaryImportCheck extends BaseGosuRule {
+@Rule(key = UnnecessaryImportRule.KEY)
+public class UnnecessaryImportRule extends BaseGosuRule {
 
-    static final String KEY = "UnnecessaryImportCheck";
+    static final String KEY = "UnnecessaryImportRule";
 
     private final Set<String> allImports = new HashSet<>();
     private final Set<String> allReferencedClasses = new HashSet<>();
