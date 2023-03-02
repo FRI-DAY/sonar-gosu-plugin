@@ -21,19 +21,19 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class PublicVariablesCheckTest {
+class PublicVariablesRuleTest {
 
     @Test
     void findsNoIssuesWhenClassFieldsAreEncapsulated() {
-        given("PublicVariablesCheck/ok.gs")
-                .whenCheckedAgainst(PublicVariablesCheck.class)
+        given("PublicVariablesRule/ok.gs")
+                .whenCheckedAgainst(PublicVariablesRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsNoIssuesWhenClassFieldsAreNotEncapsulated() {
-        given("PublicVariablesCheck/nok.gs")
-                .whenCheckedAgainst(PublicVariablesCheck.class)
+        given("PublicVariablesRule/nok.gs")
+                .whenCheckedAgainst(PublicVariablesRule.class)
                 .then()
                 .issuesFound().hasSizeEqualTo(3)
                 .and().areLocatedOn(

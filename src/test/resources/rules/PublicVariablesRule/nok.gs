@@ -1,4 +1,4 @@
-package checks.PublicVariablesCheck
+package checks.PublicVariablesRule
 
 class nok {
   public var FirstName : String // Do not declare a public variable.

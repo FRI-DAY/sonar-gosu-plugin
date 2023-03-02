@@ -25,14 +25,14 @@ import java.util.List;
 import org.antlr.v4.runtime.Token;
 import org.sonar.check.Rule;
 
-@Rule(key = PublicVariablesCheck.KEY)
-public class PublicVariablesCheck extends BaseGosuRule {
-    static final String KEY = "PublicVariablesCheck";
+@Rule(key = PublicVariablesRule.KEY)
+public class PublicVariablesRule extends BaseGosuRule {
+    static final String KEY = "PublicVariablesRule";
 
     private GosuFileProperties gosuFileProperties;
 
     @Inject
-    PublicVariablesCheck(GosuFileProperties gosuFileProperties) {
+    PublicVariablesRule(GosuFileProperties gosuFileProperties) {
         this.gosuFileProperties = gosuFileProperties;
     }
 

@@ -1,4 +1,4 @@
-package checks.PublicVariablesCheck
+package checks.PublicVariablesRule
 
 class ok {
   private var _firstName : String as FirstName // Delcare a public property as a private variable.

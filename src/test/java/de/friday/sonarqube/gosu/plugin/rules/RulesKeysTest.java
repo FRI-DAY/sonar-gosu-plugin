@@ -78,7 +78,7 @@ class RulesKeysTest {
         codeSmells.put("LoggerLibraryRule", RuleType.CODE_SMELLS);
         codeSmells.put("MagicNumbersRule", RuleType.CODE_SMELLS);
         codeSmells.put("NestedStatementsRule", RuleType.CODE_SMELLS);
-        codeSmells.put("PublicVariablesCheck", RuleType.CODE_SMELLS);
+        codeSmells.put("PublicVariablesRule", RuleType.CODE_SMELLS);
         codeSmells.put("RethrowInCatchCheck", RuleType.CODE_SMELLS);
         codeSmells.put("ReturnNullCollectionCheck", RuleType.CODE_SMELLS);
         codeSmells.put("TODOsCheck", RuleType.CODE_SMELLS);
