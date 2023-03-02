@@ -1,4 +1,4 @@
-package checks.TODOsCheck
+package checks.TODOsRule
 
 //TODO average todo comment
 class nok {

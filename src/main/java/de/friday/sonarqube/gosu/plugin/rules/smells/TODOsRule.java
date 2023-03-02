@@ -30,16 +30,16 @@ import java.util.stream.Collectors;
 import org.antlr.v4.runtime.Token;
 import org.apache.commons.lang3.StringUtils;
 import org.sonar.check.Rule;
-import static de.friday.sonarqube.gosu.plugin.rules.smells.TODOsCheck.KEY;
+import static de.friday.sonarqube.gosu.plugin.rules.smells.TODOsRule.KEY;
 
 @Rule(key = KEY)
-public class TODOsCheck extends BaseGosuRule {
-    static final String KEY = "TODOsCheck";
+public class TODOsRule extends BaseGosuRule {
+    static final String KEY = "TODOsRule";
     private Set<Integer> commentTokens = new HashSet<>(Arrays.asList(GosuLexer.COMMENT, GosuLexer.LINE_COMMENT));
     private GosuFileProperties gosuFileProperties;
 
     @Inject
-    TODOsCheck(GosuFileProperties gosuFileProperties) {
+    TODOsRule(GosuFileProperties gosuFileProperties) {
         this.gosuFileProperties = gosuFileProperties;
     }
 

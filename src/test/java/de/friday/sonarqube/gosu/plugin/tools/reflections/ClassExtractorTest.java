@@ -24,11 +24,11 @@ import org.sonar.api.batch.fs.InputFile;
 
 class ClassExtractorTest {
     @Test
-    void testTODOsCheck() {
+    void testTODOsRule() {
         Optional<Class<? extends BaseGosuRule>> enabledForMainCheck
-                = ClassExtractor.getCheckForScope("TODOsCheck", InputFile.Type.MAIN);
+                = ClassExtractor.getCheckForScope("TODOsRule", InputFile.Type.MAIN);
         Optional<Class<? extends BaseGosuRule>> disabledForTestsCheck
-                = ClassExtractor.getCheckForScope("TODOsCheck", InputFile.Type.TEST);
+                = ClassExtractor.getCheckForScope("TODOsRule", InputFile.Type.TEST);
         Optional<Class<? extends BaseGosuRule>> nonExistentCheck
                 = ClassExtractor.getCheckForScope("TODOzCheck", InputFile.Type.MAIN);
 

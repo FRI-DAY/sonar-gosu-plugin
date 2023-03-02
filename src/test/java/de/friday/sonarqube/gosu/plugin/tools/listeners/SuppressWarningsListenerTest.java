@@ -19,7 +19,7 @@ package de.friday.sonarqube.gosu.plugin.tools.listeners;
 import de.friday.sonarqube.gosu.plugin.rules.bugs.SameConditionsInIfRule;
 import de.friday.sonarqube.gosu.plugin.rules.metrics.CognitiveComplexityRule;
 import de.friday.sonarqube.gosu.plugin.rules.metrics.LinesOfCodeRule;
-import de.friday.sonarqube.gosu.plugin.rules.smells.TODOsCheck;
+import de.friday.sonarqube.gosu.plugin.rules.smells.TODOsRule;
 import de.friday.sonarqube.gosu.plugin.rules.vulnerabilities.PublicStaticFieldCheck;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
@@ -29,21 +29,21 @@ class SuppressWarningsListenerTest {
     @Test
     void shouldSuppressAllWarnings() {
         given("SuppressWarningsListener/AllWarnings.gs")
-                .whenCheckedAgainst(TODOsCheck.class)
+                .whenCheckedAgainst(TODOsRule.class)
                 .then().issuesFound().hasSizeEqualTo(1);
     }
 
     @Test
     void shouldSuppressCodeSmellWarnings() {
         given("SuppressWarningsListener/CodeSmellsWarnings.gs")
-                .whenCheckedAgainst(TODOsCheck.class)
+                .whenCheckedAgainst(TODOsRule.class)
                 .then().issuesFound().hasSizeEqualTo(1);
     }
 
     @Test
     void shouldSuppressSpecificCheckWarning() {
         given("SuppressWarningsListener/CheckWarnings.gs")
-                .whenCheckedAgainst(TODOsCheck.class)
+                .whenCheckedAgainst(TODOsRule.class)
                 .then().issuesFound().hasSizeEqualTo(1);
     }
 
@@ -71,7 +71,7 @@ class SuppressWarningsListenerTest {
     @Test
     void shouldSuppressWarningsOnFieldAndProperties() {
         given("SuppressWarningsListener/fieldsAndProperties.gs")
-                .whenCheckedAgainst(TODOsCheck.class)
+                .whenCheckedAgainst(TODOsRule.class)
                 .then().issuesFound().areEmpty();
 
         given("SuppressWarningsListener/fieldsAndProperties.gs")
@@ -82,7 +82,7 @@ class SuppressWarningsListenerTest {
     @Test
     void shouldSuppressWarningsOfMultipleChecks() {
         given("SuppressWarningsListener/arrayOfSuppressWarnings.gs")
-                .whenCheckedAgainst(TODOsCheck.class)
+                .whenCheckedAgainst(TODOsRule.class)
                 .then().issuesFound().areEmpty();
 
         given("SuppressWarningsListener/arrayOfSuppressWarnings.gs")
@@ -97,14 +97,14 @@ class SuppressWarningsListenerTest {
                 .then().issuesFound().hasSizeEqualTo(2);
 
         given("SuppressWarningsListener/notRelatedAnnotations.gs")
-                .whenCheckedAgainst(TODOsCheck.class)
+                .whenCheckedAgainst(TODOsRule.class)
                 .then().issuesFound().hasSizeEqualTo(2);
     }
 
     @Test
     void shouldSuppressWarningsOnEnhancements() {
         given("SuppressWarningsListener/enhancementSuppressWarnings.gsx")
-                .whenCheckedAgainst(TODOsCheck.class)
+                .whenCheckedAgainst(TODOsRule.class)
                 .then().issuesFound().areEmpty();
     }
 

@@ -22,9 +22,9 @@ import org.junit.jupiter.api.Test;
 class RulesMetadataUtilTest {
 
     @Test
-    void returnsMainScopeForTODOsCheck() {
+    void returnsMainScopeForTODOsRule() {
         // given
-        final String checkKey = "TODOsCheck";
+        final String checkKey = "TODOsRule";
 
         // when
         final RulesMetadataUtil.Scope scope = RulesMetadataUtil.getRuleScope(checkKey);

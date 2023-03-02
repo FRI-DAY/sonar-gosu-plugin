@@ -25,7 +25,7 @@ public class RulesKeysExtractorTest {
     @Test
     void shouldReturnPackageOfRule() {
         // given
-        final String ruleKey = "TODOsCheck";
+        final String ruleKey = "TODOsRule";
 
         // when
         final String rulePackage = RulesKeysExtractor.getRulePackage(ruleKey);

@@ -21,17 +21,17 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class TODOsCheckTest {
+class TODOsRuleTest {
 
     @Test
     void findsNoIssuesWhenGosuCodeDoNotHaveTODOs() {
-        given("TODOsCheck/ok.gs").whenCheckedAgainst(TODOsCheck.class).then().issuesFound().areEmpty();
+        given("TODOsRule/ok.gs").whenCheckedAgainst(TODOsRule.class).then().issuesFound().areEmpty();
     }
 
     @Test
     void findsIssuesWhenGosuCodeHasTODOs() {
-        given("TODOsCheck/nok.gs")
-                .whenCheckedAgainst(TODOsCheck.class)
+        given("TODOsRule/nok.gs")
+                .whenCheckedAgainst(TODOsRule.class)
                 .then()
                 .issuesFound()
                 .hasSizeEqualTo(5)

@@ -1,6 +1,6 @@
 package checks.SuppressWarningsListener
 
-@SuppressWarnings("gosu:TODOsCheck")
+@SuppressWarnings("gosu:TODOsRule")
 class CheckWarnings {
 
 /*

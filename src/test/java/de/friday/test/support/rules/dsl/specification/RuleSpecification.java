@@ -45,9 +45,9 @@ public interface RuleSpecification extends RuleRunner {
      * <p>
      * E.g.
      * <pre>
-     * given("TODOsCheck/nok.gs").whenCheckedAgainst(TODOsCheck.class).then().issuesFound().hasSizeEqualTo(5);
+     * given("TODOsRule/nok.gs").whenCheckedAgainst(TODOsRule.class).then().issuesFound().hasSizeEqualTo(5);
      * </pre>
-     * This runs the TODOsCheck against the nok.gs source code file and return the list of issues found.
+     * This runs the TODOsRule against the nok.gs source code file and return the list of issues found.
      * </p>
      * @param sourceCodeFileName Source code file name to run the check against
      * @return The Check specification
@@ -60,9 +60,9 @@ public interface RuleSpecification extends RuleRunner {
      * <p>
      * E.g.
      * <pre>
-     * given("TODOsCheck/ok.gs").whenCheckedAgainst(TODOsCheck.class).then().issuesFound().areEmpty();
+     * given("TODOsRule/ok.gs").whenCheckedAgainst(TODOsRule.class).then().issuesFound().areEmpty();
      * </pre>
-     * This runs the TODOsCheck against the ok.gs source code file and return the list of issues found.
+     * This runs the TODOsRule against the ok.gs source code file and return the list of issues found.
      * </p>
      * @param checkClass Source code file to run the check against
      * @return The Check specification
@@ -73,7 +73,7 @@ public interface RuleSpecification extends RuleRunner {
      * Returns the issue specification so that you can set up the expectations on the issues returned by the Check.
      * E.g.
      * <pre>
-     * given("TODOsCheck/ok.gs").whenCheckedAgainst(TODOsCheck.class).then().issuesFound().areEmpty();g
+     * given("TODOsRule/ok.gs").whenCheckedAgainst(TODOsRule.class).then().issuesFound().areEmpty();g
      * </pre>
      *
      * @return The issue specificaiton

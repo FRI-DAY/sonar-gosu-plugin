@@ -22,8 +22,8 @@ public interface IssueSpecification {
      * Syntactic sugar to enable expressive issue expectations.
      * E.g.
      * <pre>
-     * given("TODOsCheck/ok.gs")
-     * .whenCheckedAgainst(TODOsCheck.class)
+     * given("TODOsRule/ok.gs")
+     * .whenCheckedAgainst(TODOsRule.class)
      * .then()
      * .issuesFound()
      * .hasSizeEqualTo(5);
@@ -39,7 +39,7 @@ public interface IssueSpecification {
      * Syntactic sugar to enable expressive issue expectations.
      * E.g.
      * <pre>
-     * given("TODOsCheck/ok.gs").whenCheckedAgainst(TODOsCheck.class).then().issuesFound().areEmpty();
+     * given("TODOsRule/ok.gs").whenCheckedAgainst(TODOsRule.class).then().issuesFound().areEmpty();
      * </pre>
      *
      * @return The Issue specification
@@ -50,11 +50,11 @@ public interface IssueSpecification {
      * Syntactic sugar to enable expressive issue expectations.
      * The following expression
      * <pre>
-     * given("TODOsCheck/ok.gs").whenCheckedAgainst(TODOsCheck.class).then().noIssuesFound();
+     * given("TODOsRule/ok.gs").whenCheckedAgainst(TODOsRule.class).then().noIssuesFound();
      * </pre>
      * has the same effect as:
      * <pre>
-     * given("TODOsCheck/ok.gs").whenCheckedAgainst(TODOsCheck.class).then().issuesFound().areEmpty();
+     * given("TODOsRule/ok.gs").whenCheckedAgainst(TODOsRule.class).then().issuesFound().areEmpty();
      * </pre>
      * <p>
      * This is an end assertion.
@@ -72,7 +72,7 @@ public interface IssueSpecification {
      * Evaluate if the list of issues found by the Check is equal to the expectation.
      * E.g.
      * <pre>
-     * given("TODOsCheck/ok.gs").whenCheckedAgainst(TODOsCheck.class).then().issuesFound().hasSizeEqualTo(10);
+     * given("TODOsRule/ok.gs").whenCheckedAgainst(TODOsRule.class).then().issuesFound().hasSizeEqualTo(10);
      * </pre>
      * @return The Issue specification
      */
@@ -82,8 +82,8 @@ public interface IssueSpecification {
      * Evaluate if the list of issues found by the Check are located on the expected text locations on the Source code file.
      * E.g.
      * <pre>
-     * given("TODOsCheck/ok.gs")
-     *      .whenCheckedAgainst(TODOsCheck.class)
+     * given("TODOsRule/ok.gs")
+     *      .whenCheckedAgainst(TODOsRule.class)
      *      .then()
      *      .issuesFound()
      *      .areLocatedOn(expectedTextLocations);

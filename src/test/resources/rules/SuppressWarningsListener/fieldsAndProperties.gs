@@ -6,13 +6,13 @@ class fieldsAndProperties {
   @SuppressWarnings("gosu:PublicStaticFieldCheck")
   public static var someString : String = "asdf"
 
-  @SuppressWarnings("gosu:TODOsCheck")
+  @SuppressWarnings("gosu:TODOsRule")
   property get Something() : String {
     //todo
     return "abcde"
   }
 
-  @SuppressWarnings("gosu:TODOsCheck")
+  @SuppressWarnings("gosu:TODOsRule")
   property get SomethingElse() : String {
     //todo
     return "abcde"
