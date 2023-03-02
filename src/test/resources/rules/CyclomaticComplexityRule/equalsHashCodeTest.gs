@@ -1,4 +1,4 @@
-package checks.CyclomaticComplexityCheck
+package checks.CyclomaticComplexityRule
 
 class equalsHashCodeTest {
   override function equals(obj : Object) : boolean {

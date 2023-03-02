@@ -16,16 +16,16 @@
  */
 package de.friday.sonarqube.gosu.plugin.measures.metrics;
 
-import de.friday.sonarqube.gosu.plugin.rules.metrics.CyclomaticComplexityCheck;
+import de.friday.sonarqube.gosu.plugin.rules.metrics.CyclomaticComplexityRule;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class CyclomaticComplexityCheckTest {
+class CyclomaticComplexityRuleTest {
 
     @Test
     void findsIssuesWhenExpressionsAreTooComplex() {
-        given("CyclomaticComplexityCheck/ExpressionsTooComplex.gs")
-                .whenCheckedAgainst(CyclomaticComplexityCheck.class)
+        given("CyclomaticComplexityRule/ExpressionsTooComplex.gs")
+                .whenCheckedAgainst(CyclomaticComplexityRule.class)
                 .then()
                 .issuesFound()
                 .hasSizeEqualTo(48);
@@ -33,8 +33,8 @@ class CyclomaticComplexityCheckTest {
 
     @Test
     void findsNoIssuesOnEqualsAndHashCodeFunctions() {
-        given("CyclomaticComplexityCheck/equalsHashCodeTest.gs")
-                .whenCheckedAgainst(CyclomaticComplexityCheck.class)
+        given("CyclomaticComplexityRule/equalsHashCodeTest.gs")
+                .whenCheckedAgainst(CyclomaticComplexityRule.class)
                 .then()
                 .issuesFound()
                 .areEmpty();
@@ -42,8 +42,8 @@ class CyclomaticComplexityCheckTest {
 
     @Test
     void findsNoIssuesWhenComplexityIsWithinThreshold() {
-        given("CyclomaticComplexityCheck/testWithThreshold.gs")
-                .whenCheckedAgainst(CyclomaticComplexityCheck.class)
+        given("CyclomaticComplexityRule/testWithThreshold.gs")
+                .whenCheckedAgainst(CyclomaticComplexityRule.class)
                 .then()
                 .issuesFound()
                 .areEmpty();
@@ -51,8 +51,8 @@ class CyclomaticComplexityCheckTest {
 
     @Test
     void findsNoIssuesWhenComplexityIsBellowThreshold() {
-        given("CyclomaticComplexityCheck/testBelowThreshold.gs")
-                .whenCheckedAgainst(CyclomaticComplexityCheck.class)
+        given("CyclomaticComplexityRule/testBelowThreshold.gs")
+                .whenCheckedAgainst(CyclomaticComplexityRule.class)
                 .then()
                 .issuesFound()
                 .areEmpty();
@@ -60,8 +60,8 @@ class CyclomaticComplexityCheckTest {
 
     @Test
     void findsIssuesWhenComplexityIsAboveThreshold() {
-        given("CyclomaticComplexityCheck/testAboveThreshold.gs")
-                .whenCheckedAgainst(CyclomaticComplexityCheck.class)
+        given("CyclomaticComplexityRule/testAboveThreshold.gs")
+                .whenCheckedAgainst(CyclomaticComplexityRule.class)
                 .then()
                 .issuesFound()
                 .hasSizeEqualTo(12);
@@ -69,8 +69,8 @@ class CyclomaticComplexityCheckTest {
 
     @Test
     void findsIssuesWhenConstructorAndPropertiesComplexityAreAboveThreshold() {
-        given("CyclomaticComplexityCheck/constructorAndProperty.gs")
-                .whenCheckedAgainst(CyclomaticComplexityCheck.class)
+        given("CyclomaticComplexityRule/constructorAndProperty.gs")
+                .whenCheckedAgainst(CyclomaticComplexityRule.class)
                 .then()
                 .issuesFound()
                 .hasSizeEqualTo(24);

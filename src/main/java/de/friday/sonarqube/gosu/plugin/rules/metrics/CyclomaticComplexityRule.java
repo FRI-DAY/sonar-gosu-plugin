@@ -33,9 +33,9 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
 
-@Rule(key = CyclomaticComplexityCheck.KEY)
-public class CyclomaticComplexityCheck extends BaseGosuRule {
-    static final String KEY = "CyclomaticComplexityCheck";
+@Rule(key = CyclomaticComplexityRule.KEY)
+public class CyclomaticComplexityRule extends BaseGosuRule {
+    static final String KEY = "CyclomaticComplexityRule";
     private static final List<String> EXCLUDED_METHODS = Arrays.asList("equals", "hashCode");
     private static final int DEFAULT_METHOD_THRESHOLD = 10;
     @RuleProperty(
@@ -48,7 +48,7 @@ public class CyclomaticComplexityCheck extends BaseGosuRule {
     private CyclomaticComplexityMetric metric;
 
     @Inject
-    CyclomaticComplexityCheck(GosuFileProperties gosuFileProperties, CyclomaticComplexityMetric metric) {
+    CyclomaticComplexityRule(GosuFileProperties gosuFileProperties, CyclomaticComplexityMetric metric) {
         this.gosuFileProperties = gosuFileProperties;
         this.metric = metric;
     }

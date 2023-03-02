@@ -1,4 +1,4 @@
-package checks.CyclomaticComplexityCheck
+package checks.CyclomaticComplexityRule
 
 class testWithThreshold {
   function someFunc(obj : Object) : boolean {

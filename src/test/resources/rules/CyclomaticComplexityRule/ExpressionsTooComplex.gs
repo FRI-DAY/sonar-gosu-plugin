@@ -1,4 +1,4 @@
-package checks.CyclomaticComplexityCheck
+package checks.CyclomaticComplexityRule
 
 class ExpressionsTooComplex {
   function test() : void { //+2 -> underline function + secondary issue
