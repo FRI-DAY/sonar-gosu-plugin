@@ -24,7 +24,7 @@ import org.sonar.api.batch.fs.internal.DefaultInputFile;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.measures.CoreMetrics;
 
-public class LinesOfCodeMetric extends AbstractMetricBase {
+public class LinesOfCodeMetric extends BaseMetric {
     private final GosuFileProperties gosuFileProperties;
     private final SensorContext context;
     private int linesOfCode;

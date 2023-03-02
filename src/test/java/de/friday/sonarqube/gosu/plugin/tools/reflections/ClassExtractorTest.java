@@ -16,7 +16,7 @@
  */
 package de.friday.sonarqube.gosu.plugin.tools.reflections;
 
-import de.friday.sonarqube.gosu.plugin.checks.AbstractCheckBase;
+import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -24,16 +24,16 @@ import org.sonar.api.batch.fs.InputFile;
 
 class ClassExtractorTest {
     @Test
-    void testTODOsCheck() {
-        Optional<Class<? extends AbstractCheckBase>> enabledForMainCheck
-                = ClassExtractor.getCheckForScope("TODOsCheck", InputFile.Type.MAIN);
-        Optional<Class<? extends AbstractCheckBase>> disabledForTestsCheck
-                = ClassExtractor.getCheckForScope("TODOsCheck", InputFile.Type.TEST);
-        Optional<Class<? extends AbstractCheckBase>> nonExistentCheck
-                = ClassExtractor.getCheckForScope("TODOzCheck", InputFile.Type.MAIN);
+    void testTODOsRule() {
+        Optional<Class<? extends BaseGosuRule>> enabledForMainRule
+                = ClassExtractor.getRuleForScope("TODOsRule", InputFile.Type.MAIN);
+        Optional<Class<? extends BaseGosuRule>> disabledForTestsRule
+                = ClassExtractor.getRuleForScope("TODOsRule", InputFile.Type.TEST);
+        Optional<Class<? extends BaseGosuRule>> nonExistentRule
+                = ClassExtractor.getRuleForScope("TODOzCheck", InputFile.Type.MAIN);
 
-        Assertions.assertThat(enabledForMainCheck).isPresent();
-        Assertions.assertThat(disabledForTestsCheck).isEmpty();
-        Assertions.assertThat(nonExistentCheck).isEmpty();
+        Assertions.assertThat(enabledForMainRule).isPresent();
+        Assertions.assertThat(disabledForTestsRule).isEmpty();
+        Assertions.assertThat(nonExistentRule).isEmpty();
     }
 }

@@ -19,9 +19,8 @@ package de.friday.sonarqube.gosu.plugin;
 import de.friday.sonarqube.gosu.language.GosuLanguage;
 import de.friday.test.support.GosuSensorContextTester;
 import de.friday.test.support.TestResourcesDirectories;
-import de.friday.test.support.checks.dsl.gosu.GosuSourceCodeFile;
-import de.friday.test.support.checks.dsl.specification.SourceCodeFile;
-import java.nio.file.Paths;
+import de.friday.test.support.rules.dsl.gosu.GosuSourceCodeFile;
+import de.friday.test.support.rules.dsl.specification.SourceCodeFile;
 import org.junit.jupiter.api.Test;
 import org.sonar.api.batch.sensor.internal.DefaultSensorDescriptor;
 import org.sonar.api.batch.sensor.internal.SensorContextTester;
@@ -98,7 +97,7 @@ class GosuSensorTest {
 
     private SensorContextTester createSensorContextTesterFor(String fileName, boolean isCancelled) {
         final SourceCodeFile sourceCodeFile = new GosuSourceCodeFile(fileName, TestResourcesDirectories.SENSOR_RESOURCES_DIR.getPathAsString());
-        final GosuSensorContextTester sensorContextTester = new GosuSensorContextTester(TestResourcesDirectories.SENSOR_RESOURCES_DIR.getPath(), "MagicNumbersCheck");
+        final GosuSensorContextTester sensorContextTester = new GosuSensorContextTester(TestResourcesDirectories.SENSOR_RESOURCES_DIR.getPath(), "MagicNumbersRule");
         final SensorContextTester sensorContext = sensorContextTester.get();
         sensorContext.setCancelled(isCancelled);
         sensorContext.fileSystem().add(sourceCodeFile.asInputFile());

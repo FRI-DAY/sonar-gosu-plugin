@@ -16,9 +16,9 @@
  */
 package de.friday.sonarqube.gosu.plugin.tools.reflections;
 
-import de.friday.sonarqube.gosu.plugin.checks.AbstractCheckBase;
-import de.friday.sonarqube.gosu.plugin.measures.metrics.AbstractMetricBase;
-import de.friday.sonarqube.gosu.plugin.utils.ChecksMetadataUtil;
+import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
+import de.friday.sonarqube.gosu.plugin.measures.metrics.BaseMetric;
+import de.friday.sonarqube.gosu.plugin.utils.RulesMetadataUtil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,26 +31,26 @@ import org.sonar.api.batch.fs.InputFile;
 import org.sonar.check.Rule;
 
 public final class ClassExtractor {
-    private static final Map<String, Class<? extends AbstractCheckBase>> allChecks = new HashMap<>();
-    private static final Map<String, Class<? extends AbstractCheckBase>> mainSourcesChecks = new HashMap<>();
-    private static final Map<String, Class<? extends AbstractCheckBase>> testSourcesChecks = new HashMap<>();
-    private static final List<Class<? extends AbstractMetricBase>> metrics;
+    private static final Map<String, Class<? extends BaseGosuRule>> allRules = new HashMap<>();
+    private static final Map<String, Class<? extends BaseGosuRule>> mainSourcesRules = new HashMap<>();
+    private static final Map<String, Class<? extends BaseGosuRule>> testSourcesRules = new HashMap<>();
+    private static final List<Class<? extends BaseMetric>> metrics;
 
     static {
-        final Reflections reflections = new Reflections("de.friday.sonarqube.gosu.plugin.checks");
-        final Set<Class<? extends AbstractCheckBase>> allClasses = reflections.getSubTypesOf(AbstractCheckBase.class);
-        final Map<String, Class<? extends AbstractCheckBase>> keysToClasses = new HashMap<>();
+        final Reflections reflections = new Reflections("de.friday.sonarqube.gosu.plugin.rules");
+        final Set<Class<? extends BaseGosuRule>> allClasses = reflections.getSubTypesOf(BaseGosuRule.class);
+        final Map<String, Class<? extends BaseGosuRule>> keysToClasses = new HashMap<>();
 
-        for (Class<? extends AbstractCheckBase> checkClass : allClasses) {
-            final String key = checkClass.getAnnotation(Rule.class).key();
-            keysToClasses.put(key, checkClass);
-            addCheckByScope(checkClass, key);
+        for (Class<? extends BaseGosuRule> ruleClass : allClasses) {
+            final String key = ruleClass.getAnnotation(Rule.class).key();
+            keysToClasses.put(key, ruleClass);
+            addRuleByScope(ruleClass, key);
         }
     }
 
     static {
         final Reflections reflections = new Reflections("de.friday.sonarqube.gosu.plugin.measures");
-        final Set<Class<? extends AbstractMetricBase>> allClasses = reflections.getSubTypesOf(AbstractMetricBase.class);
+        final Set<Class<? extends BaseMetric>> allClasses = reflections.getSubTypesOf(BaseMetric.class);
 
         metrics = Collections.unmodifiableList(new ArrayList<>(allClasses));
     }
@@ -58,39 +58,39 @@ public final class ClassExtractor {
     private ClassExtractor() {
     }
 
-    private static void addCheckByScope(Class<? extends AbstractCheckBase> clazz, String checkKey) {
-        allChecks.put(checkKey, clazz);
-        ChecksMetadataUtil.Scope scope = ChecksMetadataUtil.getCheckScope(checkKey);
+    private static void addRuleByScope(Class<? extends BaseGosuRule> clazz, String ruleKey) {
+        allRules.put(ruleKey, clazz);
+        RulesMetadataUtil.Scope scope = RulesMetadataUtil.getRuleScope(ruleKey);
         switch (scope) {
             case MAIN:
-                mainSourcesChecks.put(checkKey, clazz);
+                mainSourcesRules.put(ruleKey, clazz);
                 break;
             case TESTS:
-                testSourcesChecks.put(checkKey, clazz);
+                testSourcesRules.put(ruleKey, clazz);
                 break;
             case ALL:
             default:
-                mainSourcesChecks.put(checkKey, clazz);
-                testSourcesChecks.put(checkKey, clazz);
+                mainSourcesRules.put(ruleKey, clazz);
+                testSourcesRules.put(ruleKey, clazz);
         }
     }
 
-    public static Map<String, Class<? extends AbstractCheckBase>> getChecks() {
-        return Collections.unmodifiableMap(new HashMap<>(allChecks));
+    public static Map<String, Class<? extends BaseGosuRule>> getRules() {
+        return Collections.unmodifiableMap(new HashMap<>(allRules));
     }
 
-    public static List<Class<? extends AbstractMetricBase>> getMetrics() {
+    public static List<Class<? extends BaseMetric>> getMetrics() {
         return metrics;
     }
 
-    public static Optional<Class<? extends AbstractCheckBase>> getCheckForScope(String key, InputFile.Type type) {
+    public static Optional<Class<? extends BaseGosuRule>> getRuleForScope(String key, InputFile.Type type) {
         switch (type) {
             case MAIN:
-                return Optional.ofNullable(mainSourcesChecks.get(key));
+                return Optional.ofNullable(mainSourcesRules.get(key));
             case TEST:
-                return Optional.ofNullable(testSourcesChecks.get(key));
+                return Optional.ofNullable(testSourcesRules.get(key));
             default:
-                return Optional.ofNullable(allChecks.get(key));
+                return Optional.ofNullable(allRules.get(key));
         }
     }
 }

@@ -17,7 +17,7 @@
 package de.friday.sonarqube.gosu.plugin;
 
 import de.friday.sonarqube.gosu.language.GosuLanguage;
-import de.friday.sonarqube.gosu.plugin.tools.reflections.CheckKeysExtractor;
+import de.friday.sonarqube.gosu.plugin.tools.reflections.RulesKeysExtractor;
 import org.junit.jupiter.api.Test;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.utils.ValidationMessages;
@@ -42,7 +42,7 @@ class GosuQualityProfileTest {
 
     private int expectedNumberOfActiveRules() {
         final int defaultRulesCount = 1;
-        final int numberOfGosuChecks = CheckKeysExtractor.getAllCheckKeys().size();
+        final int numberOfGosuChecks = RulesKeysExtractor.getAllRulesKeys().size();
         return defaultRulesCount + numberOfGosuChecks;
     }
 }

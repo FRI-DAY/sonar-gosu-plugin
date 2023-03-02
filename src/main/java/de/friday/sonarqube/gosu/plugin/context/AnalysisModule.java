@@ -20,7 +20,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 import com.google.inject.multibindings.Multibinder;
 import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
-import de.friday.sonarqube.gosu.plugin.checks.AbstractCheckBase;
+import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
 import de.friday.sonarqube.gosu.plugin.issues.IssueCollector;
 import de.friday.sonarqube.gosu.plugin.measures.metrics.CognitiveComplexityMetric;
 import de.friday.sonarqube.gosu.plugin.measures.metrics.CyclomaticComplexityMetric;
@@ -70,9 +70,9 @@ public class AnalysisModule extends AbstractModule {
     }
 
     private void bindChecks() {
-        final Multibinder<AbstractCheckBase> checksMultibinder = Multibinder.newSetBinder(binder(), AbstractCheckBase.class);
+        final Multibinder<BaseGosuRule> checksMultibinder = Multibinder.newSetBinder(binder(), BaseGosuRule.class);
 
-        for (Class<? extends AbstractCheckBase> check : ClassExtractor.getChecks().values()) {
+        for (Class<? extends BaseGosuRule> check : ClassExtractor.getRules().values()) {
             checksMultibinder.addBinding().to(check);
         }
     }

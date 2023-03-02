@@ -29,7 +29,7 @@ import org.sonar.api.measures.CoreMetrics;
  * Implementation base on Sonarqube documentation:
  * https://www.sonarsource.com/docs/CognitiveComplexity.pdf
  */
-public class CognitiveComplexityMetric extends AbstractMetricBase {
+public class CognitiveComplexityMetric extends BaseMetric {
     private final SensorContext context;
     private final GosuFileProperties gosuFileProperties;
     private int classComplexity;
@@ -202,7 +202,7 @@ public class CognitiveComplexityMetric extends AbstractMetricBase {
 
         int previousTokenType = 0;
         for (Token token : tokenList) {
-            if (AbstractMetricBase.isComplexityOperator(token.getType())) {
+            if (BaseMetric.isComplexityOperator(token.getType())) {
                 if (previousTokenType != token.getType()) {
                     initialComplexity++;
                 }

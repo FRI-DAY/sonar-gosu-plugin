@@ -22,7 +22,7 @@ import de.friday.sonarqube.gosu.plugin.GosuFileParser;
 import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import de.friday.sonarqube.gosu.plugin.reports.ReportsDirectories;
 import de.friday.sonarqube.gosu.plugin.reports.ReportsScanner;
-import de.friday.test.support.checks.dsl.gosu.GosuSourceCodeFile;
+import de.friday.test.support.rules.dsl.gosu.GosuSourceCodeFile;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;

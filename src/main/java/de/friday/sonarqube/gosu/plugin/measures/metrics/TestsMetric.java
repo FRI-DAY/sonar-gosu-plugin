@@ -27,7 +27,7 @@ import org.sonar.api.utils.log.Loggers;
 import org.sonar.plugins.surefire.data.UnitTestClassReport;
 import org.sonar.plugins.surefire.data.UnitTestIndex;
 
-public class TestsMetric extends AbstractMetricBase {
+public class TestsMetric extends BaseMetric {
 
     private static final Logger LOGGER = Loggers.get(TestsMetric.class);
     private final SensorContext context;
