@@ -1,6 +1,6 @@
-package checks.LinesOfCodeCheck
+package checks.LinesOfCodeRule
 
-class lines500 {
+class lines501 {
   function someFunc(obj : Object) : boolean {
     var condition1 = true
     if (condition1)
@@ -112,6 +112,7 @@ class lines500 {
 
   function longFunc() {
     var i = 0
+    i++
     i++
     i++
     i++

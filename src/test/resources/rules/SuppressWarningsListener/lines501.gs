@@ -1,6 +1,6 @@
 package checks.SuppressWarningsListener
 
-@SuppressWarnings("gosu:LinesOfCodeCheck")
+@SuppressWarnings("gosu:LinesOfCodeRule")
 class lines501 {
   function someFunc(obj : Object) : boolean {
     var condition1 = true

@@ -58,7 +58,7 @@ class RulesKeysTest {
 
         metrics.put("CognitiveComplexityRule", RuleType.METRICS);
         metrics.put("CyclomaticComplexityRule", RuleType.METRICS);
-        metrics.put("LinesOfCodeCheck", RuleType.METRICS);
+        metrics.put("LinesOfCodeRule", RuleType.METRICS);
 
         return metrics;
     }

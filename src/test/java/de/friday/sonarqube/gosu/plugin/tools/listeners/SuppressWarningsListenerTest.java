@@ -18,7 +18,7 @@ package de.friday.sonarqube.gosu.plugin.tools.listeners;
 
 import de.friday.sonarqube.gosu.plugin.rules.bugs.SameConditionsInIfRule;
 import de.friday.sonarqube.gosu.plugin.rules.metrics.CognitiveComplexityRule;
-import de.friday.sonarqube.gosu.plugin.rules.metrics.LinesOfCodeCheck;
+import de.friday.sonarqube.gosu.plugin.rules.metrics.LinesOfCodeRule;
 import de.friday.sonarqube.gosu.plugin.rules.smells.TODOsCheck;
 import de.friday.sonarqube.gosu.plugin.rules.vulnerabilities.PublicStaticFieldCheck;
 import org.junit.jupiter.api.Test;
@@ -111,7 +111,7 @@ class SuppressWarningsListenerTest {
     @Test
     void shouldSuppressWarningsOnCheckWithoutTextRange() {
         given("SuppressWarningsListener/lines501.gs")
-                .whenCheckedAgainst(LinesOfCodeCheck.class)
+                .whenCheckedAgainst(LinesOfCodeRule.class)
                 .then().issuesFound().areEmpty();
     }
 }

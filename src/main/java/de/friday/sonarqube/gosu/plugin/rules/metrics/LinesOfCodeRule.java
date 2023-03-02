@@ -24,9 +24,9 @@ import de.friday.sonarqube.gosu.plugin.measures.metrics.LinesOfCodeMetric;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
 
-@Rule(key = LinesOfCodeCheck.KEY)
-public class LinesOfCodeCheck extends BaseGosuRule {
-    static final String KEY = "LinesOfCodeCheck";
+@Rule(key = LinesOfCodeRule.KEY)
+public class LinesOfCodeRule extends BaseGosuRule {
+    static final String KEY = "LinesOfCodeRule";
     private static final int DEFAULT_METHOD_THRESHOLD = 500;
     @RuleProperty(
             key = "Max",
@@ -38,7 +38,7 @@ public class LinesOfCodeCheck extends BaseGosuRule {
     private LinesOfCodeMetric metric;
 
     @Inject
-    LinesOfCodeCheck(LinesOfCodeMetric metric) {
+    LinesOfCodeRule(LinesOfCodeMetric metric) {
         this.metric = metric;
     }
 

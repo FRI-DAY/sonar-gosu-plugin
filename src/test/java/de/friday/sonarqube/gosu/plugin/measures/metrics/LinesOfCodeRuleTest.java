@@ -16,15 +16,15 @@
  */
 package de.friday.sonarqube.gosu.plugin.measures.metrics;
 
-import de.friday.sonarqube.gosu.plugin.rules.metrics.LinesOfCodeCheck;
+import de.friday.sonarqube.gosu.plugin.rules.metrics.LinesOfCodeRule;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class LinesOfCodeCheckTest {
+class LinesOfCodeRuleTest {
     @Test
     void findsIssuesWhenLinesOfCodeAreAboveFiveHundredLines() {
-        given("LinesOfCodeCheck/lines501.gs")
-                .whenCheckedAgainst(LinesOfCodeCheck.class)
+        given("LinesOfCodeRule/lines501.gs")
+                .whenCheckedAgainst(LinesOfCodeRule.class)
                 .then()
                 .issuesFound()
                 .hasSizeEqualTo(1);
@@ -32,8 +32,8 @@ class LinesOfCodeCheckTest {
 
     @Test
     void findsNoIssuesWhenLinesOfCodeAreWithinThreshold() {
-        given("LinesOfCodeCheck/lines500.gs")
-                .whenCheckedAgainst(LinesOfCodeCheck.class)
+        given("LinesOfCodeRule/lines500.gs")
+                .whenCheckedAgainst(LinesOfCodeRule.class)
                 .then()
                 .issuesFound()
                 .areEmpty();
@@ -41,8 +41,8 @@ class LinesOfCodeCheckTest {
 
     @Test
     void findsNoIssuesWhenLinesOfCodeAreBelowThreshold() {
-        given("LinesOfCodeCheck/lines499.gs")
-                .whenCheckedAgainst(LinesOfCodeCheck.class)
+        given("LinesOfCodeRule/lines499.gs")
+                .whenCheckedAgainst(LinesOfCodeRule.class)
                 .then()
                 .issuesFound()
                 .areEmpty();
