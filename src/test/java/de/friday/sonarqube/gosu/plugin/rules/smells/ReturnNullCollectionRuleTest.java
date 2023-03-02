@@ -19,19 +19,19 @@ package de.friday.sonarqube.gosu.plugin.rules.smells;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class ReturnNullCollectionCheckTest {
+class ReturnNullCollectionRuleTest {
 
     @Test
     void findsNoIssuesWhenCollectionBeingReturnedIsNotNull() {
-        given("ReturnNullCollectionCheck/ok.gs")
-                .whenCheckedAgainst(ReturnNullCollectionCheck.class)
+        given("ReturnNullCollectionRule/ok.gs")
+                .whenCheckedAgainst(ReturnNullCollectionRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsIssuesWhenCollectionBeingReturnedIsNull() {
-        given("ReturnNullCollectionCheck/nok.gs")
-                .whenCheckedAgainst(ReturnNullCollectionCheck.class)
+        given("ReturnNullCollectionRule/nok.gs")
+                .whenCheckedAgainst(ReturnNullCollectionRule.class)
                 .then().issuesFound().hasSizeEqualTo(10);
     }
 

@@ -80,7 +80,7 @@ class RulesKeysTest {
         codeSmells.put("NestedStatementsRule", RuleType.CODE_SMELLS);
         codeSmells.put("PublicVariablesRule", RuleType.CODE_SMELLS);
         codeSmells.put("RethrowInCatchRule", RuleType.CODE_SMELLS);
-        codeSmells.put("ReturnNullCollectionCheck", RuleType.CODE_SMELLS);
+        codeSmells.put("ReturnNullCollectionRule", RuleType.CODE_SMELLS);
         codeSmells.put("TODOsCheck", RuleType.CODE_SMELLS);
         codeSmells.put("TooManyParamsCheck", RuleType.CODE_SMELLS);
         codeSmells.put("UnnecessaryImportRule", RuleType.CODE_SMELLS);

@@ -25,9 +25,9 @@ import java.util.Map;
 import java.util.Set;
 import org.sonar.check.Rule;
 
-@Rule(key = ReturnNullCollectionCheck.KEY)
-public class ReturnNullCollectionCheck extends BaseGosuRule {
-    static final String KEY = "ReturnNullCollectionCheck";
+@Rule(key = ReturnNullCollectionRule.KEY)
+public class ReturnNullCollectionRule extends BaseGosuRule {
+    static final String KEY = "ReturnNullCollectionRule";
     private static final String NULL = "null";
     private ScopeTracker currentScope = new ScopeTracker();
 
