@@ -21,9 +21,9 @@ import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
 import de.friday.sonarqube.gosu.plugin.issues.GosuIssue;
 import org.sonar.check.Rule;
 
-@Rule(key = IfElseIfCheck.KEY)
-public class IfElseIfCheck extends BaseGosuRule {
-    static final String KEY = "IfElseIfCheck";
+@Rule(key = IfElseIfRule.KEY)
+public class IfElseIfRule extends BaseGosuRule {
+    static final String KEY = "IfElseIfRule";
 
     @Override
     public void exitElseStatement(GosuParser.ElseStatementContext ctx) {

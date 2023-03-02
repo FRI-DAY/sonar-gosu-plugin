@@ -21,19 +21,19 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class IfElseIfCheckTest {
+class IfElseIfRuleTest {
 
     @Test
     void findsNoIssuesWhenIfElseIfStatementsHaveElseClause() {
-        given("IfElseIfCheck/ok.gs")
-                .whenCheckedAgainst(IfElseIfCheck.class)
+        given("IfElseIfRule/ok.gs")
+                .whenCheckedAgainst(IfElseIfRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsIssuesWhenIfElseIfStatementsHaveNoElseClause() {
-        given("IfElseIfCheck/nok.gs")
-                .whenCheckedAgainst(IfElseIfCheck.class)
+        given("IfElseIfRule/nok.gs")
+                .whenCheckedAgainst(IfElseIfRule.class)
                 .then().issuesFound()
                 .hasSizeEqualTo(2)
                 .and()

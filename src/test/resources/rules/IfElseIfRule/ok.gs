@@ -1,4 +1,4 @@
-package checks.IfElseIfCheck
+package checks.IfElseIfRule
 
 class ok {
 
