@@ -16,11 +16,11 @@
  */
 package de.friday.sonarqube.gosu.plugin.measures.metrics;
 
-import de.friday.sonarqube.gosu.plugin.checks.metrics.CognitiveComplexityCheck;
-import de.friday.test.support.checks.dsl.gosu.GosuIssueLocations;
+import de.friday.sonarqube.gosu.plugin.rules.metrics.CognitiveComplexityCheck;
+import de.friday.test.support.rules.dsl.gosu.GosuIssueLocations;
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
-import static de.friday.test.support.checks.dsl.gosu.GosuCheckTestDsl.given;
+import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
 class CognitiveComplexityCheckTest {
     @Test

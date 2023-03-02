@@ -22,7 +22,7 @@ import java.nio.file.Paths;
 public enum TestResourcesDirectories {
 
     RESOURCES_DIR("src/test/resources"),
-    CHECK_RESOURCES_DIR("src/test/resources/checks"),
+    RULES_RESOURCES_DIR("src/test/resources/rules"),
     METRICS_RESOURCES_DIR("src/test/resources/measures/metrics"),
     SENSOR_RESOURCES_DIR("src/test/resources/sensor");
 

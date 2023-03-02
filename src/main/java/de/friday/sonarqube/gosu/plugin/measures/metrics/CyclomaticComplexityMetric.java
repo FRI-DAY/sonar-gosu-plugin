@@ -25,7 +25,7 @@ import org.antlr.v4.runtime.Token;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.measures.CoreMetrics;
 
-public class CyclomaticComplexityMetric extends AbstractMetricBase {
+public class CyclomaticComplexityMetric extends BaseMetric {
     private final SensorContext context;
     private final GosuFileProperties gosuFileProperties;
     private int classComplexity;
@@ -104,7 +104,7 @@ public class CyclomaticComplexityMetric extends AbstractMetricBase {
                 .get(context.getStart().getTokenIndex(), GosuUtil.getStopToken(context).getTokenIndex());
 
         for (Token token : tokenList) {
-            if (AbstractMetricBase.isComplexityOperator(token.getType())) {
+            if (BaseMetric.isComplexityOperator(token.getType())) {
                 initialComplexity++;
             }
         }

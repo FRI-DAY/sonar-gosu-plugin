@@ -16,9 +16,9 @@
  */
 package de.friday.sonarqube.gosu.plugin.measures.metrics;
 
-import de.friday.sonarqube.gosu.plugin.checks.metrics.CyclomaticComplexityCheck;
+import de.friday.sonarqube.gosu.plugin.rules.metrics.CyclomaticComplexityCheck;
 import org.junit.jupiter.api.Test;
-import static de.friday.test.support.checks.dsl.gosu.GosuCheckTestDsl.given;
+import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
 class CyclomaticComplexityCheckTest {
 

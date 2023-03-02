@@ -16,7 +16,7 @@
  */
 package de.friday.sonarqube.gosu.plugin.issues;
 
-import de.friday.sonarqube.gosu.plugin.checks.AbstractCheckBase;
+import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
 import de.friday.sonarqube.gosu.plugin.utils.TextRangeUtil;
 import de.friday.sonarqube.gosu.plugin.utils.annotations.UnitTestMissing;
 import java.util.ArrayList;
@@ -87,7 +87,7 @@ public final class GosuIssue implements Issue {
         private RuleKey ruleKey;
         private int gap = -1;
 
-        public GosuIssueBuilder(AbstractCheckBase check) {
+        public GosuIssueBuilder(BaseGosuRule check) {
             this.ruleKey = check.getRuleKey();
         }
 

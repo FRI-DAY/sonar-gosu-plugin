@@ -19,7 +19,7 @@ package de.friday.sonarqube.gosu.plugin.issues;
 import com.google.inject.Inject;
 
 import de.friday.sonarqube.gosu.plugin.tools.listeners.SuppressWarningsListener;
-import de.friday.sonarqube.gosu.plugin.tools.reflections.CheckKeysExtractor;
+import de.friday.sonarqube.gosu.plugin.tools.reflections.RulesKeysExtractor;
 import de.friday.sonarqube.gosu.plugin.utils.annotations.UnitTestMissing;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,7 +73,7 @@ public class IssueCollector {
     }
 
     private String getCheckPackageTag(String issueKey) {
-        final String directory = CheckKeysExtractor.getCheckPackage(issueKey);
+        final String directory = RulesKeysExtractor.getRulePackage(issueKey);
         return CODE_SMELLS_DIR.equals(directory) ? CODE_SMELLS_TAG : directory;
     }
 

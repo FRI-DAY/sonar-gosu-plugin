@@ -21,8 +21,8 @@ import com.google.inject.Injector;
 import de.friday.sonarqube.gosu.antlr.GosuParser;
 import de.friday.sonarqube.gosu.antlr.GosuParserBaseListener;
 import de.friday.sonarqube.gosu.language.GosuLanguage;
-import de.friday.sonarqube.gosu.plugin.checks.AbstractCheckBase;
-import de.friday.sonarqube.gosu.plugin.measures.metrics.AbstractMetricBase;
+import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
+import de.friday.sonarqube.gosu.plugin.measures.metrics.BaseMetric;
 import de.friday.sonarqube.gosu.plugin.tools.listeners.SuppressWarningsListener;
 import de.friday.sonarqube.gosu.plugin.tools.reflections.ClassExtractor;
 import java.util.ArrayList;
@@ -64,15 +64,15 @@ public class GosuParserContext {
     }
 
     private void registerChecksOn(Injector injector) {
-        final List<AbstractCheckBase> activeChecks = instantiateChecks(injector);
+        final List<BaseGosuRule> activeChecks = instantiateChecks(injector);
 
-        for (AbstractCheckBase check : activeChecks) {
+        for (BaseGosuRule check : activeChecks) {
             registerListener(check);
         }
     }
 
     private void registerMetricsOn(Injector injector) {
-        for (Class<? extends AbstractMetricBase> metric : ClassExtractor.getMetrics()) {
+        for (Class<? extends BaseMetric> metric : ClassExtractor.getMetrics()) {
             registerListener(injector.getInstance(metric));
         }
     }
@@ -82,9 +82,9 @@ public class GosuParserContext {
         registerListener(injector.getInstance(SuppressWarningsListener.class));
     }
 
-    private List<AbstractCheckBase> instantiateChecks(Injector injector) {
+    private List<BaseGosuRule> instantiateChecks(Injector injector) {
         final Collection<ActiveRule> activeRules = context.activeRules().findByRepository(GosuLanguage.REPOSITORY_KEY);
-        final List<AbstractCheckBase> activeChecks = new ArrayList<>();
+        final List<BaseGosuRule> activeChecks = new ArrayList<>();
 
         for (ActiveRule activeRule : activeRules) {
             getCheckClass(activeRule).ifPresent(check -> activeChecks.add(injector.getInstance(check)));
@@ -101,15 +101,15 @@ public class GosuParserContext {
         gosuParser.addErrorListener(errorListener);
     }
 
-    private Optional<Class<? extends AbstractCheckBase>> getCheckClass(ActiveRule activeRule) {
+    private Optional<Class<? extends BaseGosuRule>> getCheckClass(ActiveRule activeRule) {
         final String activeRuleKey = activeRule.ruleKey().rule();
 
         return ClassExtractor.getCheckForScope(activeRuleKey, inputFile.type());
     }
 
-    private List<AbstractCheckBase> bindChecksWithSonarAnnotations(List<AbstractCheckBase> activeChecks) {
+    private List<BaseGosuRule> bindChecksWithSonarAnnotations(List<BaseGosuRule> activeChecks) {
         final CheckFactory checkFactory = new CheckFactory(context.activeRules());
-        final Checks<AbstractCheckBase> checks = checkFactory.create(GosuLanguage.REPOSITORY_KEY);
+        final Checks<BaseGosuRule> checks = checkFactory.create(GosuLanguage.REPOSITORY_KEY);
 
         return new ArrayList<>(checks.addAnnotatedChecks((Iterable) activeChecks).all());
     }

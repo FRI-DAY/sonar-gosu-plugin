@@ -16,7 +16,7 @@
  */
 package de.friday.sonarqube.gosu.plugin.tools.reflections;
 
-import de.friday.sonarqube.gosu.plugin.checks.AbstractCheckBase;
+import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -25,11 +25,11 @@ import org.sonar.api.batch.fs.InputFile;
 class ClassExtractorTest {
     @Test
     void testTODOsCheck() {
-        Optional<Class<? extends AbstractCheckBase>> enabledForMainCheck
+        Optional<Class<? extends BaseGosuRule>> enabledForMainCheck
                 = ClassExtractor.getCheckForScope("TODOsCheck", InputFile.Type.MAIN);
-        Optional<Class<? extends AbstractCheckBase>> disabledForTestsCheck
+        Optional<Class<? extends BaseGosuRule>> disabledForTestsCheck
                 = ClassExtractor.getCheckForScope("TODOsCheck", InputFile.Type.TEST);
-        Optional<Class<? extends AbstractCheckBase>> nonExistentCheck
+        Optional<Class<? extends BaseGosuRule>> nonExistentCheck
                 = ClassExtractor.getCheckForScope("TODOzCheck", InputFile.Type.MAIN);
 
         Assertions.assertThat(enabledForMainCheck).isPresent();

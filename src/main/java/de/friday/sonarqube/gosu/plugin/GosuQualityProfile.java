@@ -17,7 +17,7 @@
 package de.friday.sonarqube.gosu.plugin;
 
 import de.friday.sonarqube.gosu.language.GosuLanguage;
-import de.friday.sonarqube.gosu.plugin.tools.reflections.CheckKeysExtractor;
+import de.friday.sonarqube.gosu.plugin.tools.reflections.RulesKeysExtractor;
 import java.util.Optional;
 import org.sonar.api.profiles.ProfileDefinition;
 import org.sonar.api.profiles.RulesProfile;
@@ -34,7 +34,7 @@ public class GosuQualityProfile extends ProfileDefinition {
 
     @Override
     public RulesProfile createProfile(ValidationMessages validationMessages) {
-        CheckKeysExtractor.getAllCheckKeys().forEach(this::activateRule);
+        RulesKeysExtractor.getAllRulesKeys().forEach(this::activateRule);
         rulesProfile.setDefaultProfile(true);
 
         activateDefaultRules();
