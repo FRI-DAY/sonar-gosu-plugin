@@ -32,9 +32,9 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
 
-@Rule(key = CognitiveComplexityCheck.KEY)
-public class CognitiveComplexityCheck extends BaseGosuRule {
-    static final String KEY = "CognitiveComplexityCheck";
+@Rule(key = CognitiveComplexityRule.KEY)
+public class CognitiveComplexityRule extends BaseGosuRule {
+    static final String KEY = "CognitiveComplexityRule";
     private static final int DEFAULT_METHOD_THRESHOLD = 10;
     @RuleProperty(
             key = "Threshold",
@@ -48,7 +48,7 @@ public class CognitiveComplexityCheck extends BaseGosuRule {
     private GosuFileProperties gosuFileProperties;
 
     @Inject
-    CognitiveComplexityCheck(CognitiveComplexityMetric metric, GosuFileProperties gosuFileProperties) {
+    CognitiveComplexityRule(CognitiveComplexityMetric metric, GosuFileProperties gosuFileProperties) {
         this.gosuFileProperties = gosuFileProperties;
         this.metric = metric;
     }

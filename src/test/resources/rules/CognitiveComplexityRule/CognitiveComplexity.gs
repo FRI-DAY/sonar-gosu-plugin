@@ -1,4 +1,4 @@
-package checks.CognitiveComplexityCheck
+package checks.CognitiveComplexityRule
 
 class CognitiveComplexity {
   function sumOfPrimes(max : int) : int {

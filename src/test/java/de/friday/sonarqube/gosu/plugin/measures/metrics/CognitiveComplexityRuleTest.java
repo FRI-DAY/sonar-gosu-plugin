@@ -16,17 +16,17 @@
  */
 package de.friday.sonarqube.gosu.plugin.measures.metrics;
 
-import de.friday.sonarqube.gosu.plugin.rules.metrics.CognitiveComplexityCheck;
+import de.friday.sonarqube.gosu.plugin.rules.metrics.CognitiveComplexityRule;
 import de.friday.test.support.rules.dsl.gosu.GosuIssueLocations;
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class CognitiveComplexityCheckTest {
+class CognitiveComplexityRuleTest {
     @Test
     void findsIssuesWhenGosuCodeHasHighCognitiveComplexity() {
-        given("CognitiveComplexityCheck/CognitiveComplexity.gs")
-                .whenCheckedAgainst(CognitiveComplexityCheck.class)
+        given("CognitiveComplexityRule/CognitiveComplexity.gs")
+                .whenCheckedAgainst(CognitiveComplexityRule.class)
                 .then()
                 .issuesFound()
                 .hasSizeEqualTo(12)
@@ -51,8 +51,8 @@ class CognitiveComplexityCheckTest {
 
     @Test
     void findsIssuesWhenGosuCodeHasExpressionsTooComplex() {
-        given("CognitiveComplexityCheck/ExpressionsTooComplex.gs")
-                .whenCheckedAgainst(CognitiveComplexityCheck.class)
+        given("CognitiveComplexityRule/ExpressionsTooComplex.gs")
+                .whenCheckedAgainst(CognitiveComplexityRule.class)
                 .then()
                 .issuesFound()
                 .hasSizeEqualTo(41);
@@ -60,8 +60,8 @@ class CognitiveComplexityCheckTest {
 
     @Test
     void findsIssuesWhenGosuCodeIsAboveComplexityThreshold() {
-        given("CognitiveComplexityCheck/testAboveThreshold.gs")
-                .whenCheckedAgainst(CognitiveComplexityCheck.class)
+        given("CognitiveComplexityRule/testAboveThreshold.gs")
+                .whenCheckedAgainst(CognitiveComplexityRule.class)
                 .then()
                 .issuesFound()
                 .hasSizeEqualTo(12);
@@ -69,8 +69,8 @@ class CognitiveComplexityCheckTest {
 
     @Test
     void findsNoIssueWhenCognitiveComplexityIsBelowThreshold() {
-        given("CognitiveComplexityCheck/testBelowThreshold.gs")
-                .whenCheckedAgainst(CognitiveComplexityCheck.class)
+        given("CognitiveComplexityRule/testBelowThreshold.gs")
+                .whenCheckedAgainst(CognitiveComplexityRule.class)
                 .then()
                 .issuesFound()
                 .areEmpty();
@@ -78,8 +78,8 @@ class CognitiveComplexityCheckTest {
 
     @Test
     void findsNoIssueWhenCognitiveComplexityIsEqualToThreshold() {
-        given("CognitiveComplexityCheck/testWithThreshold.gs")
-                .whenCheckedAgainst(CognitiveComplexityCheck.class)
+        given("CognitiveComplexityRule/testWithThreshold.gs")
+                .whenCheckedAgainst(CognitiveComplexityRule.class)
                 .then()
                 .issuesFound()
                 .areEmpty();
@@ -87,8 +87,8 @@ class CognitiveComplexityCheckTest {
 
     @Test
     void findsIssuesWhenConstructorsAndPropertiesAreTooComplex() {
-        given("CognitiveComplexityCheck/constructorAndProperty.gs")
-                .whenCheckedAgainst(CognitiveComplexityCheck.class)
+        given("CognitiveComplexityRule/constructorAndProperty.gs")
+                .whenCheckedAgainst(CognitiveComplexityRule.class)
                 .then()
                 .issuesFound()
                 .hasSizeEqualTo(24);
@@ -96,8 +96,8 @@ class CognitiveComplexityCheckTest {
 
     @Test
     void findsNoIssuesWhenNestedIfsAreWithinThreshold() {
-        given("CognitiveComplexityCheck/NestedIfStatements.gs")
-                .whenCheckedAgainst(CognitiveComplexityCheck.class)
+        given("CognitiveComplexityRule/NestedIfStatements.gs")
+                .whenCheckedAgainst(CognitiveComplexityRule.class)
                 .then()
                 .issuesFound()
                 .areEmpty();

@@ -1,6 +1,6 @@
-package checks.CognitiveComplexityCheck
+package checks.CognitiveComplexityRule
 
-class testAboveThreshold {
+class testWithThreshold {
   function someFunc(obj : Object) : boolean {
     var condition1 = true
     if (condition1)
@@ -21,10 +21,8 @@ class testAboveThreshold {
       return false
     if (condition1)
       return false
-    if (condition1)
-      return false
     else if (condition1)
-      return true
+      return false
     return true
   }
 

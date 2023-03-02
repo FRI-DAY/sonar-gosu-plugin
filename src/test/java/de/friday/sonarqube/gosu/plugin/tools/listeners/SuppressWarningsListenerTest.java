@@ -17,7 +17,7 @@
 package de.friday.sonarqube.gosu.plugin.tools.listeners;
 
 import de.friday.sonarqube.gosu.plugin.rules.bugs.SameConditionsInIfRule;
-import de.friday.sonarqube.gosu.plugin.rules.metrics.CognitiveComplexityCheck;
+import de.friday.sonarqube.gosu.plugin.rules.metrics.CognitiveComplexityRule;
 import de.friday.sonarqube.gosu.plugin.rules.metrics.LinesOfCodeCheck;
 import de.friday.sonarqube.gosu.plugin.rules.smells.TODOsCheck;
 import de.friday.sonarqube.gosu.plugin.rules.vulnerabilities.PublicStaticFieldCheck;
@@ -50,7 +50,7 @@ class SuppressWarningsListenerTest {
     @Test
     void shouldSuppressMetricsWarnings() {
         given("SuppressWarningsListener/MetricsWarnings.gs")
-                .whenCheckedAgainst(CognitiveComplexityCheck.class)
+                .whenCheckedAgainst(CognitiveComplexityRule.class)
                 .then().issuesFound().hasSizeEqualTo(12);
     }
 

@@ -56,7 +56,7 @@ class RulesKeysTest {
     private Map<String, RuleType> metrics() {
         final Map<String, RuleType> metrics = new HashMap<>();
 
-        metrics.put("CognitiveComplexityCheck", RuleType.METRICS);
+        metrics.put("CognitiveComplexityRule", RuleType.METRICS);
         metrics.put("CyclomaticComplexityCheck", RuleType.METRICS);
         metrics.put("LinesOfCodeCheck", RuleType.METRICS);
 
