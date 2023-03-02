@@ -1,4 +1,4 @@
-package checks.StringBuilderInstantiationCheck
+package checks.StringBuilderInstantiationRule
 
 class ok {
 

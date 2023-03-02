@@ -23,9 +23,9 @@ import java.util.Arrays;
 import java.util.List;
 import org.sonar.check.Rule;
 
-@Rule(key = StringBuilderInstantiationCheck.KEY)
-public class StringBuilderInstantiationCheck extends BaseGosuRule {
-    static final String KEY = "StringBuilderInstantiationCheck";
+@Rule(key = StringBuilderInstantiationRule.KEY)
+public class StringBuilderInstantiationRule extends BaseGosuRule {
+    static final String KEY = "StringBuilderInstantiationRule";
     private static final List<String> STRING_BUILDERS = Arrays.asList("StringBuilder", "StringBuffer");
 
     @Override

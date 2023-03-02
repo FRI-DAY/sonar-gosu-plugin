@@ -19,12 +19,12 @@ package de.friday.sonarqube.gosu.plugin.rules.bugs;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class StringBuilderInstantiationCheckTest {
+class StringBuilderInstantiationRuleTest {
 
     @Test
     void findsIssuesWhenStringBuilderIsInstantiatedWithSingleQuoteStringLiteral() {
-        given("StringBuilderInstantiationCheck/nok.gs")
-                .whenCheckedAgainst(StringBuilderInstantiationCheck.class)
+        given("StringBuilderInstantiationRule/nok.gs")
+                .whenCheckedAgainst(StringBuilderInstantiationRule.class)
                 .then()
                 .issuesFound()
                 .hasSizeEqualTo(2);
@@ -32,8 +32,8 @@ class StringBuilderInstantiationCheckTest {
 
     @Test
     void findsNoIssuesWhenStringBuilderIsInstantiatedWithoutSingleQuoteStringLiteral() {
-        given("StringBuilderInstantiationCheck/ok.gs")
-                .whenCheckedAgainst(StringBuilderInstantiationCheck.class)
+        given("StringBuilderInstantiationRule/ok.gs")
+                .whenCheckedAgainst(StringBuilderInstantiationRule.class)
                 .then()
                 .issuesFound()
                 .areEmpty();
