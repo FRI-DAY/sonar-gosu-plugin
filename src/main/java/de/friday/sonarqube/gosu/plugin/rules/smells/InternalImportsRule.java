@@ -25,9 +25,9 @@ import java.util.List;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.sonar.check.Rule;
 
-@Rule(key = InternalImportsCheck.KEY)
-public class InternalImportsCheck extends BaseGosuRule {
-    static final String KEY = "InternalImportsCheck";
+@Rule(key = InternalImportsRule.KEY)
+public class InternalImportsRule extends BaseGosuRule {
+    static final String KEY = "InternalImportsRule";
     private static final String COM_GUIDEWIRE = "com.guidewire";
     private static final String INTERNAL = "internal";
 

@@ -1,4 +1,4 @@
-package checks.InternalImportsCheck
+package checks.InternalImportsRule
 
 uses com.friday.pl.system.bundle.TransactionUtil
 uses friday.internal.packages.*

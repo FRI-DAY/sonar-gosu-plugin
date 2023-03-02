@@ -19,33 +19,33 @@ package de.friday.sonarqube.gosu.plugin.rules.smells;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class InternalImportsCheckTest {
+class InternalImportsRuleTest {
 
     @Test
     void findsNoIssuesWhenClassDoNotUsesGuidewireInternalImports() {
-        given("InternalImportsCheck/ok.gs")
-                .whenCheckedAgainst(InternalImportsCheck.class)
+        given("InternalImportsRule/ok.gs")
+                .whenCheckedAgainst(InternalImportsRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsIssuesWhenGosuCodeUsesGuidewireInternalImports() {
-        given("InternalImportsCheck/nok.gs")
-                .whenCheckedAgainst(InternalImportsCheck.class)
+        given("InternalImportsRule/nok.gs")
+                .whenCheckedAgainst(InternalImportsRule.class)
                 .then().issuesFound().hasSizeEqualTo(6);
     }
 
     @Test
     void findsIssuesWhenEnhancementUsesGuidewireInternalImports() {
-        given("InternalImportsCheck/enhancementTest.gsx")
-                .whenCheckedAgainst(InternalImportsCheck.class)
+        given("InternalImportsRule/enhancementTest.gsx")
+                .whenCheckedAgainst(InternalImportsRule.class)
                 .then().issuesFound().hasSizeEqualTo(4);
     }
 
     @Test
     void findsIssuesWhenInterfaceUsesGuidewireInternalImports() {
-        given("InternalImportsCheck/interfaceTest.gs")
-                .whenCheckedAgainst(InternalImportsCheck.class)
+        given("InternalImportsRule/interfaceTest.gs")
+                .whenCheckedAgainst(InternalImportsRule.class)
                 .then().issuesFound().hasSizeEqualTo(3);
     }
 }
