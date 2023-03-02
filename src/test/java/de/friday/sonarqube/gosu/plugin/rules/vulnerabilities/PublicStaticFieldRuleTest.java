@@ -21,34 +21,34 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class PublicStaticFieldCheckTest {
+class PublicStaticFieldRuleTest {
 
     @Test
     void findsNoIssuesWhenStaticFieldsAreConstants() {
-        given("PublicStaticFieldCheck/ok.gs")
-                .whenCheckedAgainst(PublicStaticFieldCheck.class)
+        given("PublicStaticFieldRule/ok.gs")
+                .whenCheckedAgainst(PublicStaticFieldRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsNoIssuesWhenClassHasNoFields() {
-        given("PublicStaticFieldCheck/noFields.gs")
-                .whenCheckedAgainst(PublicStaticFieldCheck.class)
+        given("PublicStaticFieldRule/noFields.gs")
+                .whenCheckedAgainst(PublicStaticFieldRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsNoIssuesWhenFieldsHaveNoModifiers() {
-        given("PublicStaticFieldCheck/noModifiers.gs")
-                .whenCheckedAgainst(PublicStaticFieldCheck.class)
+        given("PublicStaticFieldRule/noModifiers.gs")
+                .whenCheckedAgainst(PublicStaticFieldRule.class)
                 .then().issuesFound().areEmpty();
     }
 
 
     @Test
     void findsIssuesWhenStaticFieldsAreNotConstants() {
-        given("PublicStaticFieldCheck/nok.gs")
-                .whenCheckedAgainst(PublicStaticFieldCheck.class)
+        given("PublicStaticFieldRule/nok.gs")
+                .whenCheckedAgainst(PublicStaticFieldRule.class)
                 .then()
                 .issuesFound().areLocatedOn(
                         GosuIssueLocations.of(

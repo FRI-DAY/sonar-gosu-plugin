@@ -1,4 +1,4 @@
-package checks.PublicStaticFieldCheck
+package checks.PublicStaticFieldRule
 
 class nok {
 

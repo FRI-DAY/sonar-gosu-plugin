@@ -21,9 +21,9 @@ import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
 import de.friday.sonarqube.gosu.plugin.issues.GosuIssue;
 import org.sonar.check.Rule;
 
-@Rule(key = PublicStaticFieldCheck.KEY)
-public class PublicStaticFieldCheck extends BaseGosuRule {
-    static final String KEY = "PublicStaticFieldCheck";
+@Rule(key = PublicStaticFieldRule.KEY)
+public class PublicStaticFieldRule extends BaseGosuRule {
+    static final String KEY = "PublicStaticFieldRule";
 
     @Override
     public void exitField(GosuParser.FieldContext ctx) {

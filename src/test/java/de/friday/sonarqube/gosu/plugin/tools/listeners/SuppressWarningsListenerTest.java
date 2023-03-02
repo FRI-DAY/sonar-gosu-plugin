@@ -20,7 +20,7 @@ import de.friday.sonarqube.gosu.plugin.rules.bugs.SameConditionsInIfRule;
 import de.friday.sonarqube.gosu.plugin.rules.metrics.CognitiveComplexityRule;
 import de.friday.sonarqube.gosu.plugin.rules.metrics.LinesOfCodeRule;
 import de.friday.sonarqube.gosu.plugin.rules.smells.TODOsRule;
-import de.friday.sonarqube.gosu.plugin.rules.vulnerabilities.PublicStaticFieldCheck;
+import de.friday.sonarqube.gosu.plugin.rules.vulnerabilities.PublicStaticFieldRule;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
@@ -75,7 +75,7 @@ class SuppressWarningsListenerTest {
                 .then().issuesFound().areEmpty();
 
         given("SuppressWarningsListener/fieldsAndProperties.gs")
-                .whenCheckedAgainst(PublicStaticFieldCheck.class)
+                .whenCheckedAgainst(PublicStaticFieldRule.class)
                 .then().issuesFound().areEmpty();
     }
 
@@ -86,14 +86,14 @@ class SuppressWarningsListenerTest {
                 .then().issuesFound().areEmpty();
 
         given("SuppressWarningsListener/arrayOfSuppressWarnings.gs")
-                .whenCheckedAgainst(PublicStaticFieldCheck.class)
+                .whenCheckedAgainst(PublicStaticFieldRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void shouldNotSuppressWarningsWhenAnnotatedCheckIsNotRelatedToIssue() {
         given("SuppressWarningsListener/notRelatedAnnotations.gs")
-                .whenCheckedAgainst(PublicStaticFieldCheck.class)
+                .whenCheckedAgainst(PublicStaticFieldRule.class)
                 .then().issuesFound().hasSizeEqualTo(2);
 
         given("SuppressWarningsListener/notRelatedAnnotations.gs")

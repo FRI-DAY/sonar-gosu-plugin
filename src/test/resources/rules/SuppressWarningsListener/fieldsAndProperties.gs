@@ -1,9 +1,9 @@
 package checks.SuppressWarningsListener
 
 class fieldsAndProperties {
-  @SuppressWarnings("gosu:PublicStaticFieldCheck")
+  @SuppressWarnings("gosu:PublicStaticFieldRule")
   public static var SomeVar : Integer = 3
-  @SuppressWarnings("gosu:PublicStaticFieldCheck")
+  @SuppressWarnings("gosu:PublicStaticFieldRule")
   public static var someString : String = "asdf"
 
   @SuppressWarnings("gosu:TODOsRule")

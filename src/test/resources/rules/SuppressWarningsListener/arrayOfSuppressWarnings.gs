@@ -1,6 +1,6 @@
 package checks.SuppressWarningsListener
 
-@SuppressWarnings({"gosu:PublicStaticFieldCheck","gosu:TODOsRule", "cdef"})
+@SuppressWarnings({"gosu:PublicStaticFieldRule","gosu:TODOsRule", "cdef"})
 class arrayOfSuppressWarnings {
 
   public static var SomeVar : Integer = 3
