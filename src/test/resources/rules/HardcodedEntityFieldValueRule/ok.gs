@@ -1,4 +1,4 @@
-package checks.HardcodedEntityFieldValueCheck
+package checks.HardcodedEntityFieldValueRule
 
 class ok {
   var contactContacts = new ArrayList<Contact>();

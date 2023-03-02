@@ -70,7 +70,7 @@ class RulesKeysTest {
         codeSmells.put("CollectionIsEmptyRule", RuleType.CODE_SMELLS);
         codeSmells.put("DefaultModifiersRule", RuleType.CODE_SMELLS);
         codeSmells.put("EmptyLineRule", RuleType.CODE_SMELLS);
-        codeSmells.put("HardcodedEntityFieldValueCheck", RuleType.CODE_SMELLS);
+        codeSmells.put("HardcodedEntityFieldValueRule", RuleType.CODE_SMELLS);
         codeSmells.put("IfElseIfCheck", RuleType.CODE_SMELLS);
         codeSmells.put("InternalImportsCheck", RuleType.CODE_SMELLS);
         codeSmells.put("InvertedBooleanExpressionsCheck", RuleType.CODE_SMELLS);

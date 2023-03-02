@@ -19,19 +19,19 @@ package de.friday.sonarqube.gosu.plugin.rules.smells;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class HardcodedEntityFieldValueCheckTest {
+class HardcodedEntityFieldValueRuleTest {
 
     @Test
     void findsNoIssuesWhenEntityFieldNameIsNotHardcoded() {
-        given("HardcodedEntityFieldValueCheck/ok.gs")
-                .whenCheckedAgainst(HardcodedEntityFieldValueCheck.class)
+        given("HardcodedEntityFieldValueRule/ok.gs")
+                .whenCheckedAgainst(HardcodedEntityFieldValueRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsIssuesWhenEntityFieldNameIsHardcoded() {
-        given("HardcodedEntityFieldValueCheck/nok.gs")
-                .whenCheckedAgainst(HardcodedEntityFieldValueCheck.class)
+        given("HardcodedEntityFieldValueRule/nok.gs")
+                .whenCheckedAgainst(HardcodedEntityFieldValueRule.class)
                 .then().issuesFound().hasSizeEqualTo(3);
     }
 }

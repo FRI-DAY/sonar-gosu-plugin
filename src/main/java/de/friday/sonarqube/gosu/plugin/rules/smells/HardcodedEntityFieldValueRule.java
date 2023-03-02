@@ -23,9 +23,9 @@ import java.util.Arrays;
 import java.util.List;
 import org.sonar.check.Rule;
 
-@Rule(key = HardcodedEntityFieldValueCheck.KEY)
-public class HardcodedEntityFieldValueCheck extends BaseGosuRule {
-    static final String KEY = "HardcodedEntityFieldValueCheck";
+@Rule(key = HardcodedEntityFieldValueRule.KEY)
+public class HardcodedEntityFieldValueRule extends BaseGosuRule {
+    static final String KEY = "HardcodedEntityFieldValueRule";
     private static final List<String> GET_SET_FIELD_METHODS = Arrays.asList("getFieldValue", "setFieldValue");
 
     @Override
