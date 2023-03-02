@@ -19,26 +19,26 @@ package de.friday.sonarqube.gosu.plugin.rules.smells;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class EmptyLineCheckTest {
+class EmptyLineRuleTest {
 
     @Test
     void findsNoIssuesWhenGosuSourceFileHasEmptyLineAtTheEnd() {
-        given("EmptyLineCheck/ok.gs")
-                .whenCheckedAgainst(EmptyLineCheck.class)
+        given("EmptyLineRule/ok.gs")
+                .whenCheckedAgainst(EmptyLineRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsNoIssuesWhenGosuSourceFileHasTwoEmptyLineAtTheEnd() {
-        given("EmptyLineCheck/twoExtraLines.gs")
-                .whenCheckedAgainst(EmptyLineCheck.class)
+        given("EmptyLineRule/twoExtraLines.gs")
+                .whenCheckedAgainst(EmptyLineRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsIssuesWhenGosuSourceFileHasNoEmptyLineAtTheEnd() {
-        given("EmptyLineCheck/nok.gs")
-                .whenCheckedAgainst(EmptyLineCheck.class)
+        given("EmptyLineRule/nok.gs")
+                .whenCheckedAgainst(EmptyLineRule.class)
                 .then().issuesFound().hasSizeEqualTo(1);
     }
 }

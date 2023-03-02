@@ -25,14 +25,14 @@ import java.util.List;
 import org.antlr.v4.runtime.Token;
 import org.sonar.check.Rule;
 
-@Rule(key = EmptyLineCheck.KEY)
-public class EmptyLineCheck extends BaseGosuRule {
-    static final String KEY = "EmptyLineCheck";
+@Rule(key = EmptyLineRule.KEY)
+public class EmptyLineRule extends BaseGosuRule {
+    static final String KEY = "EmptyLineRule";
 
     private GosuFileProperties gosuFileProperties;
 
     @Inject
-    EmptyLineCheck(GosuFileProperties gosuFileProperties) {
+    EmptyLineRule(GosuFileProperties gosuFileProperties) {
         this.gosuFileProperties = gosuFileProperties;
     }
 

@@ -1,4 +1,4 @@
-package checks.EmptyLineCheck
+package checks.EmptyLineRule
 
 class ok {
 

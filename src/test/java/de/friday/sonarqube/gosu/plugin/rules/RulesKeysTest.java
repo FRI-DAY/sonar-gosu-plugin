@@ -69,7 +69,7 @@ class RulesKeysTest {
         codeSmells.put("AutomaticDowncastRule", RuleType.CODE_SMELLS);
         codeSmells.put("CollectionIsEmptyRule", RuleType.CODE_SMELLS);
         codeSmells.put("DefaultModifiersRule", RuleType.CODE_SMELLS);
-        codeSmells.put("EmptyLineCheck", RuleType.CODE_SMELLS);
+        codeSmells.put("EmptyLineRule", RuleType.CODE_SMELLS);
         codeSmells.put("HardcodedEntityFieldValueCheck", RuleType.CODE_SMELLS);
         codeSmells.put("IfElseIfCheck", RuleType.CODE_SMELLS);
         codeSmells.put("InternalImportsCheck", RuleType.CODE_SMELLS);
