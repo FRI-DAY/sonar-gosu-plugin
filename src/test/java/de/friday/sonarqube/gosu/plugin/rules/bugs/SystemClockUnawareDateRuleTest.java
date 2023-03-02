@@ -19,19 +19,19 @@ package de.friday.sonarqube.gosu.plugin.rules.bugs;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-public class SystemClockUnawareDateCheckTest {
+public class SystemClockUnawareDateRuleTest {
 
     @Test
     void findsIssuesWhenDateIsCreatedUnawareOfSystemClock() {
-        given("SystemClockUnawareDateCheck/nok.gs")
-                .whenCheckedAgainst(SystemClockUnawareDateCheck.class)
+        given("SystemClockUnawareDateRule/nok.gs")
+                .whenCheckedAgainst(SystemClockUnawareDateRule.class)
                 .then().issuesFound().hasSizeEqualTo(2);
     }
 
     @Test
     void findsNoIssuesWhenDateIsCreatedAwareOfSystemClock() {
-        given("SystemClockUnawareDateCheck/ok.gs")
-                .whenCheckedAgainst(SystemClockUnawareDateCheck.class)
+        given("SystemClockUnawareDateRule/ok.gs")
+                .whenCheckedAgainst(SystemClockUnawareDateRule.class)
                 .then().issuesFound().areEmpty();
     }
 }

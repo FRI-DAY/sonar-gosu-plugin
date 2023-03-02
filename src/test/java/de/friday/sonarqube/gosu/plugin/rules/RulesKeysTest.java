@@ -48,7 +48,7 @@ class RulesKeysTest {
 
         bugChecks.put("SameConditionsInIfRule", RuleType.BUGS);
         bugChecks.put("StringBuilderInstantiationRule", RuleType.BUGS);
-        bugChecks.put("SystemClockUnawareDateCheck", RuleType.BUGS);
+        bugChecks.put("SystemClockUnawareDateRule", RuleType.BUGS);
 
         return bugChecks;
     }

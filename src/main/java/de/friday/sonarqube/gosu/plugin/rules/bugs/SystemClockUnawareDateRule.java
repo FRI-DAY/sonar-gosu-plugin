@@ -21,9 +21,9 @@ import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
 import de.friday.sonarqube.gosu.plugin.issues.GosuIssue;
 import org.sonar.check.Rule;
 
-@Rule(key = SystemClockUnawareDateCheck.KEY)
-public class SystemClockUnawareDateCheck extends BaseGosuRule {
-    static final String KEY = "SystemClockUnawareDateCheck";
+@Rule(key = SystemClockUnawareDateRule.KEY)
+public class SystemClockUnawareDateRule extends BaseGosuRule {
+    static final String KEY = "SystemClockUnawareDateRule";
 
     @Override
     public void exitNewExpression(GosuParser.NewExpressionContext ctx) {
