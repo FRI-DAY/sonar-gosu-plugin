@@ -1,4 +1,4 @@
-package checks.LoggerLibraryCheck
+package checks.LoggerLibraryRule
 
 uses org.apache.log4j.Logger;
 

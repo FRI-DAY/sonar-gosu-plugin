@@ -19,19 +19,19 @@ package de.friday.sonarqube.gosu.plugin.rules.smells;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class LoggerLibraryCheckTest {
+class LoggerLibraryRuleTest {
 
     @Test
     void findsNoIssueWhenStandardLoggerLibraryIsUsed() {
-        given("LoggerLibraryCheck/ok.gs")
-                .whenCheckedAgainst(LoggerLibraryCheck.class)
+        given("LoggerLibraryRule/ok.gs")
+                .whenCheckedAgainst(LoggerLibraryRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsNoIssueWhenLoggerLibraryImplementationIsUsedDirectly() {
-        given("LoggerLibraryCheck/nok.gs")
-                .whenCheckedAgainst(LoggerLibraryCheck.class)
+        given("LoggerLibraryRule/nok.gs")
+                .whenCheckedAgainst(LoggerLibraryRule.class)
                 .then().issuesFound().hasSizeEqualTo(1);
     }
 }

@@ -25,9 +25,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
 
-@Rule(key = LoggerLibraryCheck.KEY)
-public class LoggerLibraryCheck extends BaseGosuRule {
-    static final String KEY = "LoggerLibraryCheck";
+@Rule(key = LoggerLibraryRule.KEY)
+public class LoggerLibraryRule extends BaseGosuRule {
+    static final String KEY = "LoggerLibraryRule";
     private static final String DEFAULT_LOGGER = "org.slf4j,gw.api";
     private static final String LOGGER = "logger";
     @RuleProperty(

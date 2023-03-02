@@ -1,4 +1,4 @@
-package checks.LoggerLibraryCheck
+package checks.LoggerLibraryRule
 
 uses org.slf4j.Logger
 uses org.slf4j.LoggerFactory
