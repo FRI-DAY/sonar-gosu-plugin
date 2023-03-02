@@ -1,4 +1,4 @@
-package checks.DefaultModifiersCheck
+package checks.DefaultModifiersRule
 
 class finalInnerClass {
 

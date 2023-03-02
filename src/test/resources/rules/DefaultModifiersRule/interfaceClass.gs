@@ -1,4 +1,4 @@
-package checks.DefaultModifiersCheck
+package checks.DefaultModifiersRule
 
 public interface interfaceClass {
   abstract public function getBigInt() : int

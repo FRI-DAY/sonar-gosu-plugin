@@ -19,83 +19,83 @@ package de.friday.sonarqube.gosu.plugin.rules.smells;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-class DefaultModifiersCheckTest {
+class DefaultModifiersRuleTest {
 
     @Test
     void findsNoIssuesWhenClassHasNoExplicitModifiers() {
-        given("DefaultModifiersCheck/ok.gs")
-                .whenCheckedAgainst(DefaultModifiersCheck.class)
+        given("DefaultModifiersRule/ok.gs")
+                .whenCheckedAgainst(DefaultModifiersRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsNoIssuesWhenAbstractClassHasNoExplicitModifiers() {
-        given("DefaultModifiersCheck/OkAbstractClass.gs")
-                .whenCheckedAgainst(DefaultModifiersCheck.class)
+        given("DefaultModifiersRule/OkAbstractClass.gs")
+                .whenCheckedAgainst(DefaultModifiersRule.class)
                 .then().issuesFound().areEmpty();
     }
 
 
     @Test
     void findsNoIssuesWhenFinalInnerClassHasNoExplicitModifiersDefined() {
-        given("DefaultModifiersCheck/finalInnerClass.gs")
-                .whenCheckedAgainst(DefaultModifiersCheck.class)
+        given("DefaultModifiersRule/finalInnerClass.gs")
+                .whenCheckedAgainst(DefaultModifiersRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsNoIssuesWhenEnumHasNoExplicitModifiersDefined() {
-        given("DefaultModifiersCheck/enumClassWithoutModifiers.gs")
-                .whenCheckedAgainst(DefaultModifiersCheck.class)
+        given("DefaultModifiersRule/enumClassWithoutModifiers.gs")
+                .whenCheckedAgainst(DefaultModifiersRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsNoIssuesWhenEnumHasNoExplicitPublicModifierDefined() {
-        given("DefaultModifiersCheck/enumClassWithoutPublic.gs")
-                .whenCheckedAgainst(DefaultModifiersCheck.class)
+        given("DefaultModifiersRule/enumClassWithoutPublic.gs")
+                .whenCheckedAgainst(DefaultModifiersRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsNoIssuesWhenInterfaceHasNoExplicitModifiersDefined() {
-        given("DefaultModifiersCheck/interfaceClassWithoutModifiers.gs")
-                .whenCheckedAgainst(DefaultModifiersCheck.class)
+        given("DefaultModifiersRule/interfaceClassWithoutModifiers.gs")
+                .whenCheckedAgainst(DefaultModifiersRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsNoIssuesWhenInterfaceHasNoExplicitPublicModifierDefined() {
-        given("DefaultModifiersCheck/interfaceClassWithoutPublic.gs")
-                .whenCheckedAgainst(DefaultModifiersCheck.class)
+        given("DefaultModifiersRule/interfaceClassWithoutPublic.gs")
+                .whenCheckedAgainst(DefaultModifiersRule.class)
                 .then().issuesFound().areEmpty();
     }
 
     @Test
     void findsIssuesWhenClassHasExplicitModifiersDefined() {
-        given("DefaultModifiersCheck/nok.gs")
-                .whenCheckedAgainst(DefaultModifiersCheck.class)
+        given("DefaultModifiersRule/nok.gs")
+                .whenCheckedAgainst(DefaultModifiersRule.class)
                 .then().issuesFound().hasSizeEqualTo(6);
     }
 
     @Test
     void findsIssuesWhenInterfaceHasExplicitModifiersDefined() {
-        given("DefaultModifiersCheck/interfaceClass.gs")
-                .whenCheckedAgainst(DefaultModifiersCheck.class)
+        given("DefaultModifiersRule/interfaceClass.gs")
+                .whenCheckedAgainst(DefaultModifiersRule.class)
                 .then().issuesFound().hasSizeEqualTo(4);
     }
 
     @Test
     void findsIssuesWhenEnumHasExplicitModifiersDefined() {
-        given("DefaultModifiersCheck/enumClass.gs")
-                .whenCheckedAgainst(DefaultModifiersCheck.class)
+        given("DefaultModifiersRule/enumClass.gs")
+                .whenCheckedAgainst(DefaultModifiersRule.class)
                 .then().issuesFound().hasSizeEqualTo(2);
     }
 
     @Test
     void findsIssuesWhenFinalClassHasExplicitModifiersDefined() {
-        given("DefaultModifiersCheck/finalClass.gs")
-                .whenCheckedAgainst(DefaultModifiersCheck.class)
+        given("DefaultModifiersRule/finalClass.gs")
+                .whenCheckedAgainst(DefaultModifiersRule.class)
                 .then().issuesFound().hasSizeEqualTo(2);
     }
 }

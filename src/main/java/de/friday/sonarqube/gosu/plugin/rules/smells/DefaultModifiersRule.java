@@ -25,9 +25,9 @@ import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.sonar.check.Rule;
 
-@Rule(key = DefaultModifiersCheck.KEY)
-public class DefaultModifiersCheck extends BaseGosuRule {
-    static final String KEY = "DefaultModifiersCheck";
+@Rule(key = DefaultModifiersRule.KEY)
+public class DefaultModifiersRule extends BaseGosuRule {
+    static final String KEY = "DefaultModifiersRule";
     private boolean isInInterface;
     private Map<Integer, Boolean> finalClasses = new HashMap<>();
     private int nestedLevel = -1;
