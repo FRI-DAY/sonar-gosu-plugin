@@ -29,9 +29,10 @@ Not yet supported.
 ### Self-hosted Sonarqube
 
 Download the [latest](https://github.com/FRI-DAY/sonar-gosu-plugin/releases) JAR file and put it into Sonarqube's plugin directory (`./extensions/plugins`). 
-After restarting the server the plugin should be available under `Quality Profiles`.
+After restarting the server, a new Quality Profile for Gosu with all the plugin rules should be available on `Quality Profiles`.
 
-Alternatively, you can clone the project and build the JAR file from the sources. E.g.: `./gradlew shadowJar`
+Alternatively, you can clone the project and build the JAR file from the sources. E.g.: `./gradlew shadowJar`.
+The installation procedure is the same as mentioned above. 
 
 ## Want to contribute?
 
