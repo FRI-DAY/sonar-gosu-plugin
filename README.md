@@ -1,38 +1,46 @@
-
 # SonarQube Gosu Plugin
 [![.github/workflows/build.yml](https://github.com/FRI-DAY/sonar-gosu-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/FRI-DAY/sonar-gosu-plugin/actions/workflows/build.yml)
 
 [Gosu Programming Language](https://gosu-lang.github.io/) Plugin for SonarQube.
 
+For plugin configurations and a list of all coding rules included in the plugin, see: [plugin documentation](docs/README.md).
+
 ## Why ANTLR4?
 
-Gosu official grammar can be found [here](https://gosu-lang.github.io/grammar.html). It was written in version 3 of [ANTLR (Another Tool For Language Recognition)](https://www.antlr.org/). Despite this, we decided to write our own grammar in ANTLR4.
-
-The official Gosu grammar has some pitfalls, it is old and written in a not supported version of ANTLR. In the long run, it was easier to write own simplev grammar rather than working with an undocumented, unmodifiable and not fully working parser.
-
-### Working with ANTLR4
-
-**The Gosu Grammar should not be modified**. However, it can happen that there are bugs in the grammar or a new release of the Gosu language contains new features.
-
-In such cases, there is a very useful tool called [ANTLR v4](https://github.com/antlr/intellij-plugin-v4/blob/master/README.md) plugin for IntelliJ IDEA. With it, you can verify the parse tree built by ANTLR.
-
-## Getting Started (TODO)
-
-### Writing custom rules (TODO)
+The Sonarqube Gosu Plugin uses [ANTLR (Another Tool For Language Recognition)](https://www.antlr.org/) to execute static
+analysis of Gosu code. 
+We decided to write our own grammar in ANTLR4 due the [official Gosu grammar](https://gosu-lang.github.io/grammar.html)
+been written in an old and non-supported version of ANTLR.
+In the long run, it was easier to write our own simple grammar rather than working with an undocumented, unmodifiable and not fully working parser.
 
 ## Compatibility
 Please find below the compatibility matrix of the plugin:
 
-| SonarQube Version | Plugin Version | Gosu Version  |
-|-------------------|----------------|---------------|
-| 8.9+              | 1.0.0          | 1+            |  
+| SonarQube Version | Plugin Version |
+|-------------------|----------------|
+| v8.9 or earlier   | v1.0.0         |
 
+## Installation
 
-## How to contribute? (TODO)
+### Sonarcloud
 
-## Release Notes (TODO)
+Not yet supported.
 
-## Continuous Integration Builds (TODO)
+### Self-hosted Sonarqube
+
+Download the [latest](https://github.com/FRI-DAY/sonar-gosu-plugin/releases) JAR file and put it into Sonarqube's plugin directory (`./extensions/plugins`). 
+After restarting the server, a new Quality Profile for Gosu with all the plugin rules should be available on `Quality Profiles`.
+
+Alternatively, you can clone the project and build the JAR file from the sources. E.g.: `./gradlew shadowJar`.
+The installation procedure is the same as mentioned above. 
+
+## Want to contribute?
+
+Check the [contributing](CONTRIBUTING.md) guidelines.
+
+## Changelog
+
+All releases are available in the [Releases](https://github.com/FRI-DAY/sonar-gosu-plugin/releases) section.
 
 ## License
 Copyright (C) 2023 FRIDAY Insurance S.A.
