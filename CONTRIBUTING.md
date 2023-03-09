@@ -371,6 +371,38 @@ docker run \
   -Dsonar.jacoco.reportPath=MY PROJECT JACOCO BINARY> -X
 ```
 
+#### Installing the plugin on a running Sonarqube Docker container
+
+In case you already have the Docker container with the Sonarqube server running, you can install the plugin as follows:
+
+1. Build the plugin JAR file with your changes;
+2. Copy the JAR file to the running container;
+E.g.:
+```shell
+$ docker cp build/libs/sonar-gosu-plugin-1.0.0-SNAPSHOT.jar sonarqube:/opt/sonarqube/extensions/plugins
+```
+3. Restart Sonarqube Docker container;
+E.g.:
+```shell
+$ docker container restart <Sonarqube Container ID>
+```
+
+#### Elasticsearch issue
+
+Sonarqube has an embedded Elasticsearch instance, once you start Sonarqube with docker-compose, if you get the following error:
+```log
+$ ERROR: [1] bootstrap checks failed. You must address the points described in the following [1] lines before starting Elasticsearch.
+$ bootstrap check failure [1] of [1]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+$ ERROR: Elasticsearch did not exit normally - check the logs at /opt/sonarqube/logs/sonarqube.log
+```
+
+Follow the instructions described [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html) and increase
+the `vm.max_map_count`. 
+E.g.: `$ sysctl -w vm.max_map_count=262144`
+
+The service should start normally after it has been restarted with the new configuration.
+
+
 -------
 ## Resources
 - [How to contribute to Open Source?](https://opensource.guide/how-to-contribute/);
