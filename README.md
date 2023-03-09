@@ -18,21 +18,25 @@ Please find below the compatibility matrix of the plugin:
 
 | SonarQube Version | Plugin Version |
 |-------------------|----------------|
-| v8.9 or earlier   | v1.0.0         |
+| v8.9              | v1.0.0         |
 
 ## Installation
 
-### Sonarcloud
+### Sonarqube Marketplace
 
-Not yet supported.
+Not yet available.
 
-### Self-hosted Sonarqube
+### Sonarqube On-premise
 
 Download the [latest](https://github.com/FRI-DAY/sonar-gosu-plugin/releases) JAR file and put it into Sonarqube's plugin directory (`./extensions/plugins`). 
 After restarting the server, a new Quality Profile for Gosu with all the plugin rules should be available on `Quality Profiles`.
 
-Alternatively, you can clone the project and build the JAR file from the sources. E.g.: `./gradlew shadowJar`.
-The installation procedure is the same as mentioned above. 
+Alternatively, you can clone the project and build the JAR file from the sources. E.g.: 
+```shell
+$ ./gradlew shadowJar
+```
+
+The installation procedure is the same as mentioned previously. 
 
 ## Want to contribute?
 
