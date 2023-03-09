@@ -15,6 +15,8 @@ repositories {
     mavenCentral()
 }
 
+group 'de.friday'
+
 sourceCompatibility = JavaVersion.toVersion(jdkMinVersion)
 targetCompatibility = JavaVersion.toVersion(jdkMinVersion)
 
@@ -151,28 +153,29 @@ shadowJar {
 
 jar {
     archiveBaseName = project.name
-    archiveClassifier = 'thin' //no dependencies included
+    archiveClassifier = 'no-deps' //no dependencies included
     manifest {
         def pluginVersion = project.version
         def displayVersion = project.hasProperty('buildNumber') ? pluginVersion.substring(0, pluginVersion.lastIndexOf('.')) + " (build ${project.buildNumber})" : pluginVersion
         def buildDate = new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         attributes(
-                'Build-Time': buildDate,
+                'Build-Time': "${buildDate}",
                 'Implementation-Build': 'git rev-parse HEAD'.execute().text.trim(),
-                'Plugin-BuildDate': buildDate,
+                'Plugin-BuildDate': "${buildDate}",
                 'Plugin-ChildFirstClassLoader': 'false',
                 'Plugin-Class': 'de.friday.sonarqube.gosu.GosuPlugin',
                 'Plugin-Description': 'Gosu Programming Language Plugin for SonarQube',
-                'Plugin-Display-Version': displayVersion,
+                'Plugin-Display-Version': "${displayVersion}",
                 'Plugin-IssueTrackerUrl': 'https://github.com/FRI-DAY/sonar-gosu-plugin/issues',
-                'Plugin-Key': 'gosu',
+                'Plugin-Key': 'communityGosuPlugin',
                 'Plugin-License': 'GNU AGPL 3',
-                'Plugin-Name': 'FridayGosuPlugin',
+                'Plugin-Name': 'Community Gosu Plugin',
+                'Plugin-Homepage': 'https://github.com/FRI-DAY/sonar-gosu-plugin',
                 'Plugin-Organization': 'FRIDAY Insurance S.A.',
                 'Plugin-OrganizationUrl': 'https://www.friday.de',
                 'Plugin-SourcesUrl': 'https://github.com/FRI-DAY/sonar-gosu-plugin',
-                'Plugin-Version': pluginVersion,
-                'Sonar-Version': '6.7.7',
+                'Plugin-Version': "${pluginVersion}",
+                'Sonar-Version': "${sonarqubeVersion}",
                 'SonarLint-Supported': 'true',
                 'Version': "${pluginVersion}",
         )
