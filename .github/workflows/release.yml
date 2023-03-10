@@ -66,3 +66,62 @@ jobs:
         with:
           name: snapshot
           path: build/libs/*.jar
+  # RELEASE THE PLUGIN
+  release:
+    needs: fetch-version
+    if: needs.fetch-version.outputs.release == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: temurin
+          cache: 'gradle'
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: Set up Git
+        run: |
+          git config user.name GitHub
+          git config user.email noreply@github.com
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Release
+        run: |
+          ./gradlew clean release \
+            -Prelease.useAutomaticVersion=true \
+            -Prelease.releaseVersion=${{ needs.fetch-version.outputs.version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Archive artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: release
+          path: build/libs/*.jar
+      - name: Fetch ChangeLog
+        if: success()
+        run: |
+          ./gradlew getChangelog -q --no-header --no-summary > ${{ github.workspace }}-CHANGELOG.txt
+      - name: GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: ${{ needs.fetch-version.outputs.version }}
+          tag_name: v${{ needs.fetch-version.outputs.version }}
+          body_path: ${{ github.workspace }}-CHANGELOG.txt
+          draft: true
+          files: |
+            build/libs/*.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
