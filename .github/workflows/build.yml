@@ -1,12 +1,8 @@
 on:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - '.github/actions/**'
   pull_request:
     paths-ignore:
       - '.github/actions/**'
+      - '**.md'
 
 jobs:
   build:
