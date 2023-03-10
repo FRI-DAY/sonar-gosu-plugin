@@ -10,6 +10,7 @@ plugins {
     id('org.kordamp.gradle.markdown') version('2.2.0')
     id('com.github.johnrengelman.shadow') version('7.1.2')
     id('com.github.hierynomus.license') version('0.16.1')
+    id('net.researchgate.release') version('2.6.0')
 }
 
 repositories {
@@ -140,6 +141,10 @@ jacocoTestReport {
     }
 }
 
+assemble {
+    dependsOn(tasks.shadowJar)
+}
+
 shadowJar {
     archiveBaseName = project.name
     archiveClassifier = ''
@@ -149,12 +154,12 @@ shadowJar {
         exclude(dependency('org.sonarsource.sonarqube:.*'))
         exclude(dependency('org.slf4j:.*'))
     }
-    shouldRunAfter(tasks.check)
 }
 
 jar {
     archiveBaseName = project.name
     archiveClassifier = 'no-deps' //no dependencies included
+    enabled = false
     manifest {
         def pluginVersion = project.version
         def displayVersion = project.hasProperty('buildNumber') ? pluginVersion.substring(0, pluginVersion.lastIndexOf('.')) + " (build ${project.buildNumber})" : pluginVersion
@@ -183,18 +188,16 @@ jar {
     }
 }
 
-java {
-    withSourcesJar()
-}
-
-tasks.sourcesJar.dependsOn(tasks.generateGrammarSource)
-
-artifacts {
-    archives jar, shadowJar, sourcesJar
-}
-
 changelog {
     version = project.version
     header = "${project.version}"
     repositoryUrl = pluginRepositoryUrl
+}
+
+release {
+    tagTemplate = 'v${version}'
+    git {
+        requireBranch = 'main'
+        commitVersionFileOnly = true
+    }
 }
