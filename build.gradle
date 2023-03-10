@@ -6,6 +6,7 @@ plugins {
     id('jacoco')
     id('maven-publish')
     id('org.sonarqube') version('4.0.0.2929')
+    id('org.jetbrains.changelog') version('2.0.0')
     id('org.kordamp.gradle.markdown') version('2.2.0')
     id('com.github.johnrengelman.shadow') version('7.1.2')
     id('com.github.hierynomus.license') version('0.16.1')
@@ -101,7 +102,7 @@ void generateRulesIndexFile(File[] ruleFiles) {
 
 Follows a list of all the rules included on the plugin:
 
-""")
+""".stripIndent())
 
     ruleFiles.toSorted().each {
         rulesIndexText.append("- [${it.name.replace('.md', '')}](rules/${it.name})\n")
@@ -173,7 +174,7 @@ jar {
                 'Plugin-Homepage': 'https://github.com/FRI-DAY/sonar-gosu-plugin',
                 'Plugin-Organization': 'FRIDAY Insurance S.A.',
                 'Plugin-OrganizationUrl': 'https://www.friday.de',
-                'Plugin-SourcesUrl': 'https://github.com/FRI-DAY/sonar-gosu-plugin',
+                'Plugin-SourcesUrl': "${pluginRepositoryUrl}",
                 'Plugin-Version': "${pluginVersion}",
                 'Sonar-Version': "${sonarqubeVersion}",
                 'SonarLint-Supported': 'true',
@@ -190,4 +191,10 @@ tasks.sourcesJar.dependsOn(tasks.generateGrammarSource)
 
 artifacts {
     archives jar, shadowJar, sourcesJar
+}
+
+changelog {
+    version = project.version
+    header = "${project.version}"
+    repositoryUrl = pluginRepositoryUrl
 }
