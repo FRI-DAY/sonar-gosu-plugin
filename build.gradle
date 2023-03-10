@@ -191,6 +191,7 @@ jar {
 changelog {
     version = project.version
     header = "${project.version}"
+    groups = []
     repositoryUrl = pluginRepositoryUrl
 }
 
