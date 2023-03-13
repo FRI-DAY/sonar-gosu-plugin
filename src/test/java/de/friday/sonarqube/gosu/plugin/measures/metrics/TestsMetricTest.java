@@ -24,7 +24,7 @@ import org.sonar.api.measures.CoreMetrics;
 import static de.friday.test.support.TestResourcesDirectories.METRICS_RESOURCES_DIR;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TestsMetricTest {
+class TestsMetricTest {
 
     @Test
     void shouldSaveCoreTestMetricsOnSensorContext() {

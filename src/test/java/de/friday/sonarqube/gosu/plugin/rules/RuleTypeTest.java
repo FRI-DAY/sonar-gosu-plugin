@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class RuleTypeTest {
+class RuleTypeTest {
 
     @ParameterizedTest(name = "should return package {1} rule keys for CheckType {0}")
     @MethodSource("checkTypesAndRuleKeysCount")

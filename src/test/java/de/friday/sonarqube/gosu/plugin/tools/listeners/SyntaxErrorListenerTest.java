@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.sonar.api.batch.sensor.internal.SensorContextTester;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SyntaxErrorListenerTest {
+class SyntaxErrorListenerTest {
 
     private static final Path LISTENERS_TEST_RESOURCES_DIR = Paths.get("src/test/resources/listeners");
 
