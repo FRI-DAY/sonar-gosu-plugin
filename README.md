@@ -36,7 +36,7 @@ Alternatively, you can clone the project and build the JAR file from the sources
 $ ./gradlew shadowJar
 ```
 
-The installation procedure is the same as mentioned previously. 
+The installation procedure is the same as mentioned previously.  
 
 ## Want to contribute?
 
