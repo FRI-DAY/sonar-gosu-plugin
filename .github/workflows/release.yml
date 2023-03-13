@@ -48,6 +48,12 @@ jobs:
           java-version: ${{ matrix.java }}
           distribution: temurin
           cache: 'gradle'
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache Gradle packages
         uses: actions/cache@v3
         with:
@@ -60,6 +66,21 @@ jobs:
       - name: Build
         run: |
           ./gradlew clean build --build-cache --no-daemon
+      - name: Sonar
+        run: |
+          ./gradlew sonar --no-daemon \
+            -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }} \
+            -Dsonar.organization=${{ env.SONAR_ORGANIZATION }} \
+            -Dsonar.host.url=${{ env.SONAR_HOST_URL }} \
+            -Dsonar.pullrequest.provider=github \
+            -Dsonar.pullrequest.github.repository=${{ github.repository }} \
+            -Dsonar.branch.name=${GITHUB_REF##*/}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+          SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
       - name: Archive artifact
         if: success() && matrix.java == '11'
         uses: actions/upload-artifact@v3
@@ -82,6 +103,12 @@ jobs:
           java-version: 11
           distribution: temurin
           cache: 'gradle'
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache Gradle packages
         uses: actions/cache@v3
         with:
@@ -105,6 +132,21 @@ jobs:
             -Prelease.releaseVersion=${{ needs.fetch-version.outputs.version }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Sonar
+        run: |
+          ./gradlew sonar --no-daemon \
+            -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }} \
+            -Dsonar.organization=${{ env.SONAR_ORGANIZATION }} \
+            -Dsonar.host.url=${{ env.SONAR_HOST_URL }} \
+            -Dsonar.pullrequest.provider=github \
+            -Dsonar.pullrequest.github.repository=${{ github.repository }} \
+            -Dsonar.projectVersion=${{ needs.fetch-version.outputs.version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+          SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
       - name: Archive artifact
         uses: actions/upload-artifact@v3
         with:
