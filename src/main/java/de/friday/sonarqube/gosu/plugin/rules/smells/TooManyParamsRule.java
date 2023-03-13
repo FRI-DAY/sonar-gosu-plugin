@@ -48,49 +48,48 @@ public class TooManyParamsRule extends BaseGosuRule {
     private int maxForMethod = METHOD_MAX;
 
     @Override
-    public void exitConstructorSignature(GosuParser.ConstructorSignatureContext ctx) {
-        TextRange constructorTextRange = TextRangeUtil.fromTerminalNode(ctx.CONSTRUCT());
-        addIssueIfTooManyParams(ctx.parameterDeclarationList(), constructorTextRange, maxForConstructor, "constructor");
+    public void exitConstructorSignature(GosuParser.ConstructorSignatureContext constructorContext) {
+        final TextRange constructorTextRange = TextRangeUtil.fromTerminalNode(constructorContext.CONSTRUCT());
+        addIssueIfTooManyParams(constructorContext.parameterDeclarationList(), constructorTextRange, maxForConstructor, "constructor");
     }
 
     @Override
-    public void exitFunctionSignature(GosuParser.FunctionSignatureContext ctx) {
-        if (GosuUtil.isOverridden(ctx.modifiers())) {
+    public void exitFunctionSignature(GosuParser.FunctionSignatureContext functionContext) {
+        if (GosuUtil.isOverridden(functionContext.modifiers())) {
             return;
         }
 
-        TextRange methodNameTextRange = TextRangeUtil.fromContext(ctx.identifier());
-        addIssueIfTooManyParams(ctx.parameterDeclarationList(), methodNameTextRange, maxForMethod, "function");
+        final TextRange methodNameTextRange = TextRangeUtil.fromContext(functionContext.identifier());
+        addIssueIfTooManyParams(functionContext.parameterDeclarationList(), methodNameTextRange, maxForMethod, "function");
     }
 
-    private void addIssueIfTooManyParams(GosuParser.ParameterDeclarationListContext params, TextRange textRange, int max, String methodType) {
-        int paramsNumber = getParamNumber(params);
+    private void addIssueIfTooManyParams(GosuParser.ParameterDeclarationListContext parametersContext, TextRange textRange, int max, String methodType) {
+        if (isEmpty(parametersContext)) return;
 
-        if (paramsNumber != -1 && paramsNumber > max) {
+        final int numberOfParameters = parametersContext.parameterDeclaration().size();
+
+        if (numberOfParameters > max) {
             addIssue(new GosuIssue.GosuIssueBuilder(this)
                     .onTextRange(textRange)
-                    .withMessage(buildMessage(methodType, paramsNumber, max))
-                    .withSecondaryIssues(getSecondaryIssues(params))
+                    .withMessage(buildMessage(methodType, numberOfParameters, max))
+                    .withSecondaryIssues(getSecondaryIssues(parametersContext))
                     .build());
         }
     }
 
-    private static int getParamNumber(GosuParser.ParameterDeclarationListContext params) {
-        if (params == null) {
-            return -1;
-        }
-        return params.parameterDeclaration().size();
+    private boolean isEmpty(GosuParser.ParameterDeclarationListContext parametersContext) {
+        return parametersContext == null;
     }
 
     private List<SecondaryIssue> getSecondaryIssues(GosuParser.ParameterDeclarationListContext parameters) {
-        List<SecondaryIssue> secondaryIssues = new ArrayList<>();
-        for (GosuParser.ParameterDeclarationContext param : parameters.parameterDeclaration()) {
-            secondaryIssues.add(new SecondaryIssue(param, null));
+        final List<SecondaryIssue> secondaryIssues = new ArrayList<>();
+        for (GosuParser.ParameterDeclarationContext parameterContext : parameters.parameterDeclaration()) {
+            secondaryIssues.add(new SecondaryIssue(parameterContext, null));
         }
         return secondaryIssues;
     }
 
-    private static String buildMessage(String method, int paramsNumber, int max) {
+    private String buildMessage(String method, int paramsNumber, int max) {
         return "This " + method + " has " + paramsNumber + " parameters which is greater than " + max + " authorized";
     }
 
