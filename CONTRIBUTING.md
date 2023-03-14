@@ -6,6 +6,8 @@ On the section bellow you find all the necessary steps to start contributing.
 
 All contributions to this project are released under the project [GNU AGPL License, Version 3.0](https://www.gnu.org/licenses/agpl-3.0.en.html) license.
 
+This project is released with a Contributor [Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
+
 Happy coding :-).
 
 ### Submitting a pull request
