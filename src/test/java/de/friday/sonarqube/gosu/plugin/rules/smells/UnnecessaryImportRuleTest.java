@@ -21,7 +21,7 @@ import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class UnnecessaryImportRuleTest {
+class UnnecessaryImportRuleTest {
 
     @Test
     void findsNoIssuesWhenNoUnnecessaryImportIsFound() {

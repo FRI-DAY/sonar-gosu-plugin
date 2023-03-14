@@ -28,11 +28,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class GosuPluginTest {
+class GosuPluginTest {
 
     @ParameterizedTest
     @EnumSource(SonarServerVersionSupported.class)
-    public void shouldAddGosuExtensionsToSonarServer(SonarServerVersionSupported sonarServerVersion) {
+    void shouldAddGosuExtensionsToSonarServer(SonarServerVersionSupported sonarServerVersion) {
         // given
         final SonarRuntime runtime = SonarRuntimeImpl.forSonarQube(sonarServerVersion.getVersion(), SonarQubeSide.SERVER);
         final Plugin.Context context = new Plugin.Context(runtime);

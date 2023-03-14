@@ -19,7 +19,7 @@ package de.friday.sonarqube.gosu.plugin.rules.bugs;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
-public class SystemClockUnawareDateRuleTest {
+class SystemClockUnawareDateRuleTest {
 
     @Test
     void findsIssuesWhenDateIsCreatedUnawareOfSystemClock() {
