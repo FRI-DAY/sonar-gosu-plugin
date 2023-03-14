@@ -46,8 +46,12 @@ class UnnecessaryImportRuleTest {
 
     @Test
     void getClassNameThrowsExceptionWhenNoPackageIsProvided() {
+        //given
+        final UnnecessaryImportRule rule = new UnnecessaryImportRule();
+
+        //when //then
         assertThatThrownBy(
-                () -> new UnnecessaryImportRule().getClassName("JustClassName")
+                () -> rule.getClassName("JustClassName")
         ).isInstanceOf(IllegalArgumentException.class).hasMessage("No package found.");
     }
 

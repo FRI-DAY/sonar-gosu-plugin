@@ -62,7 +62,7 @@ public class UnnecessaryImportRule extends BaseGosuRule {
     public void exitUsesFeatureLiteral(GosuParser.UsesFeatureLiteralContext context) {
         final List<String> staticImportClasses = context.children.stream()
                 .map(ParseTree::getPayload)
-                .filter(currentPackage -> currentPackage instanceof ParserRuleContext)
+                .filter(ParserRuleContext.class::isInstance)
                 .map(parserRuleContext -> ((ParserRuleContext) parserRuleContext).getText())
                 .collect(Collectors.toList());
         allReferencedClasses.addAll(staticImportClasses);
