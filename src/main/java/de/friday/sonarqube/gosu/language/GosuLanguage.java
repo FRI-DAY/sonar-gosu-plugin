@@ -16,6 +16,7 @@
  */
 package de.friday.sonarqube.gosu.language;
 
+import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
 import org.sonar.api.config.Configuration;
 import org.sonar.api.resources.AbstractLanguage;
@@ -55,6 +56,20 @@ public class GosuLanguage extends AbstractLanguage {
 
     private String[] filterEmptyStrings(String[] strings) {
         return Arrays.stream(strings).filter(StringUtils::isNotBlank).toArray(String[]::new);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        GosuLanguage that = (GosuLanguage) o;
+        return Objects.equals(config, that.config);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), config);
     }
 }
 
