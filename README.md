@@ -1,5 +1,5 @@
 # SonarQube Gosu Plugin
-[![.github/workflows/build.yml](https://github.com/FRI-DAY/sonar-gosu-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/FRI-DAY/sonar-gosu-plugin/actions/workflows/build.yml)
+[![.github/workflows/build.yml](https://github.com/FRI-DAY/sonar-gosu-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/FRI-DAY/sonar-gosu-plugin/actions/workflows/build.yml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=FRI-DAY_sonar-gosu-plugin&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=FRI-DAY_sonar-gosu-plugin) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=FRI-DAY_sonar-gosu-plugin&metric=coverage)](https://sonarcloud.io/summary/new_code?id=FRI-DAY_sonar-gosu-plugin) 
 
 [Gosu Programming Language](https://gosu-lang.github.io/) Plugin for SonarQube.
 
