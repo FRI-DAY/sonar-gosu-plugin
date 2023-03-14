@@ -36,7 +36,7 @@ public class MagicNumbersRule extends BaseGosuRule {
     private static final int TWO_LETTERS_SUFFIX_LENGTH = 2;
     private static final String DEFAULT_NUMBERS = "-1,0,1";
     @SuppressWarnings("squid:S4784")
-    private static final Pattern FLOATING_POINT_PATTERN = Pattern.compile("[+-]?([0-9]*)?[.]0+([a-zA-Z])?");
+    private static final Pattern FLOATING_POINT_PATTERN = Pattern.compile("[+-]?([\\d]+)?[.]0+([a-zA-Z])?");
     @RuleProperty(
             key = "Authorized numbers",
             description = "Comma separated list of authorized numbers. Example: -1,0,1,2",
