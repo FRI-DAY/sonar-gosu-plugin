@@ -22,7 +22,6 @@ import de.friday.test.support.GosuTestFileParser;
 import de.friday.test.support.GosuTestFileParser.GosuFileParsed;
 import de.friday.test.support.TestResourcesDirectories;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Stream;
 import org.antlr.v4.runtime.CommonTokenStream;
