@@ -19,6 +19,7 @@ package de.friday.sonarqube.gosu.plugin.measures.tools;
 import de.friday.sonarqube.gosu.antlr.GosuLexer;
 import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import de.friday.sonarqube.gosu.plugin.utils.TextRangeUtil;
+import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.Token;
 import org.sonar.api.batch.fs.TextRange;
 import org.sonar.api.batch.sensor.highlighting.NewHighlighting;
@@ -31,7 +32,7 @@ public final class GosuHighlighting {
 
     public static void highlightToken(Token token, NewHighlighting highlighting, GosuFileProperties gosuFileProperties) {
         switch (token.getType()) {
-            case GosuLexer.EOF:
+            case Recognizer.EOF:
             case GosuLexer.IDENTIFIER:
                 break;
             case GosuLexer.LINE_COMMENT:
