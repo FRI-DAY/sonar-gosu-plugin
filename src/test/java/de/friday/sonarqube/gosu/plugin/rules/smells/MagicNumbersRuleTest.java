@@ -31,7 +31,7 @@ class MagicNumbersRuleTest {
     }
 
     @Test
-    void findsNoIssuesWhenMagicNumbersAreFound() {
+    void findsIssuesWhenMagicNumbersAreFound() {
         given("MagicNumbersRule/nok.gs")
                 .whenCheckedAgainst(MagicNumbersRule.class)
                 .then().issuesFound().hasSizeEqualTo(8)
