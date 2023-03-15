@@ -27,6 +27,7 @@ import org.sonar.api.batch.fs.internal.DefaultTextRange;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SecondaryIssueTest {
+
     @Test
     void shouldReturnTrueWhenSecondaryIssuesAreEqual() {
         TextPointer start0 = new DefaultTextPointer(0, 1);
@@ -55,7 +56,6 @@ class SecondaryIssueTest {
         SecondaryIssue secondaryIssue7 = new SecondaryIssue(textRange3, "SomeText");
 
         //Secondary Issues
-        assertThat(secondaryIssue0).isEqualTo(secondaryIssue0);
         assertThat(secondaryIssue0).isEqualTo(secondaryIssue1);
         assertThat(secondaryIssue5).isEqualTo(secondaryIssue4);
         assertThat(secondaryIssue4).isEqualTo(secondaryIssue5);
@@ -74,11 +74,13 @@ class SecondaryIssueTest {
         assertThat(secondaryIssue4).doesNotHaveSameHashCodeAs(secondaryIssue6);
 
         //CompareTo
-        assertThat(secondaryIssue0.compareTo(secondaryIssue1)).isEqualTo(0);
-        assertThat(secondaryIssue0.compareTo(secondaryIssue2)).isEqualTo(-1);
-        assertThat(secondaryIssue2.compareTo(secondaryIssue1)).isEqualTo(1);
-        assertThat(secondaryIssue0.compareTo(secondaryIssue7)).isEqualTo(-1);
-        assertThat(secondaryIssue7.compareTo(secondaryIssue1)).isEqualTo(1);
+        assertThat(secondaryIssue0)
+                .isEqualByComparingTo(secondaryIssue1)
+                .isNotEqualByComparingTo(secondaryIssue2)
+                .isLessThanOrEqualTo(secondaryIssue7);
+        assertThat(secondaryIssue1)
+                .isNotEqualByComparingTo(secondaryIssue2)
+                .isGreaterThanOrEqualTo(secondaryIssue1);
 
         //Overlapping
         assertThat(secondaryIssue0.overlap(secondaryIssue1)).isTrue();

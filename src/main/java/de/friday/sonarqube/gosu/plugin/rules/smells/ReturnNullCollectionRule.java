@@ -29,7 +29,7 @@ import org.sonar.check.Rule;
 public class ReturnNullCollectionRule extends BaseGosuRule {
     static final String KEY = "ReturnNullCollectionRule";
     private static final String NULL = "null";
-    private ScopeTracker currentScope = new ScopeTracker();
+    private final ScopeTracker currentScope = new ScopeTracker();
 
     @Override
     public void exitFunctionSignature(GosuParser.FunctionSignatureContext ctx) {
@@ -129,17 +129,17 @@ public class ReturnNullCollectionRule extends BaseGosuRule {
             methodsReturningCollection.put(nestedLevel, false);
         }
 
-        void addNullVariable(String var) {
-            getNullVariables().add(var);
+        void addNullVariable(String nullVariableName) {
+            getNullVariables().add(nullVariableName);
         }
 
         boolean isNotReturningCollection() {
             return !methodsReturningCollection.getOrDefault(nestedLevel, false);
         }
 
-        boolean containsNullVariable(String var) {
+        boolean containsNullVariable(String nullVariableName) {
             for (int i = nestedLevel; i >= 0; i--) {
-                if (nullVariables.get(i).contains(var)) {
+                if (nullVariables.get(i).contains(nullVariableName)) {
                     return true;
                 }
             }
