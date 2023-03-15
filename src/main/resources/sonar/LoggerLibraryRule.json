@@ -7,7 +7,7 @@
     "constantCost": "1min"
   },
   "tags": [
-    "friday-best-practices"
+    "best-practices"
   ],
   "defaultSeverity": "Minor",
   "scope": "Main"
