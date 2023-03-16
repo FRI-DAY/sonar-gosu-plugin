@@ -5,7 +5,8 @@
   "tags": [
     "pitfall",
     "cert",
-    "unused"
+    "unused",
+    "guidewire"
   ],
   "remediation": {
     "func": "Constant\/Issue",

@@ -56,22 +56,22 @@ class SecondaryIssueTest {
         SecondaryIssue secondaryIssue7 = new SecondaryIssue(textRange3, "SomeText");
 
         //Secondary Issues
-        assertThat(secondaryIssue0).isEqualTo(secondaryIssue1);
-        assertThat(secondaryIssue5).isEqualTo(secondaryIssue4);
-        assertThat(secondaryIssue4).isEqualTo(secondaryIssue5);
-
-        assertThat(secondaryIssue2).isNotEqualTo(secondaryIssue3);
-        assertThat(secondaryIssue0).isNotEqualTo(secondaryIssue3);
-        assertThat(secondaryIssue4).isNotEqualTo(secondaryIssue6);
+        assertThat(secondaryIssue0)
+                .isEqualTo(secondaryIssue1)
+                .isNotEqualTo(secondaryIssue3);
+        assertThat(secondaryIssue4)
+                .isEqualTo(secondaryIssue5)
+                .isNotEqualTo(secondaryIssue6);
 
         //HashCodes
-        assertThat(secondaryIssue0).hasSameHashCodeAs(secondaryIssue0);
-        assertThat(secondaryIssue0).hasSameHashCodeAs(secondaryIssue1);
-        assertThat(secondaryIssue5).hasSameHashCodeAs(secondaryIssue4);
+        assertThat(secondaryIssue0)
+                .hasSameHashCodeAs(secondaryIssue1)
+                .doesNotHaveSameHashCodeAs(secondaryIssue2)
+                .doesNotHaveSameHashCodeAs(secondaryIssue3);;
 
-        assertThat(secondaryIssue2).doesNotHaveSameHashCodeAs(secondaryIssue3);
-        assertThat(secondaryIssue0).doesNotHaveSameHashCodeAs(secondaryIssue3);
-        assertThat(secondaryIssue4).doesNotHaveSameHashCodeAs(secondaryIssue6);
+        assertThat(secondaryIssue4)
+                .hasSameHashCodeAs(secondaryIssue5)
+                .doesNotHaveSameHashCodeAs(secondaryIssue6);
 
         //CompareTo
         assertThat(secondaryIssue0)
