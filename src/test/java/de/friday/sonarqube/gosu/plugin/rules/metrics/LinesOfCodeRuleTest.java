@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package de.friday.sonarqube.gosu.plugin.measures.metrics;
+package de.friday.sonarqube.gosu.plugin.rules.metrics;
 
 import de.friday.sonarqube.gosu.plugin.rules.metrics.LinesOfCodeRule;
 import org.junit.jupiter.api.Test;
