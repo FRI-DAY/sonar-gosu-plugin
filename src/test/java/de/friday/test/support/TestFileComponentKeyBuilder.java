@@ -21,4 +21,8 @@ public class TestFileComponentKeyBuilder {
     public static String metricComponentKeyOf(String testSourceFileName) {
         return TestResourcesDirectories.METRICS_RESOURCES_DIR.getPathAsString() + ":" + testSourceFileName;
     }
+
+    public static String samplesComponentKeyOf(String testSourceFileName) {
+        return TestResourcesDirectories.SAMPLES_RESOURCES_DIR.getPathAsString() + ":" + testSourceFileName;
+    }
 }

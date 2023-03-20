@@ -31,7 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class GosuFilePropertiesTest {
+class GosuFilePropertiesTest {
 
     @ParameterizedTest
     @MethodSource("getGosuSourceFiles")

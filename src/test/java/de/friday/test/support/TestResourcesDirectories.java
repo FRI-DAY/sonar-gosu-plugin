@@ -24,6 +24,7 @@ public enum TestResourcesDirectories {
     RESOURCES_DIR("src/test/resources"),
     RULES_RESOURCES_DIR("src/test/resources/rules"),
     METRICS_RESOURCES_DIR("src/test/resources/measures/metrics"),
+    SAMPLES_RESOURCES_DIR("src/test/resources/samples"),
     SENSOR_RESOURCES_DIR("src/test/resources/sensor");
 
     private final String path;

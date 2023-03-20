@@ -19,7 +19,6 @@ package de.friday.sonarqube.gosu.plugin.measures.metrics;
 import com.google.inject.Inject;
 import de.friday.sonarqube.gosu.antlr.GosuParser;
 import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
-import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.utils.log.Logger;
@@ -30,16 +29,13 @@ import org.sonar.plugins.surefire.data.UnitTestIndex;
 public class TestsMetric extends BaseMetric {
 
     private static final Logger LOGGER = Loggers.get(TestsMetric.class);
-    private final SensorContext context;
-    private final GosuFileProperties gosuFileProperties;
     private final UnitTestIndex index;
 
     private String packageName = "";
 
     @Inject
     public TestsMetric(SensorContext context, GosuFileProperties gosuFileProperties, UnitTestIndex index) {
-        this.context = context;
-        this.gosuFileProperties = gosuFileProperties;
+        super(context, gosuFileProperties);
         this.index = index;
     }
 
@@ -70,13 +66,12 @@ public class TestsMetric extends BaseMetric {
     }
 
     private void saveMetrics(UnitTestClassReport report) {
-        final InputFile inputFile = gosuFileProperties.getFile();
         final int testsCount = report.getTests() - report.getSkipped();
 
-        saveMetric(context, inputFile, CoreMetrics.SKIPPED_TESTS, report.getSkipped());
-        saveMetric(context, inputFile, CoreMetrics.TESTS, testsCount);
-        saveMetric(context, inputFile, CoreMetrics.TEST_ERRORS, report.getErrors());
-        saveMetric(context, inputFile, CoreMetrics.TEST_FAILURES, report.getFailures());
-        saveMetric(context, inputFile, CoreMetrics.TEST_EXECUTION_TIME, report.getDurationMilliseconds());
+        saveMetricOnContext(CoreMetrics.SKIPPED_TESTS, report.getSkipped());
+        saveMetricOnContext(CoreMetrics.TESTS, testsCount);
+        saveMetricOnContext(CoreMetrics.TEST_ERRORS, report.getErrors());
+        saveMetricOnContext(CoreMetrics.TEST_FAILURES, report.getFailures());
+        saveMetricOnContext(CoreMetrics.TEST_EXECUTION_TIME, report.getDurationMilliseconds());
     }
 }

@@ -30,16 +30,13 @@ import org.sonar.api.measures.CoreMetrics;
  * https://www.sonarsource.com/docs/CognitiveComplexity.pdf
  */
 public class CognitiveComplexityMetric extends BaseMetric {
-    private final SensorContext context;
-    private final GosuFileProperties gosuFileProperties;
     private int classComplexity;
     private int methodComplexity;
     private int nestedLevel;
 
     @Inject
     public CognitiveComplexityMetric(SensorContext context, GosuFileProperties gosuFileProperties) {
-        this.context = context;
-        this.gosuFileProperties = gosuFileProperties;
+        super(context, gosuFileProperties);
     }
 
     public int getMethodComplexity() {
@@ -186,7 +183,7 @@ public class CognitiveComplexityMetric extends BaseMetric {
 
     @Override
     public void exitStart(GosuParser.StartContext ctx) {
-        saveMetric(context, gosuFileProperties.getFile(), CoreMetrics.COGNITIVE_COMPLEXITY, classComplexity);
+        saveMetricOnContext(CoreMetrics.COGNITIVE_COMPLEXITY, classComplexity);
     }
 
     private void initialize() {

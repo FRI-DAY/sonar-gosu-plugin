@@ -25,36 +25,36 @@ import static de.friday.test.support.TestFileComponentKeyBuilder.samplesComponen
 import static de.friday.test.support.TestResourcesDirectories.SAMPLES_RESOURCES_DIR;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class LinesOfCodeMetricTest {
+class CognitiveComplexityMetricTest {
 
     @Test
-    void shouldSaveLinesOfCodeMetricOnSensorContextWhenFileHasMainScope() {
+    void shouldSaveCognitiveComplexityMetricOnSensorContextWhenFileHasMainScope() {
         // given
         final String gosuFileName = "SpaceMarine.gs";
         final GosuTestFileParser parser = new GosuTestFileParser(gosuFileName);
         final String componentKey = samplesComponentKeyOf(gosuFileName);
 
         // when
-        final GosuTestFileParser.GosuFileParsed fileParsed = parser.parseWithSensorContext(SAMPLES_RESOURCES_DIR, "LinesOfCodeMetricTest");
+        final GosuTestFileParser.GosuFileParsed fileParsed = parser.parseWithSensorContext(SAMPLES_RESOURCES_DIR, "CognitiveComplexityMetricTest");
         final SensorContextTester sensor = fileParsed.getSensorContext();
 
         // then
-        assertThat(sensor.measure(componentKey, CoreMetrics.NCLOC).value()).isEqualTo(7);
+        assertThat(sensor.measure(componentKey, CoreMetrics.COGNITIVE_COMPLEXITY).value()).isEqualTo(1);
     }
 
     @Test
-    void shouldNotSaveLinesOfCodeMetricOnSensorContextWhenFileHasTestScope() {
+    void shouldNotCognitiveComplexityMetricOnSensorContextWhenFileHasTestScope() {
         // given
         final String gosuFileName = "SpaceMarineTest.gs";
         final GosuTestFileParser parser = new GosuTestFileParser(gosuFileName, InputFile.Type.TEST);
         final String componentKey = samplesComponentKeyOf(gosuFileName);
 
         // when
-        final GosuTestFileParser.GosuFileParsed fileParsed = parser.parseWithSensorContext(SAMPLES_RESOURCES_DIR, "LinesOfCodeMetricTest");
+        final GosuTestFileParser.GosuFileParsed fileParsed = parser.parseWithSensorContext(SAMPLES_RESOURCES_DIR, "CognitiveComplexityMetricTest");
         final SensorContextTester sensor = fileParsed.getSensorContext();
 
         // then
-        assertThat(sensor.measure(componentKey, CoreMetrics.NCLOC)).isNull();
+        assertThat(sensor.measure(componentKey, CoreMetrics.COGNITIVE_COMPLEXITY)).isNull();
     }
 
 }

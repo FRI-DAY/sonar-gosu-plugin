@@ -26,15 +26,12 @@ import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.measures.CoreMetrics;
 
 public class CyclomaticComplexityMetric extends BaseMetric {
-    private final SensorContext context;
-    private final GosuFileProperties gosuFileProperties;
     private int classComplexity;
     private int methodComplexity;
 
     @Inject
     public CyclomaticComplexityMetric(SensorContext context, GosuFileProperties gosuFileProperties) {
-        this.context = context;
-        this.gosuFileProperties = gosuFileProperties;
+        super(context, gosuFileProperties);
     }
 
     public int getMethodComplexity() {
@@ -93,7 +90,7 @@ public class CyclomaticComplexityMetric extends BaseMetric {
 
     @Override
     public void exitStart(GosuParser.StartContext ctx) {
-        saveMetric(context, gosuFileProperties.getFile(), CoreMetrics.COMPLEXITY, classComplexity);
+        saveMetricOnContext(CoreMetrics.COMPLEXITY, classComplexity);
     }
 
     private void calculateComplexity(GosuParser.ExpressionContext context) {

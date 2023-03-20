@@ -60,14 +60,12 @@ public class GosuFileProperties {
     public int getLinesOfCode() {
         if (linesOfCode > 0) return linesOfCode;
 
-        this.linesOfCode = computeLinesOfCodeOf(file);
+        computeLinesOfCodeOf(file);
 
         return linesOfCode;
     }
 
-    private int computeLinesOfCodeOf(InputFile file) {
-        int linesOfCode = 0;
-
+    private void computeLinesOfCodeOf(InputFile file) {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.inputStream()))) {
             while (reader.ready()) {
                 final String line = reader.readLine();
@@ -78,8 +76,6 @@ public class GosuFileProperties {
         } catch (IOException ioException) {
             throw new GosuPluginException("Unable to compute lines of code for source file: " + file.filename(), ioException);
         }
-
-        return linesOfCode;
     }
 
     private boolean isNotComment(final String line) {
