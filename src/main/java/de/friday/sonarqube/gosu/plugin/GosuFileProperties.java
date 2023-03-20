@@ -16,13 +16,21 @@
  */
 package de.friday.sonarqube.gosu.plugin;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Token;
+import org.apache.commons.lang3.StringUtils;
 import org.sonar.api.batch.fs.InputFile;
 
 public class GosuFileProperties {
+
+    private static final String COMMENT_TOKENS_REGEX = "^\\s?[/,*].*$";
     private final InputFile file;
     private final CommonTokenStream tokenStream;
+
+    private int linesOfCode = 0;
 
     public GosuFileProperties(InputFile file, CommonTokenStream tokenStream) {
         this.file = file;
@@ -37,7 +45,44 @@ public class GosuFileProperties {
         return file;
     }
 
+    public boolean isMainFile() {
+        return InputFile.Type.MAIN.equals(file.type());
+    }
+
+    public boolean isTestFile() {
+        return InputFile.Type.TEST.equals(file.type());
+    }
+
     public Token getToken(int index) {
         return tokenStream.get(index);
+    }
+
+    public int getLinesOfCode() {
+        if (linesOfCode > 0) return linesOfCode;
+
+        computeLinesOfCodeOf(file);
+
+        return linesOfCode;
+    }
+
+    private void computeLinesOfCodeOf(InputFile file) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.inputStream()))) {
+            while (reader.ready()) {
+                final String line = reader.readLine();
+                if (hasValidCharacters(line) && isNotComment(line)) {
+                    linesOfCode++;
+                }
+            }
+        } catch (IOException ioException) {
+            throw new GosuPluginException("Unable to compute lines of code for source file: " + file.filename(), ioException);
+        }
+    }
+
+    private boolean isNotComment(final String line) {
+        return !line.trim().matches(COMMENT_TOKENS_REGEX);
+    }
+
+    private boolean hasValidCharacters(final String line) {
+        return StringUtils.isNotBlank(line) && StringUtils.isNotEmpty(line);
     }
 }

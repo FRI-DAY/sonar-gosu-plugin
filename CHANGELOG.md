@@ -7,8 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Refactored TooManyParamsRule to avoid unnecessary `if` condition ([#45](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/45)).
+- Only compute core metrics (Lines of code, cognitive/cyclomatic complexity) for **main** source code files ([#54](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/54)).
 
 ### Fixed
+- Fixed Lines of Code metric ([#54](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/54)).
 - Fixed all minor SonarCloud issues:
   * [#46](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/46)
   * [#49](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/49)

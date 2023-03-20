@@ -19,39 +19,20 @@ package de.friday.sonarqube.gosu.plugin.measures.metrics;
 import com.google.inject.Inject;
 import de.friday.sonarqube.gosu.antlr.GosuParser;
 import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
-import org.sonar.api.batch.fs.InputFile;
-import org.sonar.api.batch.fs.internal.DefaultInputFile;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.measures.CoreMetrics;
 
 public class LinesOfCodeMetric extends BaseMetric {
-    private final GosuFileProperties gosuFileProperties;
-    private final SensorContext context;
-    private int linesOfCode;
-
     @Inject
     public LinesOfCodeMetric(GosuFileProperties gosuFileProperties, SensorContext context) {
-        this.gosuFileProperties = gosuFileProperties;
-        this.context = context;
-    }
-
-    public int getLinesOfCode() {
-        return linesOfCode;
+        super(context, gosuFileProperties);
     }
 
     @Override
-    @SuppressWarnings("squid:CommentedOutCodeLine")
-    public void enterStart(GosuParser.StartContext ctx) {
-        InputFile file = gosuFileProperties.getFile();
-        linesOfCode = file.lines();
-        if (file instanceof DefaultInputFile) {
-            linesOfCode = ((DefaultInputFile) file).nonBlankLines();
+    public void enterStart(GosuParser.StartContext startContext) {
+        if(shouldSaveMetric()) {
+            final int linesOfCode = gosuFileProperties.getLinesOfCode();
+            saveMetricOnContext(CoreMetrics.NCLOC, linesOfCode);
         }
-        /*
-         * Lines of code metric is set to 1 for each file as SQ license limit is 100k lines of code for all projects in total.
-         * Uncomment it when license lets scan more lines of code.
-         * saveMetric(context, file, CoreMetrics.NCLOC, linesOfCode);
-         */
-        saveMetric(context, file, CoreMetrics.NCLOC, 1);
     }
 }

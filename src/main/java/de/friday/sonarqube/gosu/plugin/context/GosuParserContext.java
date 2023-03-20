@@ -54,7 +54,7 @@ public class GosuParserContext {
 
     public void start() {
         final Injector injector = Guice.createInjector(analysisModule);
-        registerChecksOn(injector);
+        registerRulesOn(injector);
         registerMetricsOn(injector);
         registerListenersOn(injector);
     }
@@ -63,11 +63,11 @@ public class GosuParserContext {
         removeParserListeners();
     }
 
-    private void registerChecksOn(Injector injector) {
-        final List<BaseGosuRule> activeChecks = instantiateChecks(injector);
+    private void registerRulesOn(Injector injector) {
+        final List<BaseGosuRule> activeRules = instantiateRules(injector);
 
-        for (BaseGosuRule check : activeChecks) {
-            registerListener(check);
+        for (BaseGosuRule gosuRule : activeRules) {
+            registerListener(gosuRule);
         }
     }
 
@@ -82,32 +82,32 @@ public class GosuParserContext {
         registerListener(injector.getInstance(SuppressWarningsListener.class));
     }
 
-    private List<BaseGosuRule> instantiateChecks(Injector injector) {
+    private List<BaseGosuRule> instantiateRules(Injector injector) {
         final Collection<ActiveRule> activeRules = context.activeRules().findByRepository(GosuLanguage.REPOSITORY_KEY);
-        final List<BaseGosuRule> activeChecks = new ArrayList<>();
+        final List<BaseGosuRule> activeGosuRules = new ArrayList<>();
 
         for (ActiveRule activeRule : activeRules) {
-            getCheckClass(activeRule).ifPresent(check -> activeChecks.add(injector.getInstance(check)));
+            getRuleClass(activeRule).ifPresent(rule -> activeGosuRules.add(injector.getInstance(rule)));
         }
 
-        return bindChecksWithSonarAnnotations(activeChecks);
+        return bindRulesWithSonarAnnotations(activeGosuRules);
     }
 
-    private void registerListener(GosuParserBaseListener check) {
-        gosuParser.addParseListener(check);
+    private void registerListener(GosuParserBaseListener listener) {
+        gosuParser.addParseListener(listener);
     }
 
     private void registerErrorListener(ANTLRErrorListener errorListener) {
         gosuParser.addErrorListener(errorListener);
     }
 
-    private Optional<Class<? extends BaseGosuRule>> getCheckClass(ActiveRule activeRule) {
+    private Optional<Class<? extends BaseGosuRule>> getRuleClass(ActiveRule activeRule) {
         final String activeRuleKey = activeRule.ruleKey().rule();
 
         return ClassExtractor.getRuleForScope(activeRuleKey, inputFile.type());
     }
 
-    private List<BaseGosuRule> bindChecksWithSonarAnnotations(List<BaseGosuRule> activeChecks) {
+    private List<BaseGosuRule> bindRulesWithSonarAnnotations(List<BaseGosuRule> activeChecks) {
         final CheckFactory checkFactory = new CheckFactory(context.activeRules());
         final Checks<BaseGosuRule> checks = checkFactory.create(GosuLanguage.REPOSITORY_KEY);
 

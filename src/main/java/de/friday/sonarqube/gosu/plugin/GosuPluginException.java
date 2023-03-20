@@ -14,30 +14,15 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package de.friday.test.support;
+package de.friday.sonarqube.gosu.plugin;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-public enum TestResourcesDirectories {
-
-    RESOURCES_DIR("src/test/resources"),
-    RULES_RESOURCES_DIR("src/test/resources/rules"),
-    METRICS_RESOURCES_DIR("src/test/resources/measures/metrics"),
-    SAMPLES_RESOURCES_DIR("src/test/resources/samples"),
-    SENSOR_RESOURCES_DIR("src/test/resources/sensor");
-
-    private final String path;
-
-    TestResourcesDirectories(String path) {
-        this.path = path;
+public class GosuPluginException extends RuntimeException {
+    public GosuPluginException(String message) {
+        super(message);
     }
 
-    public String getPathAsString() {
-        return path;
+    public GosuPluginException(String message, Throwable cause) {
+        super(message, cause);
     }
 
-    public Path getPath() {
-        return Paths.get(this.getPathAsString());
-    }
 }

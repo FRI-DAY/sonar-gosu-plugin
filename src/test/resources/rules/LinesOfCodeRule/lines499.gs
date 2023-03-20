@@ -1,5 +1,8 @@
 package checks.LinesOfCodeRule
 
+/**
+ * Test test test
+*/
 class lines499 {
   function someFunc(obj : Object) : boolean {
     var condition1 = true
@@ -24,6 +27,7 @@ class lines499 {
     return true
   }
 
+ // tests
   function someFunc1(obj : Object) : boolean {
     var condition1 = true
     if (condition1)

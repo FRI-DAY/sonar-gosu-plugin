@@ -26,7 +26,6 @@ public enum RuleType {
     BUGS("bugs"),
     CODE_SMELLS("smells"),
     METRICS("metrics"),
-
     VULNERABILITIES("vulnerabilities");
 
     private static final String RULES_BASE_PACKAGE = "de.friday.sonarqube.gosu.plugin.rules";

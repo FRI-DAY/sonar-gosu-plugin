@@ -44,9 +44,15 @@ public class GosuTestFileParser {
     private final GosuParser gosuParser = new GosuParser(null);
 
     private final String gosuSourceFilename;
+    private final InputFile.Type inputFileType;
 
     public GosuTestFileParser(String gosuSourceFilename) {
+        this(gosuSourceFilename, InputFile.Type.MAIN);
+    }
+
+    public GosuTestFileParser(String gosuSourceFilename, InputFile.Type type) {
         this.gosuSourceFilename = gosuSourceFilename;
+        this.inputFileType = type;
     }
 
     public GosuFileParsed parse() {
@@ -64,7 +70,8 @@ public class GosuTestFileParser {
 
         final InputFile inputFile = new GosuSourceCodeFile(
                 gosuSourceFilename,
-                TestResourcesDirectories.RESOURCES_DIR.getPathAsString()
+                TestResourcesDirectories.RESOURCES_DIR.getPathAsString(),
+                inputFileType
         ).asInputFile();
         final GosuFileProperties gosuFileProperties = new GosuFileProperties(inputFile, commonTokenStream);
 
@@ -87,7 +94,7 @@ public class GosuTestFileParser {
     }
 
     public GosuFileParsed parseWithSensorContext(TestResourcesDirectories baseDir, String packageName) {
-        final InputFile inputFile = new GosuSourceCodeFile(gosuSourceFilename, baseDir.getPathAsString()).asInputFile();
+        final InputFile inputFile = new GosuSourceCodeFile(gosuSourceFilename, baseDir.getPathAsString(), inputFileType).asInputFile();
         final SensorContextTester context = new GosuSensorContextTester(baseDir.getPath()).get();
         final GosuFileProperties gosuFileProperties = parse(baseDir, packageName, inputFile, context);
 

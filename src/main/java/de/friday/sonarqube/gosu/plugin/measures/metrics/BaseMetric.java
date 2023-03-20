@@ -18,11 +18,11 @@ package de.friday.sonarqube.gosu.plugin.measures.metrics;
 
 import de.friday.sonarqube.gosu.antlr.GosuLexer;
 import de.friday.sonarqube.gosu.antlr.GosuParserBaseListener;
+import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import org.sonar.api.batch.fs.InputComponent;
 import org.sonar.api.batch.measure.Metric;
 import org.sonar.api.batch.sensor.SensorContext;
 
@@ -36,15 +36,29 @@ public abstract class BaseMetric extends GosuParserBaseListener {
             GosuLexer.BITOR)
     );
 
+    protected final SensorContext context;
+    protected final GosuFileProperties gosuFileProperties;
+
+    protected BaseMetric(SensorContext context, GosuFileProperties gosuFileProperties) {
+        this.context = context;
+        this.gosuFileProperties = gosuFileProperties;
+    }
+
     public static boolean isComplexityOperator(int type) {
         return GOSU_COMPLEXITY_OPERATORS.contains(type);
     }
 
-    <T extends Serializable> void saveMetric(SensorContext context, InputComponent inputComponent, Metric<T> metric, T value) {
-        context.<T>newMeasure()
-                .withValue(value)
-                .forMetric(metric)
-                .on(inputComponent)
-                .save();
+    protected boolean shouldSaveMetric() {
+        return gosuFileProperties.isMainFile();
+    }
+
+    <T extends Serializable> void saveMetricOnContext(Metric<T> metric, T value) {
+        if (shouldSaveMetric()) {
+            context.<T>newMeasure()
+                    .withValue(value)
+                    .forMetric(metric)
+                    .on(gosuFileProperties.getFile())
+                    .save();
+        }
     }
 }

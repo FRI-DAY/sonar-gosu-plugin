@@ -30,24 +30,49 @@ import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
 public final class GosuSourceCodeFile implements SourceCodeFile {
     private final String fileName;
     private final String baseDir;
+    private final InputFile.Type type;
 
     public GosuSourceCodeFile(String filename) {
         this(filename, GosuRulesTestResources.getBaseDirPathAsString());
     }
 
     public GosuSourceCodeFile(String filename, String baseDir) {
+        this(filename, baseDir, InputFile.Type.MAIN);
+    }
+
+    public GosuSourceCodeFile(String filename, String baseDir, InputFile.Type type) {
         this.fileName = filename;
         this.baseDir = baseDir;
+        this.type = type;
     }
 
     @Override
     public InputFile asInputFile() {
         final String sourceFileContent = loadFileContent();
+        final int numberOfLines = numberLines();
         return new TestInputFileBuilder(
                 baseDir,
                 Paths.get(baseDir).toFile(),
                 GosuRulesTestResources.getPathOf(fileName, baseDir).toFile()
-        ).initMetadata(sourceFileContent).setLanguage(GosuLanguage.KEY).build();
+        )
+                .initMetadata(sourceFileContent)
+                .setLines(numberOfLines)
+                .setLanguage(GosuLanguage.KEY)
+                .setType(type)
+                .build();
+    }
+
+    private int numberLines() {
+        final Path gosuFilePath = GosuRulesTestResources.getPathOf(fileName, baseDir);
+        int numberOfLines = 0;
+
+        try (Stream<String> lines = Files.lines(gosuFilePath)) {
+            numberOfLines = Long.valueOf(lines.count()).intValue();
+        } catch (IOException e) {
+            throw new RuntimeException("Unable to compute physical lines of " + fileName, e);
+        }
+
+        return numberOfLines;
     }
 
     private String loadFileContent() {

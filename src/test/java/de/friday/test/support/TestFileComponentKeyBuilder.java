@@ -16,28 +16,13 @@
  */
 package de.friday.test.support;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
+public class TestFileComponentKeyBuilder {
 
-public enum TestResourcesDirectories {
-
-    RESOURCES_DIR("src/test/resources"),
-    RULES_RESOURCES_DIR("src/test/resources/rules"),
-    METRICS_RESOURCES_DIR("src/test/resources/measures/metrics"),
-    SAMPLES_RESOURCES_DIR("src/test/resources/samples"),
-    SENSOR_RESOURCES_DIR("src/test/resources/sensor");
-
-    private final String path;
-
-    TestResourcesDirectories(String path) {
-        this.path = path;
+    public static String metricComponentKeyOf(String testSourceFileName) {
+        return TestResourcesDirectories.METRICS_RESOURCES_DIR.getPathAsString() + ":" + testSourceFileName;
     }
 
-    public String getPathAsString() {
-        return path;
-    }
-
-    public Path getPath() {
-        return Paths.get(this.getPathAsString());
+    public static String samplesComponentKeyOf(String testSourceFileName) {
+        return TestResourcesDirectories.SAMPLES_RESOURCES_DIR.getPathAsString() + ":" + testSourceFileName;
     }
 }
