@@ -16,7 +16,6 @@
  */
 package de.friday.sonarqube.gosu.plugin.rules.metrics;
 
-import de.friday.sonarqube.gosu.plugin.rules.metrics.LinesOfCodeRule;
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 

@@ -498,13 +498,17 @@ class lines500 {
   }
 
   private function getInteger(param : Integer) : Integer {
+    // returns parameter
     return param
   }
 
   private function doSomething(param : int) : int {
-    return param
+    return param // just returns
   }
 
+  /**
+   * This method do something else.
+   */
   private function doSomethingElse(param : int) : int {
     return param
   }

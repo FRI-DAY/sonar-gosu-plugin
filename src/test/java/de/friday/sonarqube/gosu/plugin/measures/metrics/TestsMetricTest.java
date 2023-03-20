@@ -21,6 +21,7 @@ import de.friday.test.support.GosuTestFileParser.GosuFileParsed;
 import org.junit.jupiter.api.Test;
 import org.sonar.api.batch.sensor.internal.SensorContextTester;
 import org.sonar.api.measures.CoreMetrics;
+import static de.friday.test.support.TestFileComponentKeyBuilder.metricComponentKeyOf;
 import static de.friday.test.support.TestResourcesDirectories.METRICS_RESOURCES_DIR;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,7 +32,7 @@ class TestsMetricTest {
         // given
         final String unitTestSourceFilename = "TestsMetricTest/StringUtilTest.gs";
         final GosuTestFileParser parser = new GosuTestFileParser(unitTestSourceFilename);
-        final String key = unitTextKeyOf(unitTestSourceFilename);
+        final String key = metricComponentKeyOf(unitTestSourceFilename);
 
         // when
         final GosuFileParsed fileParsed = parser.parseWithSensorContext(METRICS_RESOURCES_DIR, "TestsMetricTest");
@@ -50,7 +51,7 @@ class TestsMetricTest {
         // given
         final String unitTestSourceFilename = "TestsMetricTest/TestWithoutReport.gs";
         final GosuTestFileParser parser = new GosuTestFileParser(unitTestSourceFilename);
-        final String key = unitTextKeyOf(unitTestSourceFilename);
+        final String key = metricComponentKeyOf(unitTestSourceFilename);
 
         // when
         final GosuFileParsed fileParsed = parser.parseWithSensorContext(METRICS_RESOURCES_DIR, "TestWithoutReport");
@@ -62,9 +63,5 @@ class TestsMetricTest {
         assertThat(sensor.measure(key, CoreMetrics.TEST_ERRORS)).isNull();
         assertThat(sensor.measure(key, CoreMetrics.TEST_FAILURES)).isNull();
         assertThat(sensor.measure(key, CoreMetrics.TEST_EXECUTION_TIME)).isNull();
-    }
-
-    private String unitTextKeyOf(String testSourceFileName) {
-        return METRICS_RESOURCES_DIR.getPathAsString() + ":" + testSourceFileName;
     }
 }
