@@ -43,11 +43,29 @@ public final class GosuSourceCodeFile implements SourceCodeFile {
     @Override
     public InputFile asInputFile() {
         final String sourceFileContent = loadFileContent();
+        final int numberOfLines = numberLines();
         return new TestInputFileBuilder(
                 baseDir,
                 Paths.get(baseDir).toFile(),
                 GosuRulesTestResources.getPathOf(fileName, baseDir).toFile()
-        ).initMetadata(sourceFileContent).setLanguage(GosuLanguage.KEY).build();
+        )
+                .initMetadata(sourceFileContent)
+                .setLines(numberOfLines)
+                .setLanguage(GosuLanguage.KEY)
+                .build();
+    }
+
+    private int numberLines() {
+        final Path gosuFilePath = GosuRulesTestResources.getPathOf(fileName, baseDir);
+        int numberOfLines = 0;
+
+        try (Stream<String> lines = Files.lines(gosuFilePath)) {
+            numberOfLines = Long.valueOf(lines.count()).intValue();
+        } catch (IOException e) {
+            throw new RuntimeException("Unable to compute physical lines of " + fileName, e);
+        }
+
+        return numberOfLines;
     }
 
     private String loadFileContent() {
