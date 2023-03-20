@@ -45,6 +45,14 @@ public class GosuFileProperties {
         return file;
     }
 
+    public boolean isMainFile() {
+        return InputFile.Type.MAIN.equals(file.type());
+    }
+
+    public boolean isTestFile() {
+        return InputFile.Type.TEST.equals(file.type());
+    }
+
     public Token getToken(int index) {
         return tokenStream.get(index);
     }

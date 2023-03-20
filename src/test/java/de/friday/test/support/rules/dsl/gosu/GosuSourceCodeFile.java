@@ -30,14 +30,20 @@ import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
 public final class GosuSourceCodeFile implements SourceCodeFile {
     private final String fileName;
     private final String baseDir;
+    private final InputFile.Type type;
 
     public GosuSourceCodeFile(String filename) {
         this(filename, GosuRulesTestResources.getBaseDirPathAsString());
     }
 
     public GosuSourceCodeFile(String filename, String baseDir) {
+        this(filename, baseDir, InputFile.Type.MAIN);
+    }
+
+    public GosuSourceCodeFile(String filename, String baseDir, InputFile.Type type) {
         this.fileName = filename;
         this.baseDir = baseDir;
+        this.type = type;
     }
 
     @Override
@@ -52,6 +58,7 @@ public final class GosuSourceCodeFile implements SourceCodeFile {
                 .initMetadata(sourceFileContent)
                 .setLines(numberOfLines)
                 .setLanguage(GosuLanguage.KEY)
+                .setType(type)
                 .build();
     }
 

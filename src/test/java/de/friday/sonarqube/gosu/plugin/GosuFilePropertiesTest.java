@@ -66,7 +66,35 @@ public class GosuFilePropertiesTest {
                 .hasMessage("Unable to compute lines of code for source file: FakeFile.java");
     }
 
+    @Test
+    void isMainFileShouldReturnTrueWhenFileHasMainScope() {
+        final GosuTestFileParser.GosuFileParsed fileParsed = aParsedGosuFileOf("/samples/Foo.gs", InputFile.Type.MAIN);
+        final InputFile inputFile = fileParsed.getInputFile();
+        final CommonTokenStream tokenStream = fileParsed.getSourceFileProperties().getTokenStream();
+
+        final GosuFileProperties fileProperties = new GosuFileProperties(inputFile, tokenStream);
+
+        assertThat(fileProperties.isMainFile()).isTrue();
+        assertThat(fileProperties.isTestFile()).isFalse();
+    }
+
+    @Test
+    void isTestFileShouldReturnTrueWhenFileHasTestScope() {
+        final GosuTestFileParser.GosuFileParsed fileParsed = aParsedGosuFileOf("/samples/FooTest.gs", InputFile.Type.TEST);
+        final InputFile inputFile = fileParsed.getInputFile();
+        final CommonTokenStream tokenStream = fileParsed.getSourceFileProperties().getTokenStream();
+
+        final GosuFileProperties fileProperties = new GosuFileProperties(inputFile, tokenStream);
+
+        assertThat(fileProperties.isTestFile()).isTrue();
+        assertThat(fileProperties.isMainFile()).isFalse();
+    }
+
     private GosuTestFileParser.GosuFileParsed aParsedGosuFileOf(String testFilePath) {
-        return new GosuTestFileParser(testFilePath).parse();
+        return aParsedGosuFileOf(testFilePath, InputFile.Type.MAIN);
+    }
+
+    private GosuTestFileParser.GosuFileParsed aParsedGosuFileOf(String testFilePath, InputFile.Type type) {
+        return new GosuTestFileParser(testFilePath, type).parse();
     }
 }
