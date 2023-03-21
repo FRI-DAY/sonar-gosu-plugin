@@ -132,6 +132,7 @@ jobs:
             -Prelease.releaseVersion=${{ needs.fetch-version.outputs.version }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        permissions: read-all|write-all
       - name: Sonar
         run: |
           ./gradlew sonar --no-daemon \
