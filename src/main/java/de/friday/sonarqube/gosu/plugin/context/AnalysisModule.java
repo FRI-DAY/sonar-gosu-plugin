@@ -20,12 +20,13 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 import com.google.inject.multibindings.Multibinder;
 import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
-import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
 import de.friday.sonarqube.gosu.plugin.issues.IssueCollector;
+import de.friday.sonarqube.gosu.plugin.measures.metrics.CodeSizeMetrics;
 import de.friday.sonarqube.gosu.plugin.measures.metrics.CognitiveComplexityMetric;
 import de.friday.sonarqube.gosu.plugin.measures.metrics.CyclomaticComplexityMetric;
 import de.friday.sonarqube.gosu.plugin.measures.metrics.LinesOfCodeMetric;
 import de.friday.sonarqube.gosu.plugin.measures.metrics.TestsMetric;
+import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
 import de.friday.sonarqube.gosu.plugin.tools.listeners.SuppressWarningsListener;
 import de.friday.sonarqube.gosu.plugin.tools.listeners.SyntaxErrorListener;
 import de.friday.sonarqube.gosu.plugin.tools.reflections.ClassExtractor;
@@ -50,9 +51,8 @@ public class AnalysisModule extends AbstractModule {
     protected void configure() {
         bindBasicModuleFields();
         bindMetrics();
-        bindChecks();
-        bindErrorListeners();
-        bindAdditionalListeners();
+        bindRules();
+        bindListeners();
     }
 
     private void bindBasicModuleFields() {
@@ -63,13 +63,14 @@ public class AnalysisModule extends AbstractModule {
     }
 
     private void bindMetrics() {
+        bind(CodeSizeMetrics.class).in(Singleton.class);
         bind(CognitiveComplexityMetric.class).in(Singleton.class);
         bind(CyclomaticComplexityMetric.class).in(Singleton.class);
         bind(LinesOfCodeMetric.class).in(Singleton.class);
         bind(TestsMetric.class).in(Singleton.class);
     }
 
-    private void bindChecks() {
+    private void bindRules() {
         final Multibinder<BaseGosuRule> checksMultibinder = Multibinder.newSetBinder(binder(), BaseGosuRule.class);
 
         for (Class<? extends BaseGosuRule> check : ClassExtractor.getRules().values()) {
@@ -77,11 +78,8 @@ public class AnalysisModule extends AbstractModule {
         }
     }
 
-    private void bindErrorListeners() {
+    private void bindListeners() {
         bind(ANTLRErrorListener.class).to(SyntaxErrorListener.class);
-    }
-
-    private void bindAdditionalListeners() {
         bind(SuppressWarningsListener.class).in(Singleton.class);
     }
 }
