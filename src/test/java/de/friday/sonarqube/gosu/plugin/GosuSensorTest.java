@@ -21,6 +21,7 @@ import de.friday.test.support.GosuSensorContextTester;
 import de.friday.test.support.TestResourcesDirectories;
 import de.friday.test.support.rules.dsl.gosu.GosuSourceCodeFile;
 import de.friday.test.support.rules.dsl.specification.SourceCodeFile;
+import de.friday.test.support.sonar.scanner.FileLinesContextFactorySpy;
 import org.junit.jupiter.api.Test;
 import org.sonar.api.batch.sensor.internal.DefaultSensorDescriptor;
 import org.sonar.api.batch.sensor.internal.SensorContextTester;
@@ -88,7 +89,12 @@ class GosuSensorTest {
     }
 
     private GosuSensor newGosuSensorFor(SensorContextTester sensorContextTester) {
-        return new GosuSensor(sensorContextTester.fileSystem(), sensorContextTester.config(), new PathResolver());
+        return new GosuSensor(
+                sensorContextTester.fileSystem(),
+                sensorContextTester.config(),
+                new PathResolver(),
+                new FileLinesContextFactorySpy(sensorContextTester)
+        );
     }
 
     private SensorContextTester createSensorContextTesterFor(String fileName) {
