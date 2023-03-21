@@ -18,7 +18,7 @@ Please find below the compatibility matrix of the plugin:
 
 | SonarQube Version | Plugin Version |
 |-------------------|----------------|
-| v8.9              | v1.0.0         |
+| v8.9              | v1.0.0, v1.1.0 |
 
 ## Installation
 
