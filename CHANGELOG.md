@@ -5,6 +5,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Added size metrics (number of classes, functions and statements) to the plugin ([#56](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/56)).
+
 ### Changed
 - Refactored TooManyParamsRule to avoid unnecessary `if` condition ([#45](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/45)).
 - Only compute core metrics (Lines of code, cognitive/cyclomatic complexity) for **main** source code files ([#54](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/54)).
