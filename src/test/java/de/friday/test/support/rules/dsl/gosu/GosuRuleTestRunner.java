@@ -16,11 +16,12 @@
  */
 package de.friday.test.support.rules.dsl.gosu;
 
-import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
 import de.friday.sonarqube.gosu.plugin.GosuFileParser;
+import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
 import de.friday.test.support.GosuSensorContextTester;
 import de.friday.test.support.rules.dsl.specification.RuleRunner;
 import de.friday.test.support.rules.dsl.specification.SourceCodeFile;
+import de.friday.test.support.sonar.scanner.FileLinesContextFactorySpy;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +60,12 @@ final class GosuRuleTestRunner implements RuleRunner<List<Issue>> {
 
     private List<de.friday.sonarqube.gosu.plugin.issues.Issue> analyse(InputFile inputFile, SensorContextTester context) {
         try {
-            return new GosuFileParser(inputFile, context, new UnitTestIndex()).parse();
+            return new GosuFileParser(
+                    inputFile,
+                    context,
+                    new UnitTestIndex(),
+                    new FileLinesContextFactorySpy(context).createFor(inputFile)
+            ).parse();
         } catch (IOException e) {
             e.printStackTrace();
             throw new AssertionError("Unable to parse input file.");

@@ -18,21 +18,25 @@ package de.friday.sonarqube.gosu.plugin.measures.metrics;
 
 import com.google.inject.Inject;
 import de.friday.sonarqube.gosu.antlr.GosuParser;
+import de.friday.sonarqube.gosu.plugin.GosuFileLineData;
 import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.measures.CoreMetrics;
 
 public class LinesOfCodeMetric extends BaseMetric {
+
     @Inject
     public LinesOfCodeMetric(GosuFileProperties gosuFileProperties, SensorContext context) {
         super(context, gosuFileProperties);
     }
 
     @Override
-    public void enterStart(GosuParser.StartContext startContext) {
+    public void exitStart(GosuParser.StartContext startContext) {
         if(shouldSaveMetric()) {
-            final int linesOfCode = gosuFileProperties.getLinesOfCode();
-            saveMetricOnContext(CoreMetrics.NCLOC, linesOfCode);
+            final GosuFileLineData fileLineData = gosuFileProperties.getFileLineData();
+            saveMetricOnContext(CoreMetrics.NCLOC, fileLineData.getNumberOfLinesOfCode());
+            saveMetricOnContext(CoreMetrics.COMMENT_LINES, fileLineData.getNumberOfCommentedLines());
+            fileLineData.saveOnContext();
         }
     }
 }

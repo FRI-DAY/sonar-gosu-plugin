@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Added lines of code data (`NCLOC_DATA`) to the plugin ([#55](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/55)).
 - Added size metrics (number of classes, functions and statements) to the plugin ([#56](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/56)).
 
 ### Changed

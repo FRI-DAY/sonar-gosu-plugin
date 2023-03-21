@@ -29,6 +29,7 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.sensor.SensorContext;
+import org.sonar.api.measures.FileLinesContext;
 import org.sonar.plugins.surefire.data.UnitTestIndex;
 
 public class GosuFileParser {
@@ -40,11 +41,11 @@ public class GosuFileParser {
     private final IssueCollector collector = new IssueCollector();
     private final InputFile inputFile;
 
-    public GosuFileParser(InputFile inputFile, SensorContext context, UnitTestIndex index) throws IOException {
+    public GosuFileParser(InputFile inputFile, SensorContext context, UnitTestIndex index, FileLinesContext fileLinesContext) throws IOException {
         this.inputFile = inputFile;
         this.context = context;
         this.unitTestIndex = index;
-        this.gosuFileProperties = initializeTokenStream();
+        this.gosuFileProperties = createGosuFilePropertiesWith(fileLinesContext);
     }
 
     public List<Issue> parse() {
@@ -60,12 +61,12 @@ public class GosuFileParser {
         return new GosuParserContext(context, analysisModule, inputFile, gosuParser);
     }
 
-    private GosuFileProperties initializeTokenStream() throws IOException {
+    private GosuFileProperties createGosuFilePropertiesWith(FileLinesContext fileLinesContext) throws IOException {
         try (InputStream stream = inputFile.inputStream()) {
             gosuLexer.setInputStream(CharStreams.fromStream(stream));
             CommonTokenStream tokenStream = new CommonTokenStream(gosuLexer);
             gosuParser.setTokenStream(tokenStream);
-            return new GosuFileProperties(inputFile, tokenStream);
+            return new GosuFileProperties(inputFile, tokenStream, fileLinesContext);
         }
     }
 
@@ -78,6 +79,6 @@ public class GosuFileParser {
     }
 
     public GosuFileProperties getProperties() {
-        return new GosuFileProperties(gosuFileProperties.getFile(), gosuFileProperties.getTokenStream());
+        return new GosuFileProperties(gosuFileProperties.getFile(), gosuFileProperties.getTokenStream(), gosuFileProperties.getFileLinesContext());
     }
 }

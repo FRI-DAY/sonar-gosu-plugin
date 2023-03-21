@@ -18,6 +18,7 @@ package de.friday.sonarqube.gosu.plugin.rules.metrics;
 
 import com.google.inject.Inject;
 import de.friday.sonarqube.gosu.antlr.GosuParser;
+import de.friday.sonarqube.gosu.plugin.GosuFileLineData;
 import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import de.friday.sonarqube.gosu.plugin.issues.GosuIssue;
 import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
@@ -44,9 +45,10 @@ public class LinesOfCodeRule extends BaseGosuRule {
 
     @Override
     public void exitStart(GosuParser.StartContext ctx) {
-        if (gosuFileProperties.getLinesOfCode() > max) {
+        final GosuFileLineData fileLineData = gosuFileProperties.getFileLineData();
+        if (fileLineData.isNumberOfLinesOfCodeGreaterThan(max)) {
             addIssue(new GosuIssue.GosuIssueBuilder(this)
-                    .withMessage(messageBuilder(gosuFileProperties.getLinesOfCode()))
+                    .withMessage(messageBuilder(fileLineData.getNumberOfLinesOfCode()))
                     .build());
         }
     }

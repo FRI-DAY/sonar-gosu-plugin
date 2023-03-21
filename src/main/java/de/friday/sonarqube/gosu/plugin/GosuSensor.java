@@ -19,8 +19,8 @@ package de.friday.sonarqube.gosu.plugin;
 import de.friday.sonarqube.gosu.language.GosuLanguage;
 import de.friday.sonarqube.gosu.plugin.issues.Issue;
 import de.friday.sonarqube.gosu.plugin.measures.Measures;
-import de.friday.sonarqube.gosu.plugin.reports.ReportsScanner;
 import de.friday.sonarqube.gosu.plugin.reports.ReportsDirectories;
+import de.friday.sonarqube.gosu.plugin.reports.ReportsScanner;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
@@ -36,6 +36,7 @@ import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.SensorDescriptor;
 import org.sonar.api.config.Configuration;
+import org.sonar.api.measures.FileLinesContextFactory;
 import org.sonar.api.scan.filesystem.PathResolver;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
@@ -47,11 +48,18 @@ public class GosuSensor implements Sensor {
     private final FileSystem fileSystem;
     private final FilePredicate mainFilesPredicate;
     private final UnitTestIndex unitTestIndex;
+    private final FileLinesContextFactory fileLinesContextFactory;
 
-    public GosuSensor(FileSystem fileSystem, Configuration settings, PathResolver pathResolver) {
+    public GosuSensor(
+            FileSystem fileSystem,
+            Configuration settings,
+            PathResolver pathResolver,
+            FileLinesContextFactory fileLinesContextFactory
+    ) {
         this.fileSystem = fileSystem;
         this.mainFilesPredicate = fileSystem.predicates().and(fileSystem.predicates().hasLanguage(GosuLanguage.KEY));
         this.unitTestIndex = createUnitTestIndex(settings, pathResolver);
+        this.fileLinesContextFactory = fileLinesContextFactory;
     }
 
     @Override
@@ -124,7 +132,7 @@ public class GosuSensor implements Sensor {
 
     private Optional<GosuFileParser> createParser(SensorContext context, InputFile inputFile) {
         try {
-            final GosuFileParser gosuFileParser = new GosuFileParser(inputFile, context, unitTestIndex);
+            final GosuFileParser gosuFileParser = new GosuFileParser(inputFile, context, unitTestIndex, fileLinesContextFactory.createFor(inputFile));
             return Optional.of(gosuFileParser);
         } catch (IOException e) {
             context.newAnalysisError()
