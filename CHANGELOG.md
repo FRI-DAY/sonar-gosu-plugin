@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0]
+
 ### Added
 - Added lines of code data (`NCLOC_DATA`) to the plugin ([#55](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/55)).
 - Added size metrics (number of classes, functions and statements) to the plugin ([#56](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/56)).
@@ -15,10 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed Lines of Code metric ([#54](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/54)).
-- Fixed all minor SonarCloud issues:
-  * [#46](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/46)
-  * [#49](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/49)
-  * [#50](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/50)
+- Fixed all minor SonarCloud issues ([#46](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/46), [#49](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/49), [#50](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/50)).
 
 ## [1.0.0]
 
@@ -40,5 +39,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed NPE on UnnecessaryImportRule [(#31)](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/31).
 - Fixed NPE on InternalImportsRule [(#29)](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/29);
 
-[Unreleased]: https://github.com/FRI-DAY/sonar-gosu-plugin/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/FRI-DAY/sonar-gosu-plugin/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/FRI-DAY/sonar-gosu-plugin/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/FRI-DAY/sonar-gosu-plugin/commits/v1.0.0
