@@ -92,7 +92,6 @@ jobs:
     needs: fetch-version
     if: needs.fetch-version.outputs.release == 'true'
     runs-on: ubuntu-latest
-    permissions: read-all|write-all
     steps:
       - name: Checkout
         uses: actions/checkout@v3
