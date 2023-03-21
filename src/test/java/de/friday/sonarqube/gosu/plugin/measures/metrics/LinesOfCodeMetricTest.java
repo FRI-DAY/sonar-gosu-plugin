@@ -28,7 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class LinesOfCodeMetricTest {
 
     @Test
-    void shouldSaveLinesOfCodeMetricOnSensorContextWhenFileHasMainScope() {
+    void shouldSaveMetricsOnSensorContextWhenFileHasMainScope() {
         // given
         final String gosuFileName = "SpaceMarine.gs";
         final GosuTestFileParser parser = new GosuTestFileParser(gosuFileName);
@@ -40,10 +40,13 @@ class LinesOfCodeMetricTest {
 
         // then
         assertThat(sensor.measure(componentKey, CoreMetrics.NCLOC).value()).isEqualTo(7);
+        assertThat(sensor.measure(componentKey, CoreMetrics.COMMENT_LINES).value()).isEqualTo(4);
+        assertThat(sensor.measure(componentKey, CoreMetrics.NCLOC_DATA).value()).isEqualTo("1=1;3=1;5=1;7=1;8=1;9=1;15=1");
+        assertThat(sensor.measure(componentKey, CoreMetrics.EXECUTABLE_LINES_DATA).value()).isEqualTo("7=1");
     }
 
     @Test
-    void shouldNotSaveLinesOfCodeMetricOnSensorContextWhenFileHasTestScope() {
+    void shouldNotSaveMetricsOnSensorContextWhenFileHasTestScope() {
         // given
         final String gosuFileName = "SpaceMarineTest.gs";
         final GosuTestFileParser parser = new GosuTestFileParser(gosuFileName, InputFile.Type.TEST);
@@ -55,6 +58,9 @@ class LinesOfCodeMetricTest {
 
         // then
         assertThat(sensor.measure(componentKey, CoreMetrics.NCLOC)).isNull();
+        assertThat(sensor.measure(componentKey, CoreMetrics.COMMENT_LINES)).isNull();
+        assertThat(sensor.measure(componentKey, CoreMetrics.NCLOC_DATA)).isNull();
+        assertThat(sensor.measure(componentKey, CoreMetrics.EXECUTABLE_LINES_DATA)).isNull();
     }
 
 }
