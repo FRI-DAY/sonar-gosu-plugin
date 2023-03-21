@@ -23,6 +23,7 @@ import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import de.friday.sonarqube.gosu.plugin.reports.ReportsDirectories;
 import de.friday.sonarqube.gosu.plugin.reports.ReportsScanner;
 import de.friday.test.support.rules.dsl.gosu.GosuSourceCodeFile;
+import de.friday.test.support.sonar.scanner.FileLinesContextFactorySpy;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -73,7 +74,7 @@ public class GosuTestFileParser {
                 TestResourcesDirectories.RESOURCES_DIR.getPathAsString(),
                 inputFileType
         ).asInputFile();
-        final GosuFileProperties gosuFileProperties = new GosuFileProperties(inputFile, commonTokenStream);
+        final GosuFileProperties gosuFileProperties = new GosuFileProperties(inputFile, commonTokenStream, new FileLinesContextFactorySpy().createFor(inputFile));
 
         return new GosuFileParsed(inputFile, gosuFileProperties, null);
     }
@@ -103,7 +104,7 @@ public class GosuTestFileParser {
 
     private GosuFileProperties parse(TestResourcesDirectories baseDir, String packageName, InputFile inputFile, SensorContextTester context) {
         try {
-            GosuFileParser gosuFileParser = new GosuFileParser(inputFile, context, getUnitTestIndex(baseDir, packageName));
+            GosuFileParser gosuFileParser = new GosuFileParser(inputFile, context, getUnitTestIndex(baseDir, packageName), new FileLinesContextFactorySpy(context).createFor(inputFile));
             gosuFileParser.parse();
             return gosuFileParser.getProperties();
         } catch (IOException e) {

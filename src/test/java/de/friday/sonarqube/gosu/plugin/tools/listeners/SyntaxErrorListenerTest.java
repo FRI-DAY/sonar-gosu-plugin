@@ -69,7 +69,7 @@ class SyntaxErrorListenerTest {
 
     private GosuFileProperties aProperties() {
         final SourceCodeFile file = new GosuSourceCodeFile("syntax/GosuFile.gs", LISTENERS_TEST_RESOURCES_DIR.toFile().getPath());
-        return new GosuFileProperties(file.asInputFile(), null);
+        return new GosuFileProperties(file.asInputFile(), null, null);
     }
 
     private static class DummyRecognitionException extends RecognitionException {

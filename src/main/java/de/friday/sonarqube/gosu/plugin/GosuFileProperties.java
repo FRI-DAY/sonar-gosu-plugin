@@ -16,25 +16,22 @@
  */
 package de.friday.sonarqube.gosu.plugin;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Token;
-import org.apache.commons.lang3.StringUtils;
 import org.sonar.api.batch.fs.InputFile;
+import org.sonar.api.measures.FileLinesContext;
 
 public class GosuFileProperties {
 
-    private static final String COMMENT_TOKENS_REGEX = "^\\s?[/,*].*$";
     private final InputFile file;
     private final CommonTokenStream tokenStream;
+    private final FileLinesContext fileLinesContext;
+    private GosuFileLineData fileLineData;
 
-    private int linesOfCode = 0;
-
-    public GosuFileProperties(InputFile file, CommonTokenStream tokenStream) {
+    public GosuFileProperties(InputFile file, CommonTokenStream tokenStream, FileLinesContext fileLinesContext) {
         this.file = file;
         this.tokenStream = tokenStream;
+        this.fileLinesContext = fileLinesContext;
     }
 
     public CommonTokenStream getTokenStream() {
@@ -43,6 +40,10 @@ public class GosuFileProperties {
 
     public InputFile getFile() {
         return file;
+    }
+
+    public FileLinesContext getFileLinesContext() {
+        return fileLinesContext;
     }
 
     public boolean isMainFile() {
@@ -57,32 +58,11 @@ public class GosuFileProperties {
         return tokenStream.get(index);
     }
 
-    public int getLinesOfCode() {
-        if (linesOfCode > 0) return linesOfCode;
+    public GosuFileLineData getFileLineData() {
+        if (this.fileLineData != null) return this.fileLineData;
 
-        computeLinesOfCodeOf(file);
+        this.fileLineData = new GosuFileLineData(this);
 
-        return linesOfCode;
-    }
-
-    private void computeLinesOfCodeOf(InputFile file) {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.inputStream()))) {
-            while (reader.ready()) {
-                final String line = reader.readLine();
-                if (hasValidCharacters(line) && isNotComment(line)) {
-                    linesOfCode++;
-                }
-            }
-        } catch (IOException ioException) {
-            throw new GosuPluginException("Unable to compute lines of code for source file: " + file.filename(), ioException);
-        }
-    }
-
-    private boolean isNotComment(final String line) {
-        return !line.trim().matches(COMMENT_TOKENS_REGEX);
-    }
-
-    private boolean hasValidCharacters(final String line) {
-        return StringUtils.isNotBlank(line) && StringUtils.isNotEmpty(line);
+        return this.fileLineData;
     }
 }

@@ -17,6 +17,7 @@
 package de.friday.sonarqube.gosu.plugin;
 
 import de.friday.test.support.GosuTestFileParser;
+import de.friday.test.support.sonar.scanner.FileLinesContextFactorySpy;
 import java.io.IOException;
 import java.util.stream.Stream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -27,6 +28,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.fs.internal.TestInputFileBuilder;
+import org.sonar.api.measures.FileLinesContext;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -35,14 +37,15 @@ class GosuFilePropertiesTest {
 
     @ParameterizedTest
     @MethodSource("getGosuSourceFiles")
-    void shouldReturnLinesOfCodeOfGosuFile(String gosuSourceFilePath, int expectedNumberOfLinesOfCode) {
+    void shouldReturnFileLineDataOfGosuFile(String gosuSourceFilePath, int expectedNumberOfLinesOfCode) {
         final GosuTestFileParser.GosuFileParsed fileParsed = aParsedGosuFileOf(gosuSourceFilePath);
         final InputFile inputFile = fileParsed.getInputFile();
+        final FileLinesContext fileLinesContext = aFileLinesContextOf(inputFile);
         final CommonTokenStream tokenStream = fileParsed.getSourceFileProperties().getTokenStream();
 
-        final GosuFileProperties fileProperties = new GosuFileProperties(inputFile, tokenStream);
+        final GosuFileProperties fileProperties = new GosuFileProperties(inputFile, tokenStream, fileLinesContext);
 
-        assertThat(fileProperties.getLinesOfCode()).isEqualTo(expectedNumberOfLinesOfCode);
+        assertThat(fileProperties.getFileLineData().getNumberOfLinesOfCode()).isEqualTo(expectedNumberOfLinesOfCode);
     }
 
     private Stream<Arguments> getGosuSourceFiles() {
@@ -53,14 +56,14 @@ class GosuFilePropertiesTest {
     }
 
     @Test
-    void throwsGosuPluginExceptionWhenLinesOfCodeCanNotBeCalculated() {
+    void throwsGosuPluginExceptionWhenFileLineDataCanNotBeCreated() {
         final GosuTestFileParser.GosuFileParsed fileParsed = aParsedGosuFileOf("/samples/Foo.gs");
         final InputFile fakeInputFile = TestInputFileBuilder.create("fakeModule", "FakeFile.java").build();
         final CommonTokenStream tokenStream = fileParsed.getSourceFileProperties().getTokenStream();
 
-        final GosuFileProperties fileProperties = new GosuFileProperties(fakeInputFile, tokenStream);
+        final GosuFileProperties fileProperties = new GosuFileProperties(fakeInputFile, tokenStream, aFileLinesContextOf(fakeInputFile));
 
-        assertThatThrownBy(fileProperties::getLinesOfCode)
+        assertThatThrownBy(fileProperties::getFileLineData)
                 .isInstanceOf(GosuPluginException.class)
                 .hasCauseInstanceOf(IOException.class)
                 .hasMessage("Unable to compute lines of code for source file: FakeFile.java");
@@ -72,7 +75,7 @@ class GosuFilePropertiesTest {
         final InputFile inputFile = fileParsed.getInputFile();
         final CommonTokenStream tokenStream = fileParsed.getSourceFileProperties().getTokenStream();
 
-        final GosuFileProperties fileProperties = new GosuFileProperties(inputFile, tokenStream);
+        final GosuFileProperties fileProperties = new GosuFileProperties(inputFile, tokenStream, aFileLinesContextOf(inputFile));
 
         assertThat(fileProperties.isMainFile()).isTrue();
         assertThat(fileProperties.isTestFile()).isFalse();
@@ -84,7 +87,7 @@ class GosuFilePropertiesTest {
         final InputFile inputFile = fileParsed.getInputFile();
         final CommonTokenStream tokenStream = fileParsed.getSourceFileProperties().getTokenStream();
 
-        final GosuFileProperties fileProperties = new GosuFileProperties(inputFile, tokenStream);
+        final GosuFileProperties fileProperties = new GosuFileProperties(inputFile, tokenStream, aFileLinesContextOf(inputFile));
 
         assertThat(fileProperties.isTestFile()).isTrue();
         assertThat(fileProperties.isMainFile()).isFalse();
@@ -96,5 +99,9 @@ class GosuFilePropertiesTest {
 
     private GosuTestFileParser.GosuFileParsed aParsedGosuFileOf(String testFilePath, InputFile.Type type) {
         return new GosuTestFileParser(testFilePath, type).parse();
+    }
+
+    private FileLinesContext aFileLinesContextOf(InputFile inputFile) {
+        return new FileLinesContextFactorySpy().createFor(inputFile);
     }
 }
