@@ -160,14 +160,14 @@ jobs:
           git config user.email noreply@github.com
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
         env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Release
         run: |
           ./gradlew clean release \
             -Prelease.useAutomaticVersion=true \
             -Prelease.releaseVersion=${{ needs.fetch-version.outputs.version }}
         env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Sonar
         run: |
           ./gradlew sonar --no-daemon \
@@ -178,7 +178,7 @@ jobs:
             -Dsonar.pullrequest.github.repository=${{ github.repository }} \
             -Dsonar.projectVersion=${{ needs.fetch-version.outputs.version }}
         env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
           SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
@@ -202,4 +202,4 @@ jobs:
           files: |
             build/libs/*.jar
         env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
