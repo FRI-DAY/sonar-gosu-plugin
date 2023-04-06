@@ -27,7 +27,43 @@ jobs:
             echo "release=false" >> $GITHUB_OUTPUT
           fi
           cat "${GITHUB_OUTPUT}"
-  # BUILD SNAPSHOT VERSIONS
+  integration-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          # previous LTS version
+          - SONAR_SERVER_VERSION: 8.9.10
+            SONAR_WS_VERSION: 8.9.9.56886
+            SONAR_PLUGIN_API_VERSION: 6.7.7
+            SONAR_JAVA_VERSION: 7.11.0.29148
+            SONAR_SERVER_JAVA_VERSION: 11
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set up JDK ${{ matrix.SONAR_SERVER_JAVA_VERSION }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.SONAR_SERVER_JAVA_VERSION }}
+          distribution: temurin
+          cache: 'gradle'
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: Run Integration Tests
+        run: |
+          ./gradlew testIntegration --build-cache --no-daemon \
+            -PsonarqubeVersion=${{ matrix.SONAR_SERVER_VERSION }} \
+            -PsonarqubeWsVersion=${{ matrix.SONAR_WS_VERSION }} \
+            -PsonarPluginApiVersion=${{ matrix.SONAR_PLUGIN_API_VERSION }} \
+            -PsonarJavaVersion=${{ matrix.SONAR_JAVA_VERSION }}
   snapshot:
     needs: fetch-version
     if: needs.fetch-version.outputs.release == 'false'

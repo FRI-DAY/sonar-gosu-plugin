@@ -42,8 +42,11 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.9.2'
     testImplementation "org.sonarsource.sonarqube:sonar-scanner-engine:${sonarPluginApiVersion}"
+    testImplementation "org.sonarsource.sonarqube:sonar-ws:${sonarqubeWsVersion}"
+    testImplementation 'com.google.protobuf:protobuf-java-util:3.22.2'
+    testImplementation 'org.sonarsource.orchestrator:sonar-orchestrator:3.42.0.312'
     testRuntimeOnly "org.sonarsource.sonarqube:sonar-plugin-api:${sonarPluginApiVersion}"
-    testRuntimeOnly "ch.qos.logback:logback-classic:1.4.5"
+    testRuntimeOnly 'ch.qos.logback:logback-classic:1.4.5'
 }
 
 def antlrGeneratedSourcesPath = ['de', 'friday', 'sonarqube', 'gosu', 'antlr']
@@ -113,6 +116,7 @@ Follows a list of all the rules included on the plugin:
     new File("$projectDir/docs", 'RULES.md').text = rulesIndexText.toString()
 }
 
+
 test {
     useJUnitPlatform()
     testLogging {
@@ -139,6 +143,42 @@ jacocoTestReport {
                     "${antlrGeneratedSourcesPath.join("/")}/**",
             ])
         }))
+    }
+}
+
+sourceSets {
+    create("testIntegration") {
+        java {
+            srcDir("src/testIntegration/java")
+            compileClasspath += configurations["testRuntimeClasspath"]
+            runtimeClasspath += configurations["testRuntimeClasspath"]
+        }
+    }
+}
+
+abstract class IntegrationTest extends Test { }
+
+tasks.withType(IntegrationTest).configureEach {
+    testClassesDirs = sourceSets["testIntegration"].output.classesDirs
+    classpath = sourceSets["testIntegration"].runtimeClasspath
+    dependsOn(shadowJar)
+}
+
+tasks.register("testIntegration", IntegrationTest) {
+    description = "Runs integration tests"
+    group = "verification"
+    systemProperties([
+            "sonarServerVersion": providers.systemProperty("sonar.server.version").getOrElse(sonarqubeVersion),
+            "gosuPluginVersion": providers.systemProperty("sonar.gosu.plugin.version").getOrElse(version)
+    ])
+    useJUnitPlatform {
+        includeTags("integration")
+    }
+    testLogging {
+        showExceptions = true
+        exceptionFormat = 'full'
+        showStandardStreams = true
+        events 'passed', 'skipped', 'failed'
     }
 }
 
