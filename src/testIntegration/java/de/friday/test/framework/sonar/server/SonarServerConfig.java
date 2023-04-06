@@ -50,7 +50,7 @@ public class SonarServerConfig {
     }
 
     private String getPluginFullName() {
-        return "sonar-gosu-plugin-" + pluginVersion + ".jar";
+        return "sonar-communitygosu-plugin-" + pluginVersion + ".jar";
     }
 
     static class SonarVersion {
