@@ -5,6 +5,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Changed plugin key to `communitygosu` [(#60)](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/60).
+
 ## [1.1.0]
 
 ### Added

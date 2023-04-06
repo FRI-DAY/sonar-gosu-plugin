@@ -222,7 +222,7 @@ jar {
                 'Plugin-Description': 'Gosu Programming Language Plugin for SonarQube',
                 'Plugin-Display-Version': "${displayVersion}",
                 'Plugin-IssueTrackerUrl': 'https://github.com/FRI-DAY/sonar-gosu-plugin/issues',
-                'Plugin-Key': 'communityGosuPlugin',
+                'Plugin-Key': 'communitygosu',
                 'Plugin-License': 'GNU AGPL 3',
                 'Plugin-Name': 'Community Gosu Plugin',
                 'Plugin-Homepage': 'https://github.com/FRI-DAY/sonar-gosu-plugin',
