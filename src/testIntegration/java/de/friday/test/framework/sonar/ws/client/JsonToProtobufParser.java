@@ -37,7 +37,7 @@ public final class JsonToProtobufParser {
             JsonFormat.parser().ignoringUnknownFields().merge(json, builder);
             return (I) builder.build();
         } catch (InvalidProtocolBufferException exception) {
-            throw new RuntimeException("Failed to adapt JSON to Protobuf message", exception);
+            throw new RuntimeException("Failed to parse JSON to Protobuf message", exception);
         }
     }
 
