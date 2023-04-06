@@ -1,0 +1,58 @@
+plugins {
+    id('jacoco')
+    id('org.sonarqube') version ('4.0.0.2929')
+    id('org.gosu-lang.gosu') version ('6.1.0')
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' } //for Gosu snapshot builds
+}
+
+dependencies {
+    compile "org.gosu-lang.gosu:gosu-core-api:1.15.8"
+
+    testCompile "org.assertj:assertj-core:3.24.2"
+    testCompile 'junit:junit:4.13.2'
+
+    runtime 'org.slf4j:slf4j-simple:1.7.21'
+    runtime files("${System.properties['java.home']}/../lib/tools.jar")
+}
+
+test {
+    useJUnit()
+    testLogging {
+        showExceptions = true
+        exceptionFormat = 'full'
+        showStandardStreams = true
+        events 'passed', 'skipped', 'failed'
+    }
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+        csv.required = false
+        html.required = true
+        html.outputLocation.set(file("$buildDir/jacocoHtml"))
+    }
+}
+
+compileGosu {
+    gosuOptions.checkedArithmetic = true
+    gosuOptions.failOnError = false
+}
+
+sonar {
+    properties {
+        property "sonar.projectKey", "simple-gosu-project"
+        property "sonar.sources", "src/main/gosu"
+        property "sonar.tests", "src/test/gosu"
+        property "sonar.gosu.reportPaths", "build/test-results"
+        property "sonar.junit.reportPaths", "sonar.junit.reportPaths"
+        property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml"
+        property "sonar.jacoco.reportPath", "build/jacoco/test.exec"
+    }
+}
