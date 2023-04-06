@@ -85,7 +85,7 @@ license {
         java = 'SLASHSTAR_STYLE'
         g4 = 'DOUBLESLASH_STYLE'
     }
-    excludes(['**/*.gs', '**/*.txt', '**/*.properties', '**/*.xml', '**/*.json', '**/*.xsd', '**/*.html', '**/*.vm', '**/*.snap', '**/*.svg', '**/*.jar', '**/*.zip', '**/*.log', '**/*.cnf', '**/*.jks', '**/README', '**/*.interp', '**/*.tokens'])
+    excludes(['**/*.gs', '**/*.txt', '**/*.properties', '**/*.xml', '**/*.json', '**/*.xsd', '**/*.html', '**/*.vm', '**/*.snap', '**/*.svg', '**/*.jar', '**/*.zip', '**/*.log', '**/*.cnf', '**/*.jks', '**/README', '**/*.interp', '**/*.tokens', '**/*.gradle'])
 }
 
 htmlToMarkdown {

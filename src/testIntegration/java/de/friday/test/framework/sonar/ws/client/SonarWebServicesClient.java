@@ -38,8 +38,8 @@ public class SonarWebServicesClient {
         return new PluginsServiceAdapter(connector);
     }
 
-    public IssuesService issues() {
-        return new IssuesService(connector);
+    public IssuesServiceAdapter issues() {
+        return new IssuesServiceAdapter(connector);
     }
 
     public ProjectsService projects() {
