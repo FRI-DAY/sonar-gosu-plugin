@@ -19,7 +19,7 @@
 - [ ] Bug fix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds functionality)
 - [ ] New Gosu Rule (adds a new Gosu rule to the plugin)
-- [ ] Tech Debit (refactoring, etc.)
+- [ ] Tech Debt (refactoring, etc.)
 - [ ] Breaking change (fix or feature that would cause existing functionality to change)
 - [ ] Documentation (add or update README or docs)
 
