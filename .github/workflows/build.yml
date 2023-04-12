@@ -15,6 +15,19 @@ jobs:
             SONAR_PLUGIN_API_VERSION: 6.7.7
             SONAR_JAVA_VERSION: 7.11.0.29148
             SONAR_SERVER_JAVA_VERSION: 11
+          - SONAR_SERVER_VERSION: 9.7.0.61563
+            SONAR_PLUGIN_API_VERSION: 6.7.7
+            SONAR_JAVA_VERSION: 7.13.0.29990
+            SONAR_SERVER_JAVA_VERSION: 11
+          # current LTS version
+          - SONAR_SERVER_VERSION: 9.9.0.65466
+            SONAR_PLUGIN_API_VERSION: 6.7.7
+            SONAR_JAVA_VERSION: 7.13.0.29990
+            SONAR_SERVER_JAVA_VERSION: 17
+          - SONAR_SERVER_VERSION: 10.0.0.68432
+            SONAR_PLUGIN_API_VERSION: 6.7.7
+            SONAR_JAVA_VERSION: 7.13.0.29990
+            SONAR_SERVER_JAVA_VERSION: 17
     steps:
       - uses: actions/checkout@v3
         with:
