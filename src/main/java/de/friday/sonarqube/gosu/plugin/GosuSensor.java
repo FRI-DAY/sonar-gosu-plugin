@@ -31,7 +31,6 @@ import javax.annotation.Nonnull;
 import org.sonar.api.batch.fs.FilePredicate;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;
-import org.sonar.api.batch.fs.internal.DefaultTextPointer;
 import org.sonar.api.batch.sensor.Sensor;
 import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.SensorDescriptor;
@@ -137,7 +136,7 @@ public class GosuSensor implements Sensor {
         } catch (IOException e) {
             context.newAnalysisError()
                     .onFile(inputFile)
-                    .at(new DefaultTextPointer(0, 0))
+                    .at(inputFile.newPointer(0, 0))
                     .message(e.getMessage())
                     .save();
             LOG.error("Couldn't get input stream from file " + inputFile.filename(), e);

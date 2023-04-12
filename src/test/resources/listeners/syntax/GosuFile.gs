@@ -16,7 +16,7 @@
  */
 package listeners.syntax
 
-class GosuFile {
+classs GosuFile {
   function doNothing() {
   }
 

@@ -36,6 +36,12 @@ class TextRangeUtilTest {
 
         assertThat(TextRangeUtil.fromPosition(0, 1, 0, 5)).isEqualTo(textRange);
         assertThat(TextRangeUtil.fromPointers(start, stop)).isEqualTo(textRange);
+        assertThat(TextRangeUtil.fromPointers(start, stop).start())
+                .isEqualByComparingTo(textRange.start())
+                .hasToString(textRange.start().toString());
+        assertThat(TextRangeUtil.fromPointers(start, stop).end())
+                .isEqualByComparingTo(textRange.end())
+                .hasToString(textRange.end().toString());
     }
 
     @Test
@@ -82,7 +88,6 @@ class TextRangeUtilTest {
         comment.setCharPositionInLine(11);
 
         TextRange textRangeFromTwoTokens = new DefaultTextRange(start, commentStop);
-
 
         assertThat(TextRangeUtil.fromToken(token)).isEqualTo(textRange);
         assertThat(TextRangeUtil.fromToken(comment)).isEqualTo(commentTextRange);

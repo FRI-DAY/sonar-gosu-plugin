@@ -64,6 +64,12 @@ public class SimpleGosuProjectIT {
                             assertThat(issue.getScope()).isEqualTo("MAIN");
                             assertThat(issue.getSeverity()).isEqualTo(Common.Severity.INFO);
                             assertThat(issue.getMessage()).isEqualTo("Complete the task associated to this TODO comment.");
+                            assertThat(issue.getTextRange()).satisfies(textRange -> {
+                                assertThat(textRange.getStartLine()).isEqualTo(9);
+                                assertThat(textRange.getStartOffset()).isEqualTo(2);
+                                assertThat(textRange.getEndLine()).isEqualTo(9);
+                                assertThat(textRange.getEndOffset()).isEqualTo(15);
+                            });
                         }
                 );
     }
