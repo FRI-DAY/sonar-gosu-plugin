@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Removed direct usages of `DefaultTextPointer` [(#60)](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/62).
+- Removed direct usages of `DefaultTextRange` [(#60)](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/63).
+
 ## [1.2.0]
 
 ### Changed
