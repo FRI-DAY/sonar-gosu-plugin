@@ -34,8 +34,12 @@ class TextRangeUtilTest {
         TextPointer stop = new DefaultTextPointer(0, 5);
         TextRange textRange = new DefaultTextRange(start, stop);
 
-        assertThat(TextRangeUtil.fromPosition(0, 1, 0, 5)).isEqualTo(textRange);
-        assertThat(TextRangeUtil.fromPointers(start, stop)).isEqualTo(textRange);
+        assertThat(TextRangeUtil.fromPosition(0, 1, 0, 5))
+                .isEqualTo(textRange)
+                .hasToString(textRange.toString());
+        assertThat(TextRangeUtil.fromPointers(start, stop))
+                .isEqualTo(textRange)
+                .hasToString(textRange.toString());
         assertThat(TextRangeUtil.fromPointers(start, stop).start())
                 .isEqualByComparingTo(textRange.start())
                 .hasToString(textRange.start().toString());
@@ -64,9 +68,16 @@ class TextRangeUtilTest {
         parserRuleContext.start = token;
         parserRuleContext.stop = token;
 
-        assertThat(TextRangeUtil.fromToken(token)).isEqualTo(textRange);
-        assertThat(TextRangeUtil.fromContext(parserRuleContext)).isEqualTo(textRange);
-        assertThat(TextRangeUtil.fromTokens(token, token2)).isEqualTo(textRange2);
+        assertThat(TextRangeUtil.fromToken(token))
+                .isEqualTo(textRange)
+                .hasToString(textRange.toString())
+                .isNotEqualTo(textRange2);
+        assertThat(TextRangeUtil.fromContext(parserRuleContext))
+                .isEqualTo(textRange)
+                .hasToString(textRange.toString());
+        assertThat(TextRangeUtil.fromTokens(token, token2))
+                .isEqualTo(textRange2)
+                .hasToString(textRange2.toString());
     }
 
     @Test
