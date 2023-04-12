@@ -27,7 +27,6 @@ import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.sonar.api.batch.fs.TextPointer;
 import org.sonar.api.batch.fs.TextRange;
-import org.sonar.api.batch.fs.internal.DefaultTextRange;
 
 public final class TextRangeUtil {
     private static final Pattern LINE_SEPARATOR = Pattern.compile("\\r?\\n");
@@ -50,7 +49,7 @@ public final class TextRangeUtil {
     }
 
     public static TextRange fromPointers(TextPointer start, TextPointer stop) {
-        return new DefaultTextRange(start, stop);
+        return new InternalTextRange(start, stop);
     }
 
     public static TextRange fromPosition(int startLine, int startOffset, int stopLine, int stopOffset) {
@@ -107,6 +106,51 @@ public final class TextRangeUtil {
             return token.getCharPositionInLine();
         } else {
             return token.getCharPositionInLine() + token.getText().length();
+        }
+    }
+
+    private static class InternalTextRange implements TextRange {
+
+        private final TextPointer start;
+        private final TextPointer end;
+
+        public InternalTextRange(TextPointer start, TextPointer end) {
+            this.start = start;
+            this.end = end;
+        }
+
+        @Override
+        public TextPointer start() {
+            return start;
+        }
+
+        @Override
+        public TextPointer end() {
+            return end;
+        }
+
+        @Override
+        public boolean overlap(TextRange another) {
+            return this.end.compareTo(another.start()) > 0 && another.end().compareTo(this.start) > 0;
+        }
+
+        @Override
+        public String toString() {
+            return "Range[from " + start + " to " + end + "]";
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (!(obj instanceof TextRange)) {
+                return false;
+            }
+            final TextRange other = (TextRange) obj;
+            return this.start.equals(other.start()) && this.end.equals(other.end());
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.start.hashCode(), this.end.hashCode());
         }
     }
 
