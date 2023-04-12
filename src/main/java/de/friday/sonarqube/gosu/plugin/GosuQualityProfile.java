@@ -19,36 +19,35 @@ package de.friday.sonarqube.gosu.plugin;
 import de.friday.sonarqube.gosu.language.GosuLanguage;
 import de.friday.sonarqube.gosu.plugin.tools.reflections.RulesKeysExtractor;
 import java.util.Optional;
-import org.sonar.api.profiles.ProfileDefinition;
-import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.Rule;
-import org.sonar.api.utils.ValidationMessages;
+import org.sonar.api.server.profile.BuiltInQualityProfilesDefinition;
 
-public class GosuQualityProfile extends ProfileDefinition {
-    private static final String PROFILE = "Sonar way";
-    private final RulesProfile rulesProfile;
-
-    public GosuQualityProfile() {
-        rulesProfile = RulesProfile.create(PROFILE, GosuLanguage.KEY);
-    }
+public class GosuQualityProfile implements BuiltInQualityProfilesDefinition {
+    private static final String BUILTIN_GOSU_PROFILE_NAME = "Sonar way";
 
     @Override
-    public RulesProfile createProfile(ValidationMessages validationMessages) {
-        RulesKeysExtractor.getAllRulesKeys().forEach(this::activateRule);
-        rulesProfile.setDefaultProfile(true);
-
-        activateDefaultRules();
-
-        return rulesProfile;
+    public void define(Context context) {
+        final NewBuiltInQualityProfile builtInQualityProfile = context.createBuiltInQualityProfile(
+                BUILTIN_GOSU_PROFILE_NAME,
+                GosuLanguage.KEY
+        );
+        activateRules(builtInQualityProfile);
+        builtInQualityProfile.setDefault(true);
+        builtInQualityProfile.done();
     }
 
-    private void activateRule(String ruleKey) {
+    public void activateRules(NewBuiltInQualityProfile builtInQualityProfile) {
+        RulesKeysExtractor.getAllRulesKeys().forEach(ruleKey -> activateRule(ruleKey, builtInQualityProfile));
+        activateDefaultRules(builtInQualityProfile);
+    }
+
+    private void activateDefaultRules(NewBuiltInQualityProfile builtInQualityProfile) {
+        final Rule duplicatedBlocks = Rule.create(GosuRulesDefinition.COMMON_REPOSITORY_KEY, "DuplicatedBlocks");
+        builtInQualityProfile.activateRule(duplicatedBlocks.getRepositoryKey(), duplicatedBlocks.getKey());
+    }
+
+    private void activateRule(String ruleKey, NewBuiltInQualityProfile builtInQualityProfile) {
         final Optional<Rule> rule = Optional.ofNullable(Rule.create(GosuLanguage.REPOSITORY_KEY, ruleKey));
-        rule.ifPresent(value -> rulesProfile.activateRule(value, null));
-    }
-
-    private void activateDefaultRules() {
-        final Rule duplicatedBlocksRule = Rule.create("common-gosu", "DuplicatedBlocks");
-        rulesProfile.activateRule(duplicatedBlocksRule, null);
+        rule.ifPresent(value -> builtInQualityProfile.activateRule(value.getRepositoryKey(), value.getKey()));
     }
 }
