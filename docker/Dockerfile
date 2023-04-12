@@ -1,4 +1,4 @@
-FROM sonarqube:8.9.10-community
+FROM sonarqube:lts-community
 
-COPY build/libs/sonar-gosu-plugin-*.jar /opt/sonarqube/extensions/plugins
+COPY build/libs/sonar-communitygosu-plugin-*.jar /opt/sonarqube/extensions/plugins
 
