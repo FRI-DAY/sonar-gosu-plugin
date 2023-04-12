@@ -6,8 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
-- Removed direct usages of `DefaultTextPointer` [(#60)](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/62).
-- Removed direct usages of `DefaultTextRange` [(#60)](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/63).
+- Removed direct usages of `DefaultTextPointer` [(#62)](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/62).
+- Removed direct usages of `DefaultTextRange` [(#63)](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/63).
+- Replace usage of `ProfileDefinition` by `QualityProfilesServiceAdapter` [(#64)](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/64).
 
 ## [1.2.0]
 
