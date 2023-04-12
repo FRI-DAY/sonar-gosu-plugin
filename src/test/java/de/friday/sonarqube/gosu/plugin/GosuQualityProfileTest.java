@@ -19,8 +19,8 @@ package de.friday.sonarqube.gosu.plugin;
 import de.friday.sonarqube.gosu.language.GosuLanguage;
 import de.friday.sonarqube.gosu.plugin.tools.reflections.RulesKeysExtractor;
 import org.junit.jupiter.api.Test;
-import org.sonar.api.profiles.RulesProfile;
-import org.sonar.api.utils.ValidationMessages;
+import org.sonar.api.server.profile.BuiltInQualityProfilesDefinition;
+import org.sonar.api.server.profile.BuiltInQualityProfilesDefinition.Context;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GosuQualityProfileTest {
@@ -28,21 +28,26 @@ class GosuQualityProfileTest {
     @Test
     void shouldReturnRulesProfileWithGosuChecks() {
         // given
+        final Context context = new Context();
         final GosuQualityProfile gosuQualityProfile = new GosuQualityProfile();
 
         // when
-        final RulesProfile rulesProfile = gosuQualityProfile.createProfile(ValidationMessages.create());
+        gosuQualityProfile.define(context);
 
         // then
-        assertThat(rulesProfile.getName()).isEqualTo("Sonar way");
-        assertThat(rulesProfile.getLanguage()).isEqualTo(GosuLanguage.KEY);
-        assertThat(rulesProfile.getDefaultProfile()).isTrue();
-        assertThat(rulesProfile.getActiveRules()).hasSize(expectedNumberOfActiveRules());
+        BuiltInQualityProfilesDefinition.BuiltInQualityProfile rulesProfile = context.profile(GosuLanguage.KEY, "Sonar way");
+        assertThat(rulesProfile.name()).isEqualTo("Sonar way");
+        assertThat(rulesProfile.language()).isEqualTo(GosuLanguage.KEY);
+        assertThat(rulesProfile.isDefault()).isTrue();
+        assertThat(rulesProfile.rules())
+                .filteredOn(activeRule -> activeRule.repoKey().equals(GosuLanguage.REPOSITORY_KEY))
+                .hasSize(expectedNumberOfActiveGosuRules());
+        assertThat(rulesProfile.rules())
+                .filteredOn(activeRule -> activeRule.repoKey().equals(GosuRulesDefinition.COMMON_REPOSITORY_KEY))
+                .hasSize(1);
     }
 
-    private int expectedNumberOfActiveRules() {
-        final int defaultRulesCount = 1;
-        final int numberOfGosuChecks = RulesKeysExtractor.getAllRulesKeys().size();
-        return defaultRulesCount + numberOfGosuChecks;
+    private int expectedNumberOfActiveGosuRules() {
+        return RulesKeysExtractor.getAllRulesKeys().size();
     }
 }

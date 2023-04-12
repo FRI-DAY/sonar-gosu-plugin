@@ -24,6 +24,9 @@ import org.sonar.api.server.rule.RulesDefinition;
 import org.sonarsource.analyzer.commons.RuleMetadataLoader;
 
 public class GosuRulesDefinition implements RulesDefinition {
+
+    public static final String COMMON_REPOSITORY_KEY = "common-gosu";
+
     private final SonarRuntime sonarRuntime;
 
     public GosuRulesDefinition(SonarRuntime sonarRuntime) {
