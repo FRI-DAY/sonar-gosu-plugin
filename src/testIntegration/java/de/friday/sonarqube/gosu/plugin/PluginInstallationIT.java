@@ -19,8 +19,10 @@ package de.friday.sonarqube.gosu.plugin;
 import de.friday.test.config.IntegrationTest;
 import de.friday.test.framework.sonar.server.SonarServer;
 import de.friday.test.framework.sonar.ws.client.SonarWebServicesClient;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.sonarqube.ws.Plugins;
+import org.sonarqube.ws.Qualityprofiles;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @IntegrationTest
@@ -45,6 +47,24 @@ public class PluginInstallationIT {
                     assertThat(pluginDetails.getDescription()).isEqualTo("Gosu Programming Language Plugin for SonarQube");
                     assertThat(pluginDetails.getLicense()).isEqualTo("GNU AGPL 3");
                     assertThat(pluginDetails.getOrganizationName()).isEqualTo("FRIDAY Insurance S.A.");
+                }
+        );
+    }
+
+    @Test
+    void shouldCreateDefaultProfileWithAllRules() {
+        //when
+        final List<Qualityprofiles.SearchWsResponse.QualityProfile> qualityProfiles = sonarClient.qualityProfiles().findAllProfilesOf("gosu");
+
+        //then
+        assertThat(qualityProfiles).hasSize(1).allSatisfy(
+                qualityProfile -> {
+                    assertThat(qualityProfile.getName()).isEqualTo("Sonar way");
+                    assertThat(qualityProfile.getLanguage()).isEqualTo("gosu");
+                    assertThat(qualityProfile.getLanguageName()).isEqualTo("Gosu");
+                    assertThat(qualityProfile.getActiveRuleCount()).isEqualTo(28);
+                    assertThat(qualityProfile.getIsDefault()).isTrue();
+                    assertThat(qualityProfile.getIsBuiltIn()).isTrue();
                 }
         );
     }
