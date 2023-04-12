@@ -17,9 +17,7 @@
 package de.friday.test.framework.sonar.ws.client;
 
 import org.sonarqube.ws.client.HttpConnector;
-import org.sonarqube.ws.client.issues.IssuesService;
 import org.sonarqube.ws.client.projects.ProjectsService;
-import org.sonarqube.ws.client.qualityprofiles.QualityprofilesService;
 
 public class SonarWebServicesClient {
 
@@ -46,7 +44,7 @@ public class SonarWebServicesClient {
         return new ProjectsService(connector);
     }
 
-    public QualityprofilesService qualityProfiles() {
-        return new QualityprofilesService(connector);
+    public QualityProfilesServiceAdapter qualityProfiles() {
+        return new QualityProfilesServiceAdapter(connector);
     }
 }
