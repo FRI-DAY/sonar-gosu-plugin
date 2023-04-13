@@ -8,5 +8,4 @@ the unreleased changes notes to the soon-to-be released version and create a new
 3. Open a pull request with the changes.
 4. Once the pull request is merged the release workflow will build the release version, create the tag and create a draft [Github release](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases) with the plugin JAR and change notes.
 5. Review the draft Github release and, if everything is ok, release it.
-6. The only thing left now is to update the new version on the `gradle.properties` file with the `-SNAPSHOT` suffix.
-7. All done :-). 
+6. All done :-). 
