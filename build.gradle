@@ -168,8 +168,8 @@ tasks.register("testIntegration", IntegrationTest) {
     description = "Runs integration tests"
     group = "verification"
     systemProperties([
-            "sonarServerVersion": providers.systemProperty("sonar.server.version").getOrElse(sonarqubeVersion),
-            "gosuPluginVersion": providers.systemProperty("sonar.gosu.plugin.version").getOrElse(version)
+            "sonarServerVersion": providers.gradleProperty("sonarqubeServerVersion").getOrElse(sonarqubeVersion),
+            "gosuPluginVersion": providers.gradleProperty("sonarGosuPluginVersion").getOrElse(version)
     ])
     useJUnitPlatform {
         includeTags("integration")
