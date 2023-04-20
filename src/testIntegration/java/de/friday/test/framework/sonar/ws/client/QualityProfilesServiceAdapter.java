@@ -14,10 +14,21 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package listeners.syntax
+package de.friday.test.framework.sonar.ws.client;
 
-classs GosuFile {
-  function doNothing() {
-  }
+import java.util.List;
+import org.sonarqube.ws.Qualityprofiles;
+import org.sonarqube.ws.client.HttpConnector;
+import org.sonarqube.ws.client.qualityprofiles.QualityprofilesService;
+import org.sonarqube.ws.client.qualityprofiles.SearchRequest;
+
+public class QualityProfilesServiceAdapter extends QualityprofilesService {
+    public QualityProfilesServiceAdapter(HttpConnector connector) {
+        super(connector);
+    }
+
+    public List<Qualityprofiles.SearchWsResponse.QualityProfile> findAllProfilesOf(String language) {
+        return this.search(new SearchRequest().setLanguage(language)).getProfilesList();
+    }
 
 }

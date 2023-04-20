@@ -20,14 +20,13 @@ import de.friday.sonarqube.gosu.antlr.GosuLexer;
 import de.friday.sonarqube.gosu.language.utils.GosuUtil;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.sonar.api.batch.fs.TextPointer;
 import org.sonar.api.batch.fs.TextRange;
-import org.sonar.api.batch.fs.internal.DefaultTextPointer;
-import org.sonar.api.batch.fs.internal.DefaultTextRange;
 
 public final class TextRangeUtil {
     private static final Pattern LINE_SEPARATOR = Pattern.compile("\\r?\\n");
@@ -50,23 +49,21 @@ public final class TextRangeUtil {
     }
 
     public static TextRange fromPointers(TextPointer start, TextPointer stop) {
-        return new DefaultTextRange(start, stop);
+        return new InternalTextRange(start, stop);
     }
 
     public static TextRange fromPosition(int startLine, int startOffset, int stopLine, int stopOffset) {
-        TextPointer start = new DefaultTextPointer(startLine, startOffset);
-        TextPointer stop = new DefaultTextPointer(stopLine, stopOffset);
+        final TextPointer start = new InternalTextPointer(startLine, startOffset);
+        final TextPointer stop = new InternalTextPointer(stopLine, stopOffset);
 
         return fromPointers(start, stop);
     }
 
     public static TextRange fromTokens(Token startToken, Token endToken) {
-        TextPointer start = new DefaultTextPointer(startToken.getLine(), startToken.getCharPositionInLine());
-
-
-        TextPointer stop = endToken.getType() == GosuLexer.COMMENT
+        final TextPointer start = new InternalTextPointer(startToken.getLine(), startToken.getCharPositionInLine());
+        final TextPointer stop = endToken.getType() == GosuLexer.COMMENT
                 ? fromToken(endToken).end()
-                : new DefaultTextPointer(endToken.getLine(), endToken.getCharPositionInLine() + endToken.getText().length());
+                : new InternalTextPointer(endToken.getLine(), endToken.getCharPositionInLine() + endToken.getText().length());
 
         return fromPointers(start, stop);
     }
@@ -88,8 +85,8 @@ public final class TextRangeUtil {
 
     private static TextRange getMultilineTokenTextRange(Token token) {
         List<String> listOfLines = Arrays.asList(LINE_SEPARATOR.split(token.getText()));
-        TextPointer start = new DefaultTextPointer(token.getLine(), token.getCharPositionInLine());
-        TextPointer stop = getEndTextPointerForMultilineToken(token, listOfLines);
+        final TextPointer start = new InternalTextPointer(token.getLine(), token.getCharPositionInLine());
+        final TextPointer stop = getEndTextPointerForMultilineToken(token, listOfLines);
         return TextRangeUtil.fromPointers(start, stop);
     }
 
@@ -100,7 +97,7 @@ public final class TextRangeUtil {
         if (lastLineIndex == 0) {
             lastLineLength += token.getCharPositionInLine();
         }
-        return new DefaultTextPointer(token.getLine() + lastLineIndex,
+        return new InternalTextPointer(token.getLine() + lastLineIndex,
                 lastLineLength);
     }
 
@@ -110,5 +107,99 @@ public final class TextRangeUtil {
         } else {
             return token.getCharPositionInLine() + token.getText().length();
         }
+    }
+
+    private static class InternalTextRange implements TextRange {
+
+        private final TextPointer start;
+        private final TextPointer end;
+
+        public InternalTextRange(TextPointer start, TextPointer end) {
+            this.start = start;
+            this.end = end;
+        }
+
+        @Override
+        public TextPointer start() {
+            return start;
+        }
+
+        @Override
+        public TextPointer end() {
+            return end;
+        }
+
+        @Override
+        public boolean overlap(TextRange another) {
+            return this.end.compareTo(another.start()) > 0 && another.end().compareTo(this.start) > 0;
+        }
+
+        @Override
+        public String toString() {
+            return "Range[from " + start + " to " + end + "]";
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (!(obj instanceof TextRange)) {
+                return false;
+            }
+            final TextRange other = (TextRange) obj;
+            return this.start.equals(other.start()) && this.end.equals(other.end());
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.start.hashCode(), this.end.hashCode());
+        }
+    }
+
+    private static class InternalTextPointer implements TextPointer {
+
+        private final int line;
+        private final int lineOffset;
+
+        public InternalTextPointer(int line, int lineOffset) {
+            this.line = line;
+            this.lineOffset = lineOffset;
+        }
+
+        @Override
+        public int line() {
+            return line;
+        }
+
+        @Override
+        public int lineOffset() {
+            return lineOffset;
+        }
+
+        @Override
+        public String toString() {
+            return "[line=" + line + ", lineOffset=" + lineOffset + "]";
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (!(obj instanceof TextPointer)) {
+                return false;
+            }
+            final TextPointer other = (TextPointer) obj;
+            return other.line() == this.line && other.lineOffset() == this.lineOffset;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.line, this.lineOffset);
+        }
+
+        @Override
+        public int compareTo(TextPointer o) {
+            if (this.line == o.line()) {
+                return Integer.compare(this.lineOffset, o.lineOffset());
+            }
+            return Integer.compare(this.line, o.line());
+        }
+
     }
 }

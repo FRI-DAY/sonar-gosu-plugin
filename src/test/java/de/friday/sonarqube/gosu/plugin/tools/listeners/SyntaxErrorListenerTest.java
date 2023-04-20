@@ -42,8 +42,8 @@ class SyntaxErrorListenerTest {
         syntaxErrorListener.syntaxError(
                 aGosuLexer(),
                 "#",
-                1,
-                5,
+                19,
+                7,
                 "Syntax error",
                 new DummyRecognitionException()
         );
@@ -52,8 +52,8 @@ class SyntaxErrorListenerTest {
         assertThat(sensorContext.allAnalysisErrors()).hasSize(1).allSatisfy(analysisError -> {
             assertThat(analysisError.message()).isEqualTo("Syntax error");
             assertThat(analysisError.location()).isNotNull();
-            assertThat(analysisError.location().line()).isEqualTo(1);
-            assertThat(analysisError.location().lineOffset()).isEqualTo(5);
+            assertThat(analysisError.location().line()).isEqualTo(19);
+            assertThat(analysisError.location().lineOffset()).isEqualTo(7);
             assertThat(analysisError.inputFile()).isNotNull();
         });
 

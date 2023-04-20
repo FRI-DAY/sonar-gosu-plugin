@@ -381,7 +381,7 @@ In case you already have the Docker container with the Sonarqube server running,
 2. Copy the JAR file to the running container;
 E.g.:
 ```shell
-$ docker cp build/libs/sonar-gosu-plugin-1.0.0-SNAPSHOT.jar sonarqube:/opt/sonarqube/extensions/plugins
+$ docker cp build/libs/sonar-communitygosu-plugin-1.2.1.jar sonarqube:/opt/sonarqube/extensions/plugins
 ```
 3. Restart Sonarqube Docker container;
 E.g.:

@@ -5,6 +5,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.1]
+
+### Changed
+- Removed direct usages of `DefaultTextPointer` [(#62)](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/62).
+- Removed direct usages of `DefaultTextRange` [(#63)](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/63).
+- Replace usage of `ProfileDefinition` by `BuiltInQualityProfilesDefinition` [(#64)](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/64).
+
+## [1.2.0]
+
+### Changed
+- Changed plugin key to `communitygosu` [(#60)](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/60).
+
 ## [1.1.0]
 
 ### Added
@@ -39,6 +51,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed NPE on UnnecessaryImportRule [(#31)](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/31).
 - Fixed NPE on InternalImportsRule [(#29)](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/29);
 
-[Unreleased]: https://github.com/FRI-DAY/sonar-gosu-plugin/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/FRI-DAY/sonar-gosu-plugin/compare/v1.2.1...HEAD
+[1.2.1]: https://github.com/FRI-DAY/sonar-gosu-plugin/compare/v1.2.0...v1.2.1
+[1.2.0]: https://github.com/FRI-DAY/sonar-gosu-plugin/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/FRI-DAY/sonar-gosu-plugin/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/FRI-DAY/sonar-gosu-plugin/commits/v1.0.0

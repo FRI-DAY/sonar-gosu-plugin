@@ -17,6 +17,8 @@
 package de.friday.test.framework.sonar.server;
 
 import com.sonar.orchestrator.Orchestrator;
+import com.sonar.orchestrator.build.Build;
+import com.sonar.orchestrator.build.BuildResult;
 import com.sonar.orchestrator.locator.FileLocation;
 import de.friday.test.framework.sonar.ws.client.SonarWebServicesClient;
 import org.apache.commons.lang3.StringUtils;
@@ -67,5 +69,9 @@ public class SonarServer {
 
     public SonarWebServicesClient getClient() {
         return new SonarWebServicesClient(getUrl());
+    }
+
+    public BuildResult executeBuild(Build<?> build) {
+        return orchestrator.executeBuild(build);
     }
 }

@@ -21,24 +21,25 @@ import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
-import org.sonar.api.batch.fs.internal.DefaultTextPointer;
+import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.sensor.SensorContext;
 
 public class SyntaxErrorListener extends BaseErrorListener {
     private final SensorContext context;
-    private final GosuFileProperties gosuFileProperties;
+
+    private final InputFile inputFile;
 
     @Inject
     public SyntaxErrorListener(SensorContext context, GosuFileProperties gosuFileProperties) {
         this.context = context;
-        this.gosuFileProperties = gosuFileProperties;
+        this.inputFile = gosuFileProperties.getFile();
     }
 
     @Override
     public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
         context.newAnalysisError()
-                .onFile(gosuFileProperties.getFile())
-                .at(new DefaultTextPointer(line, charPositionInLine))
+                .onFile(inputFile)
+                .at(inputFile.newPointer(line, charPositionInLine))
                 .message(msg)
                 .save();
     }

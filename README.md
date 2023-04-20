@@ -16,9 +16,10 @@ In the long run, it was easier to write our own simple grammar rather than worki
 ## Compatibility
 Please find below the compatibility matrix of the plugin:
 
-| SonarQube Version | Plugin Version |
-|-------------------|----------------|
-| v8.9              | v1.0.0, v1.1.0 |
+| SonarQube Version | Plugin Version               |
+|-------------------|------------------------------|
+| v8.9              | [1.0.0, 1.1.0, 1.2.0, 1.2.1] |
+| v9+               | [1.2.1]                      |
 
 ## Installation
 

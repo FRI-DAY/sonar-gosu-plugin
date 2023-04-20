@@ -26,7 +26,6 @@ jobs:
           else
             echo "release=false" >> $GITHUB_OUTPUT
           fi
-          cat "${GITHUB_OUTPUT}"
   integration-tests:
     runs-on: ubuntu-latest
     strategy:
@@ -38,6 +37,17 @@ jobs:
             SONAR_PLUGIN_API_VERSION: 6.7.7
             SONAR_JAVA_VERSION: 7.11.0.29148
             SONAR_SERVER_JAVA_VERSION: 11
+          - SONAR_SERVER_VERSION: 9.7.0
+            SONAR_WS_VERSION: 8.9.9.56886
+            SONAR_PLUGIN_API_VERSION: 6.7.7
+            SONAR_JAVA_VERSION: 7.13.0.29990
+            SONAR_SERVER_JAVA_VERSION: 11
+          # current LTS version
+          - SONAR_SERVER_VERSION: 9.9.0
+            SONAR_WS_VERSION: 8.9.9.56886
+            SONAR_PLUGIN_API_VERSION: 6.7.7
+            SONAR_JAVA_VERSION: 7.13.0.29990
+            SONAR_SERVER_JAVA_VERSION: 17
     steps:
       - uses: actions/checkout@v3
         with:
@@ -60,12 +70,12 @@ jobs:
       - name: Run Integration Tests
         run: |
           ./gradlew testIntegration --build-cache --no-daemon \
-            -PsonarqubeVersion=${{ matrix.SONAR_SERVER_VERSION }} \
+            -PsonarqubeServerVersion=${{ matrix.SONAR_SERVER_VERSION }} \
             -PsonarqubeWsVersion=${{ matrix.SONAR_WS_VERSION }} \
             -PsonarPluginApiVersion=${{ matrix.SONAR_PLUGIN_API_VERSION }} \
             -PsonarJavaVersion=${{ matrix.SONAR_JAVA_VERSION }}
   snapshot:
-    needs: fetch-version
+    needs: [fetch-version, integration-tests]
     if: needs.fetch-version.outputs.release == 'false'
     runs-on: ubuntu-latest
     strategy:
@@ -125,7 +135,7 @@ jobs:
           path: build/libs/*.jar
   # RELEASE THE PLUGIN
   release:
-    needs: fetch-version
+    needs: [fetch-version, integration-tests]
     if: needs.fetch-version.outputs.release == 'true'
     runs-on: ubuntu-latest
     steps:
@@ -133,6 +143,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          token: ${{ secrets.RELEASE_TOKEN }}
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
@@ -156,18 +167,33 @@ jobs:
             ${{ runner.os }}-gradle-
       - name: Set up Git
         run: |
-          git config user.name GitHub
-          git config user.email noreply@github.com
-          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          git config --global user.name "${{ env.RELEASE_USER_NAME }}"
+          git config --global user.email "${{ env.RELEASE_USER_EMAIL }}"
+          git remote set-url origin https://x-access-token:${RELEASE_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+          RELEASE_USER_EMAIL: ${{ secrets.RELEASE_USER_EMAIL }}
+          RELEASE_USER_NAME: ${{ secrets.RELEASE_USER_NAME }}
+      - name: Generate Next Plugin Version
+        run: |
+          MAJOR=$(echo $RELEASE_VERSION | cut -d. -f1)
+          MINOR=$(echo $RELEASE_VERSION | cut -d. -f2)
+          PATCH=$(echo $RELEASE_VERSION | cut -d. -f3)
+          PATCH=$((PATCH + 1))
+          NEXT_PLUGIN_VERSION="$MAJOR.$MINOR.$PATCH-SNAPSHOT"
+          echo "Next Version will be: ${NEXT_PLUGIN_VERSION}"
+          echo "NEXT_PLUGIN_VERSION=${NEXT_PLUGIN_VERSION}" >> $GITHUB_ENV
+        env:
+          RELEASE_VERSION: ${{ needs.fetch-version.outputs.version }}
       - name: Release
+        if: success()
         run: |
           ./gradlew clean release \
             -Prelease.useAutomaticVersion=true \
-            -Prelease.releaseVersion=${{ needs.fetch-version.outputs.version }}
+            -Prelease.releaseVersion=${{ needs.fetch-version.outputs.version }} \
+            -Prelease.newVersion=${{ env.NEXT_PLUGIN_VERSION }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
       - name: Sonar
         run: |
           ./gradlew sonar --no-daemon \
