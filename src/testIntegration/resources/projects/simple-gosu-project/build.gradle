@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    compile "org.gosu-lang.gosu:gosu-core-api:1.15.8"
+    compile "org.gosu-lang.gosu:gosu-core-api:1.17.0-SNAPSHOT" //Using a SNAPSHOT release since the latest one does not support Java 17
 
     testCompile "org.assertj:assertj-core:3.24.2"
     testCompile 'junit:junit:4.13.2'
@@ -29,6 +29,10 @@ test {
         events 'passed', 'skipped', 'failed'
     }
     finalizedBy jacocoTestReport
+}
+
+jacoco {
+    toolVersion = "0.8.9"
 }
 
 jacocoTestReport {
