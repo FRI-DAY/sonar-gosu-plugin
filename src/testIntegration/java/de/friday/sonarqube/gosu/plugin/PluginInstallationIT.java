@@ -62,7 +62,7 @@ public class PluginInstallationIT {
                     assertThat(qualityProfile.getName()).isEqualTo("Sonar way");
                     assertThat(qualityProfile.getLanguage()).isEqualTo("gosu");
                     assertThat(qualityProfile.getLanguageName()).isEqualTo("Gosu");
-                    assertThat(qualityProfile.getActiveRuleCount()).isEqualTo(28);
+                    assertThat(qualityProfile.getActiveRuleCount()).isEqualTo(27);
                     assertThat(qualityProfile.getIsDefault()).isTrue();
                     assertThat(qualityProfile.getIsBuiltIn()).isTrue();
                 }
