@@ -49,7 +49,7 @@ public enum Projects {
         return GradleBuild
                 .create(getRootDirectory())
                 .setProperty("sonar.projectKey", this.projectKey)
-                .setTasks("test", "sonar");
+                .setTasks("sonar");
     }
 
     public String getMainComponentKeyOf(String component) {
