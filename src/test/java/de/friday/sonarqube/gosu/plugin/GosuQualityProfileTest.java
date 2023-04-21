@@ -44,7 +44,7 @@ class GosuQualityProfileTest {
                 .hasSize(expectedNumberOfActiveGosuRules());
         assertThat(rulesProfile.rules())
                 .filteredOn(activeRule -> activeRule.repoKey().equals(GosuRulesDefinition.COMMON_REPOSITORY_KEY))
-                .hasSize(1);
+                .isEmpty();
     }
 
     private int expectedNumberOfActiveGosuRules() {

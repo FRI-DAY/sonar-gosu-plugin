@@ -38,12 +38,6 @@ public class GosuQualityProfile implements BuiltInQualityProfilesDefinition {
 
     public void activateRules(NewBuiltInQualityProfile builtInQualityProfile) {
         RulesKeysExtractor.getAllRulesKeys().forEach(ruleKey -> activateRule(ruleKey, builtInQualityProfile));
-        activateDefaultRules(builtInQualityProfile);
-    }
-
-    private void activateDefaultRules(NewBuiltInQualityProfile builtInQualityProfile) {
-        final Rule duplicatedBlocks = Rule.create(GosuRulesDefinition.COMMON_REPOSITORY_KEY, "DuplicatedBlocks");
-        builtInQualityProfile.activateRule(duplicatedBlocks.getRepositoryKey(), duplicatedBlocks.getKey());
     }
 
     private void activateRule(String ruleKey, NewBuiltInQualityProfile builtInQualityProfile) {
