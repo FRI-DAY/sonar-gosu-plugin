@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.batch.rule.internal.ActiveRulesBuilder;
+import org.sonar.api.batch.rule.internal.NewActiveRule;
 import org.sonar.api.batch.sensor.internal.SensorContextTester;
 import org.sonar.api.rule.RuleKey;
 
@@ -41,9 +42,9 @@ public class GosuSensorContextTester {
     }
 
     private void activateRules(String ruleKey, SensorContextTester sensorContextTester) {
-        final ActiveRulesBuilder activeRulesBuilder = new ActiveRulesBuilder().create(
-                RuleKey.of("gosu", ruleKey)
-        ).activate();
+        final ActiveRulesBuilder activeRulesBuilder = new ActiveRulesBuilder().addRule(
+                new NewActiveRule.Builder().setRuleKey(RuleKey.of("gosu", ruleKey)).build()
+        );
         final ActiveRules activeRules = activeRulesBuilder.build();
         sensorContextTester.setActiveRules(activeRules);
     }

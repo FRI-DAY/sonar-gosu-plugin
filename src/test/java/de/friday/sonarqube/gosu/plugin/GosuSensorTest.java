@@ -240,6 +240,11 @@ class GosuSensorTest {
         }
 
         @Override
+        public String md5Hash() {
+            return "";
+        }
+
+        @Override
         public String key() {
             return null;
         }

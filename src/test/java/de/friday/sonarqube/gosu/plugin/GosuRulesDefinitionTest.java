@@ -21,6 +21,7 @@ import de.friday.sonarqube.gosu.plugin.tools.reflections.ClassExtractor;
 import de.friday.test.support.SonarServerVersionSupported;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.sonar.api.SonarEdition;
 import org.sonar.api.SonarQubeSide;
 import org.sonar.api.SonarRuntime;
 import org.sonar.api.internal.SonarRuntimeImpl;
@@ -34,7 +35,9 @@ class GosuRulesDefinitionTest {
     @EnumSource(SonarServerVersionSupported.class)
     void shouldLoadMetadataDefinitionForAllChecks(SonarServerVersionSupported sonarServerVersion) {
         // given
-        final SonarRuntime sonarRuntime = SonarRuntimeImpl.forSonarQube(sonarServerVersion.getVersion(), SonarQubeSide.SERVER);
+        final SonarRuntime sonarRuntime = SonarRuntimeImpl.forSonarQube(
+                sonarServerVersion.getVersion(), SonarQubeSide.SERVER, SonarEdition.COMMUNITY
+        );
         final RulesDefinition.Context context = new RulesDefinition.Context();
 
         // when
@@ -42,7 +45,7 @@ class GosuRulesDefinitionTest {
 
         // then
         final RulesDefinition.Repository repository = context.repository(GosuLanguage.KEY);
-        assertThat(repository.name()).isNotNull().isEqualTo("SonarAnalyzer");
+        assertThat(repository.name()).isNotNull().isEqualTo("SonarQube");
         assertThat(repository.key()).isEqualTo(GosuLanguage.REPOSITORY_KEY);
         assertThat(repository.language()).isEqualTo(GosuLanguage.KEY);
         assertThat(repository.rules()).hasSize(ClassExtractor.getRules().size()).allSatisfy(

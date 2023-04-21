@@ -25,7 +25,7 @@ targetCompatibility = JavaVersion.toVersion(jdkMinVersion)
 dependencies {
     antlr "org.antlr:antlr4:${antlrVersion}"
 
-    compileOnlyApi "org.sonarsource.sonarqube:sonar-plugin-api:${sonarPluginApiVersion}"
+    compileOnlyApi "org.sonarsource.api.plugin:sonar-plugin-api:${sonarPluginApiVersion}"
 
     implementation "org.antlr:antlr4-runtime:${antlrVersion}"
     implementation "org.sonarsource.analyzer-commons:sonar-analyzer-commons:${sonarAnalyzerCommonsVersion}"
@@ -37,15 +37,16 @@ dependencies {
     implementation "commons-io:commons-io:2.11.0"
 
     testImplementation "org.sonarsource.sonarqube:sonar-testing-harness:${sonarHarnessVersion}"
+    testImplementation "org.sonarsource.sonarqube:sonar-plugin-api-impl:${sonarqubeWsVersion}"
     testImplementation "org.assertj:assertj-core:3.24.2"
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.9.2'
-    testImplementation "org.sonarsource.sonarqube:sonar-scanner-engine:${sonarPluginApiVersion}"
+//    testImplementation "org.sonarsource.sonarqube:sonar-scanner-engine:9.9.0.65466"
     testImplementation "org.sonarsource.sonarqube:sonar-ws:${sonarqubeWsVersion}"
     testImplementation 'com.google.protobuf:protobuf-java-util:3.22.3'
     testImplementation 'org.sonarsource.orchestrator:sonar-orchestrator:3.42.0.312'
-    testRuntimeOnly "org.sonarsource.sonarqube:sonar-plugin-api:${sonarPluginApiVersion}"
+//    testRuntimeOnly "org.sonarsource.sonarqube:sonar-plugin-api:${sonarPluginApiVersion}"
     testRuntimeOnly 'ch.qos.logback:logback-classic:1.4.6'
 }
 

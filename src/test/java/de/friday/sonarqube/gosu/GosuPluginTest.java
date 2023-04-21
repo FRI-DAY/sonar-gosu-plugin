@@ -21,6 +21,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.sonar.api.Plugin;
+import org.sonar.api.SonarEdition;
 import org.sonar.api.SonarQubeSide;
 import org.sonar.api.SonarRuntime;
 import org.sonar.api.internal.SonarRuntimeImpl;
@@ -34,7 +35,11 @@ class GosuPluginTest {
     @EnumSource(SonarServerVersionSupported.class)
     void shouldAddGosuExtensionsToSonarServer(SonarServerVersionSupported sonarServerVersion) {
         // given
-        final SonarRuntime runtime = SonarRuntimeImpl.forSonarQube(sonarServerVersion.getVersion(), SonarQubeSide.SERVER);
+        final SonarRuntime runtime = SonarRuntimeImpl.forSonarQube(
+                sonarServerVersion.getVersion(),
+                SonarQubeSide.SERVER,
+                SonarEdition.COMMUNITY
+        );
         final Plugin.Context context = new Plugin.Context(runtime);
 
         // when

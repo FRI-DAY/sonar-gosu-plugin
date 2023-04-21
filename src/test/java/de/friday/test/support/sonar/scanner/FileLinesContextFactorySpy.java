@@ -64,7 +64,7 @@ public class FileLinesContextFactorySpy implements FileLinesContextFactory {
             setValue(metricKey, line, value);
         }
 
-        @Override
+//        @Override
         public Integer getIntValue(String metricKey, int line) {
             final Map<Integer, Object> lines = map.get(metricKey);
             return (Integer) lines.get(line);
@@ -75,7 +75,7 @@ public class FileLinesContextFactorySpy implements FileLinesContextFactory {
             setValue(metricKey, line, value);
         }
 
-        @Override
+//        @Override
         public String getStringValue(String metricKey, int line) {
             final Map<Integer, Object> lines = map.get(metricKey);
             return (String) lines.get(line);

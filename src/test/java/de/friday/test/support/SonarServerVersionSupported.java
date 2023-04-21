@@ -20,7 +20,9 @@ import org.sonar.api.utils.Version;
 
 public enum SonarServerVersionSupported {
     VERSION_6_5(Version.create(6, 5)),
-    VERSION_7_4(Version.create(6, 5));
+    VERSION_7_4(Version.create(7, 5)),
+    VERSION_9_9(Version.create(9, 9)),
+    VERSION_10_0(Version.create(10, 0));
 
     private final Version version;
 
