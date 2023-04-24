@@ -46,7 +46,7 @@ dependencies {
     testImplementation 'com.google.protobuf:protobuf-java-util:3.22.3'
     testImplementation 'org.sonarsource.orchestrator:sonar-orchestrator:3.42.0.312'
     testRuntimeOnly "org.sonarsource.sonarqube:sonar-plugin-api:${sonarPluginApiVersion}"
-    testRuntimeOnly 'ch.qos.logback:logback-classic:1.4.6'
+    testRuntimeOnly 'ch.qos.logback:logback-classic:1.4.7'
 }
 
 def antlrGeneratedSourcesPath = ['de', 'friday', 'sonarqube', 'gosu', 'antlr']
