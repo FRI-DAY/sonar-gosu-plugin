@@ -150,7 +150,7 @@ classMembers
 
 enhancementMembers
     : ((function
-    | propertySignature functionBody) semicolon?)*
+    | property) semicolon?)*
     ;
 
 interfaceMembers
