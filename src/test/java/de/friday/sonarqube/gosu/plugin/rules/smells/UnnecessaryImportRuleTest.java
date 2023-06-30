@@ -16,9 +16,14 @@
  */
 package de.friday.sonarqube.gosu.plugin.rules.smells;
 
+import de.friday.test.support.rules.dsl.gosu.GosuIssueLocations;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class UnnecessaryImportRuleTest {
 
@@ -49,5 +54,19 @@ class UnnecessaryImportRuleTest {
         given("UnnecessaryImportRule/nokWithInnerClass.gs")
                 .whenCheckedAgainst(UnnecessaryImportRule.class)
                 .then().issuesFound().hasSizeEqualTo(1);
+    }
+
+    @Test
+    void findsIssuesWhenUnnecessaryImportIsFoundOnClassAndVerifyUnderlying() {
+        given("UnnecessaryImportRule/nokUnusedImport.gs")
+                .whenCheckedAgainst(UnnecessaryImportRule.class)
+                .then().issuesFound()
+                .hasSizeEqualTo(2)
+                .areLocatedOn(
+                        GosuIssueLocations.of(
+                                Arrays.asList(3, 6, 3, 26),
+                                Arrays.asList(6, 6, 6, 25)
+                        )
+                );
     }
 }
