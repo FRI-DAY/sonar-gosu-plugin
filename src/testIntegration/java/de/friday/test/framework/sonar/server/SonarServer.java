@@ -19,6 +19,7 @@ package de.friday.test.framework.sonar.server;
 import com.sonar.orchestrator.Orchestrator;
 import com.sonar.orchestrator.build.Build;
 import com.sonar.orchestrator.build.BuildResult;
+import com.sonar.orchestrator.junit5.OrchestratorExtension;
 import com.sonar.orchestrator.locator.FileLocation;
 import de.friday.test.framework.sonar.ws.client.SonarWebServicesClient;
 import org.apache.commons.lang3.StringUtils;
@@ -34,7 +35,7 @@ public class SonarServer {
 
     public SonarServer(SonarServerConfig config) {
         logServerConfig(config);
-        this.orchestrator = Orchestrator.builderEnv()
+        this.orchestrator = OrchestratorExtension.builderEnv()
                 .addPlugin(FileLocation.of(config.getPluginJarFile()))
                 .keepBundledPlugins()
                 .useDefaultAdminCredentialsForBuilds(true)
