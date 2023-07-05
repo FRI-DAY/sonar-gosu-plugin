@@ -29,10 +29,27 @@ class TooManyParamsRuleTest {
     }
 
     @Test
-    void findsNoIssuesWhenNumberOfParametersIsAboveThreshold() {
+    void findsIssuesWhenNumberOfParametersIsAboveThreshold() {
         given("TooManyParamsRule/nok.gs")
                 .whenCheckedAgainst(TooManyParamsRule.class)
                 .then().issuesFound().hasSizeEqualTo(27);
+    }
+
+    @Test
+    void findsIssuesInConstructorWhenNumberOfParametersIsAboveThreshold() {
+        given("TooManyParamsRule/nok.gs")
+                .whenCheckedAgainst(TooManyParamsRule.class)
+                .withParameter("Max", "100")
+                .then().issuesFound().hasSizeEqualTo(9);
+    }
+
+    @Test
+    void findsNoIssuesInConstructorWhenNumberOfParametersIsAboveThreshold() {
+        given("TooManyParamsRule/nok.gs")
+                .whenCheckedAgainst(TooManyParamsRule.class)
+                .withParameter("Max", "100")
+                .withParameter("Constructor Max", "100")
+                .then().issuesFound().areEmpty();
     }
 
 }
