@@ -1,3 +1,5 @@
+name: Build
+
 on:
   pull_request:
     paths-ignore:
@@ -15,19 +17,23 @@ jobs:
             SONAR_PLUGIN_API_VERSION: 6.7.7
             SONAR_JAVA_VERSION: 7.11.0.29148
             SONAR_SERVER_JAVA_VERSION: 11
+            UPLOAD_ARTIFACTS: false
           - SONAR_SERVER_VERSION: 9.7.0.61563
             SONAR_PLUGIN_API_VERSION: 6.7.7
             SONAR_JAVA_VERSION: 7.13.0.29990
             SONAR_SERVER_JAVA_VERSION: 11
+            UPLOAD_ARTIFACTS: true
           # current LTS version
           - SONAR_SERVER_VERSION: 9.9.0.65466
             SONAR_PLUGIN_API_VERSION: 6.7.7
             SONAR_JAVA_VERSION: 7.13.0.29990
             SONAR_SERVER_JAVA_VERSION: 17
+            UPLOAD_ARTIFACTS: false
           - SONAR_SERVER_VERSION: 10.0.0.68432
             SONAR_PLUGIN_API_VERSION: 6.7.7
             SONAR_JAVA_VERSION: 7.13.0.29990
             SONAR_SERVER_JAVA_VERSION: 17
+            UPLOAD_ARTIFACTS: false
     steps:
       - uses: actions/checkout@v3
         with:
@@ -38,12 +44,6 @@ jobs:
           java-version: ${{ matrix.SONAR_SERVER_JAVA_VERSION }}
           distribution: temurin
           cache: 'gradle'
-      - name: Cache SonarCloud packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
       - name: Cache Gradle packages
         uses: actions/cache@v3
         with:
@@ -55,19 +55,12 @@ jobs:
                     ${{ runner.os }}-gradle-
       - name: Build
         run: |
-          ./gradlew build sonar --build-cache --no-daemon \
+          ./gradlew build --build-cache --no-daemon \
             -PsonarPluginApiVersion=${{ matrix.SONAR_PLUGIN_API_VERSION }} \
-            -PsonarJavaVersion=${{ matrix.SONAR_JAVA_VERSION }} \
-            -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }} \
-            -Dsonar.organization=${{ env.SONAR_ORGANIZATION }} \
-            -Dsonar.host.url=${{ env.SONAR_HOST_URL }} \
-            -Dsonar.pullrequest.provider=github \
-            -Dsonar.pullrequest.github.repository=${{ github.repository }} \
-            -Dsonar.pullrequest.key=${{ github.event.number }} \
-            -Dsonar.pullrequest.base=${{ github.base_ref }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
-          SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+            -PsonarJavaVersion=${{ matrix.SONAR_JAVA_VERSION }}
+      - name: Upload Build Artifacts
+        if: success() && matrix.UPLOAD_ARTIFACTS == true
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: build/
