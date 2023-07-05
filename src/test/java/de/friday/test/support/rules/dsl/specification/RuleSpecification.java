@@ -18,14 +18,14 @@ package de.friday.test.support.rules.dsl.specification;
 
 import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
 
+import java.util.Map;
+
 /**
  * Defines the basic specification for a Rule test.
- *
  */
 public interface RuleSpecification extends RuleRunner {
 
     /**
-     *
      * Specify the source code file to be analysed by the Rule.
      * <p>
      * E.g.
@@ -34,13 +34,13 @@ public interface RuleSpecification extends RuleRunner {
      * </pre>
      * This runs the TODOsRule against the ok.gs source code file and return the list of issues found.
      * </p>
+     *
      * @param sourceCodeFile Source code file to run the rule against
      * @return The Rule specification
      */
     RuleSpecification given(SourceCodeFile sourceCodeFile);
 
     /**
-     *
      * Specify the source code file to be analysed by the RUle.
      * <p>
      * E.g.
@@ -49,13 +49,13 @@ public interface RuleSpecification extends RuleRunner {
      * </pre>
      * This runs the TODOsRule against the nok.gs source code file and return the list of issues found.
      * </p>
+     *
      * @param sourceCodeFileName Source code file name to run the rule against
      * @return The Rule specification
      */
     RuleSpecification given(String sourceCodeFileName);
 
     /**
-     *
      * Specify the Rule that it be used to run the analyses on the source code file.
      * <p>
      * E.g.
@@ -64,10 +64,42 @@ public interface RuleSpecification extends RuleRunner {
      * </pre>
      * This runs the TODOsRule against the ok.gs source code file and return the list of issues found.
      * </p>
+     *
      * @param ruleClass Source code file to run the rule against
      * @return The Rule specification
      */
     RuleSpecification whenCheckedAgainst(Class<? extends BaseGosuRule> ruleClass);
+
+    /**
+     * Specify the parameter that will be used.
+     * <p>
+     * E.g.
+     * <pre>
+     * given("TODOsRule/ok.gs").withParameter("Max","10").whenCheckedAgainst(TODOsRule.class).then().issuesFound().areEmpty();
+     * </pre>
+     * This runs the TODOsRule with parameter against the ok.gs source code file and return the list of issues found.
+     * </p>
+     *
+     * @param key   param Key
+     * @param value param Vaule
+     * @return The Rule specification
+     */
+    RuleSpecification withParameter(String key, String value);
+
+    /**
+     * Specify the parameters that will be used.
+     * <p>
+     * E.g.
+     * <pre>
+     * given("TODOsRule/ok.gs").withParameters(Collections.singletonMap("username1", "password1")).whenCheckedAgainst(TODOsRule.class).then().issuesFound().areEmpty();
+     * </pre>
+     * This runs the TODOsRule with parameters against the ok.gs source code file and return the list of issues found.
+     * </p>
+     *
+     * @param parameters map of params
+     * @return The Rule specification
+     */
+    RuleSpecification withParameters(Map<String, String> parameters);
 
     /**
      * Returns the issue specification so that you can set up the expectations on the issues returned by the Rule.
@@ -76,7 +108,7 @@ public interface RuleSpecification extends RuleRunner {
      * given("TODOsRule/ok.gs").whenCheckedAgainst(TODOsRule.class).then().issuesFound().areEmpty();
      * </pre>
      *
-     * @return The issue specificaiton
+     * @return The issue specification
      */
     IssueSpecification then();
 

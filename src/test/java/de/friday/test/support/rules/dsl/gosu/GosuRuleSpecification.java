@@ -17,16 +17,21 @@
 package de.friday.test.support.rules.dsl.gosu;
 
 import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
-import de.friday.test.support.rules.dsl.specification.RuleSpecification;
 import de.friday.test.support.rules.dsl.specification.IssueSpecification;
+import de.friday.test.support.rules.dsl.specification.RuleSpecification;
 import de.friday.test.support.rules.dsl.specification.SourceCodeFile;
-import java.util.List;
-import java.util.Objects;
 import org.sonar.api.batch.sensor.issue.Issue;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class GosuRuleSpecification implements RuleSpecification {
     private SourceCodeFile sourceCodeFile;
     private Class<? extends BaseGosuRule> checkClass;
+
+    private final Map<String, String> parameters = new HashMap<>();
 
     public GosuRuleSpecification(String sourceCodeFileName) {
         this(new GosuSourceCodeFile(sourceCodeFileName));
@@ -58,6 +63,21 @@ public class GosuRuleSpecification implements RuleSpecification {
     }
 
     @Override
+    public RuleSpecification withParameter(String key, String value) {
+        Objects.requireNonNull(key, "Param Key can not be null.");
+        Objects.requireNonNull(value, "Param Value can not be null.");
+        this.parameters.put(key, value);
+        return this;
+    }
+
+    @Override
+    public RuleSpecification withParameters(Map<String, String> parameters) {
+        Objects.requireNonNull(parameters, "Map of params can not be null.");
+        parameters.forEach(this::withParameter);
+        return this;
+    }
+
+    @Override
     public IssueSpecification then() {
         final List<Issue> issues = executeRule();
         return new GosuIssuesSpecification(issues);
@@ -65,6 +85,6 @@ public class GosuRuleSpecification implements RuleSpecification {
 
     @Override
     public List<Issue> executeRule() {
-        return new GosuRuleTestRunner(checkClass, sourceCodeFile).executeRule();
+        return new GosuRuleTestRunner(checkClass, sourceCodeFile, parameters).executeRule();
     }
 }

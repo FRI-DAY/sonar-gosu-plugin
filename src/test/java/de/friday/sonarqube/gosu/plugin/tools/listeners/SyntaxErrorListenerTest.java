@@ -21,11 +21,14 @@ import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
 import de.friday.test.support.GosuSensorContextTester;
 import de.friday.test.support.rules.dsl.gosu.GosuSourceCodeFile;
 import de.friday.test.support.rules.dsl.specification.SourceCodeFile;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import org.antlr.v4.runtime.RecognitionException;
 import org.junit.jupiter.api.Test;
 import org.sonar.api.batch.sensor.internal.SensorContextTester;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Collections;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SyntaxErrorListenerTest {
@@ -64,7 +67,8 @@ class SyntaxErrorListenerTest {
     }
 
     private SensorContextTester aSensorContext() {
-        return new GosuSensorContextTester(LISTENERS_TEST_RESOURCES_DIR, "SomeRuleKey").get();
+        return new GosuSensorContextTester(LISTENERS_TEST_RESOURCES_DIR, "SomeRuleKey", Collections.emptyMap())
+                .get();
     }
 
     private GosuFileProperties aProperties() {
