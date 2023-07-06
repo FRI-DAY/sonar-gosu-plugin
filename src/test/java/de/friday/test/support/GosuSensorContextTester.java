@@ -48,6 +48,9 @@ public class GosuSensorContextTester {
         NewActiveRule newActiveRule = new ActiveRulesBuilder().create(
                 RuleKey.of("gosu", ruleKey)
         );
+
+
+        
         ruleProperties.forEach(newActiveRule::setParam);
         final ActiveRulesBuilder activeRulesBuilder = newActiveRule.activate();
         final ActiveRules activeRules = activeRulesBuilder.build();
