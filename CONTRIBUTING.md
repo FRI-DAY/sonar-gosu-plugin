@@ -332,7 +332,7 @@ public class MyAwesomeNewRuleTest {
    void findsIssuesWhenIfConditionsAreGreaterThanThreshold() {
       given("MyAwesomeNewRule/nok.gs")
               .whenCheckedAgainst(MyAwesomeNewRule.class)
-              .withParameter("Param1", "100")
+              .withRuleProperty("Param1", "100")
               .then()
               .issuesFound()
               .hasSizeEqualTo(1)

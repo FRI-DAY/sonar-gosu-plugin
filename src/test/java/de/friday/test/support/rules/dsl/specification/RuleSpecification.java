@@ -71,35 +71,35 @@ public interface RuleSpecification extends RuleRunner {
     RuleSpecification whenCheckedAgainst(Class<? extends BaseGosuRule> ruleClass);
 
     /**
-     * Specify the parameter that will be used.
+     * Specify the ruleProperty that will be used.
      * <p>
      * E.g.
      * <pre>
-     * given("TODOsRule/ok.gs").withParameter("Max","10").whenCheckedAgainst(TODOsRule.class).then().issuesFound().areEmpty();
+     * given("TODOsRule/ok.gs").withRuleProperty("Max","10").whenCheckedAgainst(TODOsRule.class).then().issuesFound().areEmpty();
      * </pre>
-     * This runs the TODOsRule with parameter against the ok.gs source code file and return the list of issues found.
+     * This runs the TODOsRule with ruleProperty against the ok.gs source code file and return the list of issues found.
      * </p>
      *
      * @param key   param Key
-     * @param value param Vaule
+     * @param value param Value
      * @return The Rule specification
      */
-    RuleSpecification withParameter(String key, String value);
+    RuleSpecification withRuleProperty(String key, String value);
 
     /**
-     * Specify the parameters that will be used.
+     * Specify the ruleProperties that will be used.
      * <p>
      * E.g.
      * <pre>
-     * given("TODOsRule/ok.gs").withParameters(Collections.singletonMap("username1", "password1")).whenCheckedAgainst(TODOsRule.class).then().issuesFound().areEmpty();
+     * given("TODOsRule/ok.gs").withRuleProperties(Collections.singletonMap("username1", "password1")).whenCheckedAgainst(TODOsRule.class).then().issuesFound().areEmpty();
      * </pre>
-     * This runs the TODOsRule with parameters against the ok.gs source code file and return the list of issues found.
+     * This runs the TODOsRule with ruleProperties against the ok.gs source code file and return the list of issues found.
      * </p>
      *
-     * @param parameters map of params
+     * @param ruleProperties map of params
      * @return The Rule specification
      */
-    RuleSpecification withParameters(Map<String, String> parameters);
+    RuleSpecification withRuleProperties(Map<String, String> ruleProperties);
 
     /**
      * Returns the issue specification so that you can set up the expectations on the issues returned by the Rule.

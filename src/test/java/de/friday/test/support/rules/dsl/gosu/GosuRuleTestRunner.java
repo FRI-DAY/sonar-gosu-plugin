@@ -39,19 +39,19 @@ import java.util.Map;
 final class GosuRuleTestRunner implements RuleRunner<List<Issue>> {
     private final Class<? extends BaseGosuRule> rule;
     private final SourceCodeFile gosuSourceCodeFile;
-    private final Map<String, String> parameters;
+    private final Map<String, String> ruleProperties;
 
     public GosuRuleTestRunner(Class<? extends BaseGosuRule> rule, SourceCodeFile gosuSourceCodeFile,
-                              Map<String, String> parameters) {
+                              Map<String, String> ruleProperties) {
         this.rule = rule;
         this.gosuSourceCodeFile = gosuSourceCodeFile;
-        this.parameters = parameters;
+        this.ruleProperties = ruleProperties;
     }
 
     @Override
     public List<Issue> executeRule() {
         final InputFile gosuInputFile = gosuSourceCodeFile.asInputFile();
-        final SensorContextTester context = new GosuSensorContextTester(GosuRulesTestResources.getBaseDir(), getRuleKey(), parameters).get();
+        final SensorContextTester context = new GosuSensorContextTester(GosuRulesTestResources.getBaseDir(), getRuleKey(), ruleProperties).get();
         final List<de.friday.sonarqube.gosu.plugin.issues.Issue> issues = analyse(gosuInputFile, context);
 
         issues.forEach(issue -> issue.createIssue(context, gosuInputFile));

@@ -23,6 +23,7 @@ import org.sonar.api.batch.sensor.internal.SensorContextTester;
 import org.sonar.api.rule.RuleKey;
 
 import java.nio.file.Path;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
@@ -30,24 +31,24 @@ public class GosuSensorContextTester {
     private final SensorContextTester sensorContextTester;
 
     public GosuSensorContextTester(Path moduleBaseDir) {
-        this(moduleBaseDir, null, null);
+        this(moduleBaseDir, null, Collections.emptyMap());
     }
 
-    public GosuSensorContextTester(Path moduleBaseDir, String ruleKey, Map<String, String> ruleParameters) {
-        this.sensorContextTester = create(moduleBaseDir, Optional.ofNullable(ruleKey), ruleParameters);
+    public GosuSensorContextTester(Path moduleBaseDir, String ruleKey, Map<String, String> ruleProperties) {
+        this.sensorContextTester = create(moduleBaseDir, Optional.ofNullable(ruleKey), ruleProperties);
     }
 
-    private SensorContextTester create(Path moduleBaseDir, Optional<String> ruleKey, Map<String, String> ruleParameters) {
+    private SensorContextTester create(Path moduleBaseDir, Optional<String> ruleKey, Map<String, String> ruleProperties) {
         final SensorContextTester sensorContextTester = SensorContextTester.create(moduleBaseDir);
-        ruleKey.ifPresent(key -> activateRules(key, sensorContextTester, ruleParameters));
+        ruleKey.ifPresent(key -> activateRules(key, sensorContextTester, ruleProperties));
         return sensorContextTester;
     }
 
-    private void activateRules(String ruleKey, SensorContextTester sensorContextTester, Map<String, String> ruleParameters) {
+    private void activateRules(String ruleKey, SensorContextTester sensorContextTester, Map<String, String> ruleProperties) {
         NewActiveRule newActiveRule = new ActiveRulesBuilder().create(
                 RuleKey.of("gosu", ruleKey)
         );
-        ruleParameters.forEach(newActiveRule::setParam);
+        ruleProperties.forEach(newActiveRule::setParam);
         final ActiveRulesBuilder activeRulesBuilder = newActiveRule.activate();
         final ActiveRules activeRules = activeRulesBuilder.build();
         sensorContextTester.setActiveRules(activeRules);

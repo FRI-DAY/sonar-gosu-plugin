@@ -28,10 +28,9 @@ import java.util.Map;
 import java.util.Objects;
 
 public class GosuRuleSpecification implements RuleSpecification {
+    private final Map<String, String> ruleProperties = new HashMap<>();
     private SourceCodeFile sourceCodeFile;
     private Class<? extends BaseGosuRule> checkClass;
-
-    private final Map<String, String> parameters = new HashMap<>();
 
     public GosuRuleSpecification(String sourceCodeFileName) {
         this(new GosuSourceCodeFile(sourceCodeFileName));
@@ -63,17 +62,17 @@ public class GosuRuleSpecification implements RuleSpecification {
     }
 
     @Override
-    public RuleSpecification withParameter(String key, String value) {
+    public RuleSpecification withRuleProperty(String key, String value) {
         Objects.requireNonNull(key, "Param Key can not be null.");
         Objects.requireNonNull(value, "Param Value can not be null.");
-        this.parameters.put(key, value);
+        this.ruleProperties.put(key, value);
         return this;
     }
 
     @Override
-    public RuleSpecification withParameters(Map<String, String> parameters) {
-        Objects.requireNonNull(parameters, "Map of params can not be null.");
-        parameters.forEach(this::withParameter);
+    public RuleSpecification withRuleProperties(Map<String, String> ruleProperties) {
+        Objects.requireNonNull(ruleProperties, "Map of params can not be null.");
+        ruleProperties.forEach(this::withRuleProperty);
         return this;
     }
 
@@ -85,6 +84,6 @@ public class GosuRuleSpecification implements RuleSpecification {
 
     @Override
     public List<Issue> executeRule() {
-        return new GosuRuleTestRunner(checkClass, sourceCodeFile, parameters).executeRule();
+        return new GosuRuleTestRunner(checkClass, sourceCodeFile, ruleProperties).executeRule();
     }
 }
