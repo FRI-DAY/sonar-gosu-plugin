@@ -17,14 +17,18 @@
 package de.friday.test.support.rules.dsl.gosu;
 
 import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
-import de.friday.test.support.rules.dsl.specification.RuleSpecification;
 import de.friday.test.support.rules.dsl.specification.IssueSpecification;
+import de.friday.test.support.rules.dsl.specification.RuleSpecification;
 import de.friday.test.support.rules.dsl.specification.SourceCodeFile;
-import java.util.List;
-import java.util.Objects;
 import org.sonar.api.batch.sensor.issue.Issue;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
 public class GosuRuleSpecification implements RuleSpecification {
+    private final Map<String, String> ruleProperties = new HashMap<>();
     private SourceCodeFile sourceCodeFile;
     private Class<? extends BaseGosuRule> checkClass;
 
@@ -58,6 +62,21 @@ public class GosuRuleSpecification implements RuleSpecification {
     }
 
     @Override
+    public RuleSpecification withRuleProperty(String key, String value) {
+        Objects.requireNonNull(key, "Param Key can not be null.");
+        Objects.requireNonNull(value, "Param Value can not be null.");
+        this.ruleProperties.put(key, value);
+        return this;
+    }
+
+    @Override
+    public RuleSpecification withRuleProperties(Map<String, String> ruleProperties) {
+        Objects.requireNonNull(ruleProperties, "Map of params can not be null.");
+        ruleProperties.forEach(this::withRuleProperty);
+        return this;
+    }
+
+    @Override
     public IssueSpecification then() {
         final List<Issue> issues = executeRule();
         return new GosuIssuesSpecification(issues);
@@ -65,6 +84,6 @@ public class GosuRuleSpecification implements RuleSpecification {
 
     @Override
     public List<Issue> executeRule() {
-        return new GosuRuleTestRunner(checkClass, sourceCodeFile).executeRule();
+        return new GosuRuleTestRunner(checkClass, sourceCodeFile, ruleProperties).executeRule();
     }
 }
