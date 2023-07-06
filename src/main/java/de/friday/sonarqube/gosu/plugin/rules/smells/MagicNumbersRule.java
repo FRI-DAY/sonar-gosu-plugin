@@ -20,15 +20,16 @@ import com.google.inject.Inject;
 import de.friday.sonarqube.gosu.antlr.GosuLexer;
 import de.friday.sonarqube.gosu.antlr.GosuParser;
 import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
-import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
 import de.friday.sonarqube.gosu.plugin.issues.GosuIssue;
-import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Pattern;
+import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Pattern;
 
 @Rule(key = MagicNumbersRule.KEY)
 public class MagicNumbersRule extends BaseGosuRule {
@@ -42,14 +43,8 @@ public class MagicNumbersRule extends BaseGosuRule {
             description = "Comma separated list of authorized numbers. Example: -1,0,1,2",
             defaultValue = "" + DEFAULT_NUMBERS)
     private String approvedNumbers = DEFAULT_NUMBERS;
-    private final List<String> numbers = Arrays.asList(approvedNumbers.split(",", -1));
     private IN_HASHCODE hashCodeFlag = IN_HASHCODE.FALSE;
     private GosuFileProperties gosuFileProperties;
-
-    private enum IN_HASHCODE {
-        TRUE,
-        FALSE
-    }
 
     @Inject
     MagicNumbersRule(GosuFileProperties gosuFileProperties) {
@@ -113,8 +108,13 @@ public class MagicNumbersRule extends BaseGosuRule {
         tryAddIssue(ctx.NumberLiteral().getSymbol());
     }
 
+    private List<String> authorizedNumbers() {
+        return Arrays.asList(approvedNumbers.split(","));
+    }
+
     private void tryAddIssue(Token token) {
         String literal = removeSuffix(token.getText());
+        List<String> numbers = authorizedNumbers();
 
         if (!numbers.contains(literal) && !numbers.contains(removeFloatingPoint(literal))) {
             addIssue(new GosuIssue.GosuIssueBuilder(this)
@@ -124,7 +124,7 @@ public class MagicNumbersRule extends BaseGosuRule {
         }
     }
 
-    private static String removeSuffix(String literal) {
+    private String removeSuffix(String literal) {
 
         if (Character.isDigit(literal.charAt(literal.length() - 1))) {
             return literal;
@@ -135,7 +135,7 @@ public class MagicNumbersRule extends BaseGosuRule {
         }
     }
 
-    private static String removeFloatingPoint(String literal) {
+    private String removeFloatingPoint(String literal) {
         if (FLOATING_POINT_PATTERN.matcher(literal).matches()) {
             literal = literal.substring(0, literal.indexOf('.'));
             return literal.length() == 0 ? "0" : literal;
@@ -146,5 +146,10 @@ public class MagicNumbersRule extends BaseGosuRule {
     @Override
     protected String getKey() {
         return KEY;
+    }
+
+    private enum IN_HASHCODE {
+        TRUE,
+        FALSE
     }
 }
