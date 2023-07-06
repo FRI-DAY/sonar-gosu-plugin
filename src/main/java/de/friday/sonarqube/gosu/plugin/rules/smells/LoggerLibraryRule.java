@@ -17,13 +17,14 @@
 package de.friday.sonarqube.gosu.plugin.rules.smells;
 
 import de.friday.sonarqube.gosu.antlr.GosuParser;
-import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
 import de.friday.sonarqube.gosu.plugin.issues.GosuIssue;
-import java.util.Arrays;
-import java.util.List;
+import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
 import org.apache.commons.lang3.StringUtils;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Rule(key = LoggerLibraryRule.KEY)
 public class LoggerLibraryRule extends BaseGosuRule {
@@ -35,11 +36,12 @@ public class LoggerLibraryRule extends BaseGosuRule {
             description = "Comma separated logger libraries approved in project.",
             defaultValue = "" + DEFAULT_LOGGER)
     private String approvedLoggers = DEFAULT_LOGGER;
-    private List<String> loggers = Arrays.asList(approvedLoggers.split(",", -1));
 
     @Override
     public void exitUsesStatement(GosuParser.UsesStatementContext ctx) {
-        if(ctx == null || ctx.namespace() == null) { return; }
+        if (ctx == null || ctx.namespace() == null) {
+            return;
+        }
         String usesStatement = ctx.namespace().getText();
         if (isWrongLogger(usesStatement)) {
             addIssue(new GosuIssue.GosuIssueBuilder(this)
@@ -54,13 +56,17 @@ public class LoggerLibraryRule extends BaseGosuRule {
                 && !isLibraryInPermittedLoggers(usesStatement);
     }
 
-    private boolean isLibraryInPermittedLoggers(String usesStatement){
-        for(String logger : loggers){
+    private List<String> loggerLibs() {
+        return Arrays.asList(approvedLoggers.split(","));
+    }
+
+    private boolean isLibraryInPermittedLoggers(String usesStatement) {
+        for (String logger : loggerLibs()) {
             logger = logger.trim();
-            if(logger.endsWith("*")){
+            if (logger.endsWith("*")) {
                 logger = logger.substring(0, logger.length() - 1);
             }
-            if(usesStatement.startsWith(logger)){
+            if (usesStatement.startsWith(logger)) {
                 return true;
             }
         }
