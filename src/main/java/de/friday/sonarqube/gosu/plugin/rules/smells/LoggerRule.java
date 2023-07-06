@@ -17,14 +17,15 @@
 package de.friday.sonarqube.gosu.plugin.rules.smells;
 
 import de.friday.sonarqube.gosu.antlr.GosuParser;
-import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
 import de.friday.sonarqube.gosu.plugin.issues.GosuIssue;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
+import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
+
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 @Rule(key = LoggerRule.KEY)
 public class LoggerRule extends BaseGosuRule {
@@ -39,16 +40,16 @@ public class LoggerRule extends BaseGosuRule {
             key = "format",
             description = "Regular expression used to check the logger names against.",
             defaultValue = "" + DEFAULT_LOGGER_REGEX)
-    private String regex = DEFAULT_LOGGER_REGEX;
+    private String loggerRegex = DEFAULT_LOGGER_REGEX;
     private Pattern loggerPattern;
     private String className;
 
     @Override
     public void enterStart(GosuParser.StartContext ctx) {
         try {
-            loggerPattern = Pattern.compile(regex);
+            loggerPattern = Pattern.compile(loggerRegex);
         } catch (PatternSyntaxException e) {
-            LOG.error("LoggerRule - wrong syntax of \"format\" property - " + regex, e);
+            LOG.error("LoggerRule - wrong syntax of \"format\" property - " + loggerRegex, e);
             loggerPattern = MATCH_ALL_LOGGERS_PATTERN;
         }
     }
@@ -76,26 +77,26 @@ public class LoggerRule extends BaseGosuRule {
         verifyLogger(ctx, methodCallContext.arguments().argExpression(0));
     }
 
-    private static boolean isMethodCall(GosuParser.MemberAccessContext ctx) {
+    private boolean isMethodCall(GosuParser.MemberAccessContext ctx) {
         return ctx.expression(1) instanceof GosuParser.MethodCallContext;
     }
 
-    private static boolean isNotLogger(GosuParser.MemberAccessContext memberAccessContext,
-                                       GosuParser.MethodCallContext methodCallContext) {
+    private boolean isNotLogger(GosuParser.MemberAccessContext memberAccessContext,
+                                GosuParser.MethodCallContext methodCallContext) {
         return !isLoggerFactory(memberAccessContext.expression(0))
                 || !hasGetLoggerMethod(methodCallContext.expression())
                 || hasNoArguments(methodCallContext);
     }
 
-    private static boolean isLoggerFactory(GosuParser.ExpressionContext context) {
+    private boolean isLoggerFactory(GosuParser.ExpressionContext context) {
         return context.getText().contains(LOGGER);
     }
 
-    private static boolean hasGetLoggerMethod(GosuParser.ExpressionContext context) {
+    private boolean hasGetLoggerMethod(GosuParser.ExpressionContext context) {
         return GET_LOGGER.equals(context.getText());
     }
 
-    private static boolean hasNoArguments(GosuParser.MethodCallContext methodCallContext) {
+    private boolean hasNoArguments(GosuParser.MethodCallContext methodCallContext) {
         return methodCallContext.arguments().argExpression().isEmpty();
     }
 

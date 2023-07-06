@@ -28,15 +28,14 @@ import org.sonar.check.RuleProperty;
 @Rule(key = LinesOfCodeRule.KEY)
 public class LinesOfCodeRule extends BaseGosuRule {
     static final String KEY = "LinesOfCodeRule";
-    private static final int DEFAULT_METHOD_THRESHOLD = 500;
+    private static final int DEFAULT_MAX_NUMBER_OF_LINES = 500;
+    private final GosuFileProperties gosuFileProperties;
     @RuleProperty(
             key = "Max",
             description = "Maximum authorized lines in a file.",
-            defaultValue = "" + DEFAULT_METHOD_THRESHOLD
+            defaultValue = "" + DEFAULT_MAX_NUMBER_OF_LINES
     )
-    private int max = DEFAULT_METHOD_THRESHOLD;
-
-    private final GosuFileProperties gosuFileProperties;
+    private int maxNumberOfLines = DEFAULT_MAX_NUMBER_OF_LINES;
 
     @Inject
     LinesOfCodeRule(GosuFileProperties gosuFileProperties) {
@@ -46,7 +45,7 @@ public class LinesOfCodeRule extends BaseGosuRule {
     @Override
     public void exitStart(GosuParser.StartContext ctx) {
         final GosuFileLineData fileLineData = gosuFileProperties.getFileLineData();
-        if (fileLineData.isNumberOfLinesOfCodeGreaterThan(max)) {
+        if (fileLineData.isNumberOfLinesOfCodeGreaterThan(maxNumberOfLines)) {
             addIssue(new GosuIssue.GosuIssueBuilder(this)
                     .withMessage(messageBuilder(fileLineData.getNumberOfLinesOfCode()))
                     .build());
@@ -55,7 +54,7 @@ public class LinesOfCodeRule extends BaseGosuRule {
 
     private String messageBuilder(int lines) {
         return "This file has " + lines + " lines, which is greater than "
-                + max + " authorized. Split it into smaller files.";
+                + maxNumberOfLines + " authorized. Split it into smaller files.";
     }
 
     @Override
