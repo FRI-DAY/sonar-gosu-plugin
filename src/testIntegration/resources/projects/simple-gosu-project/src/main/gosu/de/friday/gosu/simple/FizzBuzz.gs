@@ -3,6 +3,8 @@ package de.friday.gosu.simple
 uses java.lang.Boolean
 uses java.lang.Integer
 
+uses java.util.*
+
 class FizzBuzz implements Fizz, Buzz {
 
   function run() {

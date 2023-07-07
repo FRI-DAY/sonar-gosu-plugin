@@ -93,13 +93,23 @@ public class UnnecessaryImportRule extends BaseGosuRule {
     @Override
     public void exitStart(GosuParser.StartContext ctx) {
         allImports.stream()
-                .filter((usesStatement) -> !allReferencedClasses.contains(usesStatement.getClassName()))
+                .filter(this::isUnusedImport)
                 .forEach(unusedImport ->
-                        addIssueWithMessage(
-                                "There is unused import of " + unusedImport.getValue() + ".",
-                                usesStatementContext
-                        )
+                        addIssueWithMessage("There is unused import of " + unusedImport.getValue() + ".", usesStatementContext)
                 );
+    }
+
+    private boolean isUnusedImport(UsesStatement usesStatement) {
+        return isNotWildcardImport(usesStatement)
+                && isUnreferencedClass(usesStatement);
+    }
+
+    private boolean isUnreferencedClass(UsesStatement usesStatement) {
+        return !allReferencedClasses.contains(usesStatement.getClassName());
+    }
+
+    private boolean isNotWildcardImport(UsesStatement usesStatement) {
+        return !usesStatement.isWildcardImport();
     }
 
     private void checkUnnecessaryImports(UsesStatement usesStatement) {
