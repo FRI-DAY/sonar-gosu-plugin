@@ -106,7 +106,7 @@ public class SimpleGosuProjectIT {
                             assertThat(issue.getType()).isEqualTo(Common.RuleType.CODE_SMELL);
                             assertThat(issue.getScope()).isEqualTo("MAIN");
                             assertThat(issue.getSeverity()).isEqualTo(Common.Severity.MINOR);
-                            assertThat(issue.getMessage()).isEqualTo("Unnecessary import, java.lang classes are always available.");
+                            assertThat(issue.getMessage()).isEqualTo("Unnecessary import, Java Classes are always available.");
                         }
                 );
     }

@@ -103,25 +103,18 @@ public class UnnecessaryImportRule extends BaseGosuRule {
     }
 
     private void checkUnnecessaryImports(UsesStatement usesStatement) {
-        checkJavaLangImport(usesStatement);
-        checkGwPersistedObjectsImport(usesStatement);
         checkSamePackageImport(usesStatement);
         checkDuplicateImport(usesStatement);
+
+        AlwaysAvailableTypes.forEach(
+                alwaysAvailableType -> checkUsageOfClassesAlwaysAvailable(alwaysAvailableType, usesStatement)
+        );
     }
 
-    private void checkJavaLangImport(UsesStatement usesStatement) {
-        if (usesStatement.startsWith("java.lang.")) {
+    private void checkUsageOfClassesAlwaysAvailable(AlwaysAvailableTypes alwaysAvailableType, UsesStatement usesStatement) {
+        if (usesStatement.startsWith(alwaysAvailableType.packagePrefix)) {
             addIssueWithMessage(
-                    "Unnecessary import, java.lang classes are always available.",
-                    usesStatement.getContext()
-            );
-        }
-    }
-
-    private void checkGwPersistedObjectsImport(UsesStatement usesStatement) {
-        if (usesStatement.startsWith("typekey.") || usesStatement.startsWith("entity.")) {
-            addIssueWithMessage(
-                    "Unnecessary import, typekey and entity classes are always available.",
+                    "Unnecessary import, " + alwaysAvailableType.description + " are always available.",
                     usesStatement.getContext()
             );
         }
@@ -153,5 +146,26 @@ public class UnnecessaryImportRule extends BaseGosuRule {
                 .onContext(ctx)
                 .build()
         );
+    }
+
+    /**
+     * Types that are always available and do not require import statements.
+     */
+    private enum AlwaysAvailableTypes {
+        JAVA_LANG("java.lang.", "Java Classes"),
+        GUIDEWIRE_ENTITIES("entity.", "Entity Classes"),
+        GUIDEWIRE_TYPE_KEYS("typekey.", "Typekey Classes");
+
+        private final String packagePrefix;
+        private final String description;
+
+        AlwaysAvailableTypes(String packagePrefix, String description) {
+            this.packagePrefix = packagePrefix;
+            this.description = description;
+        }
+
+        static void forEach(Consumer<AlwaysAvailableTypes> action) {
+            Arrays.stream(AlwaysAvailableTypes.values()).forEach(action);
+        }
     }
 }
