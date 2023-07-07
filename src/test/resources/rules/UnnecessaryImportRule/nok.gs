@@ -9,6 +9,8 @@ uses checks.nested.UnusedImport
 uses checks.nested.SomethingElse
 uses friday.cc.gdv.GdvInvoiceWrapper
 
+uses de.*
+
 class nok {
 
   function sampleFunc(s: String, i: int, gdvWrapper: GdvInvoiceWrapper): Claim {

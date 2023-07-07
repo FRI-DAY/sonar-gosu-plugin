@@ -18,8 +18,6 @@ package de.friday.sonarqube.gosu.plugin.rules.smells;
 
 import org.junit.jupiter.api.Test;
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class UnnecessaryImportRuleTest {
 
@@ -42,23 +40,5 @@ class UnnecessaryImportRuleTest {
         given("UnnecessaryImportRule/nokWithInnerClass.gs")
                 .whenCheckedAgainst(UnnecessaryImportRule.class)
                 .then().issuesFound().hasSizeEqualTo(1);
-    }
-
-    @Test
-    void getClassNameThrowsExceptionWhenNoPackageIsProvided() {
-        //given
-        final UnnecessaryImportRule rule = new UnnecessaryImportRule();
-
-        //when //then
-        assertThatThrownBy(
-                () -> rule.getClassName("JustClassName")
-        ).isInstanceOf(IllegalArgumentException.class).hasMessage("No package found.");
-    }
-
-    @Test
-    void getClassNameReturnsClassNameWhenFullQualifiedClassNameIsProvided() {
-        assertThat(
-                new UnnecessaryImportRule().getClassName("de.friday.claims.SomeClass")
-        ).isEqualTo("SomeClass");
     }
 }

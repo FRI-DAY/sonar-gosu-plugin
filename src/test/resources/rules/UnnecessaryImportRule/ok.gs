@@ -8,6 +8,8 @@ uses de.friday.products.ProductCodes
 uses Relop#Equals
 uses ProductCodes#*
 
+uses de.*
+
 class ok {
 
   function sampleFunc() {
