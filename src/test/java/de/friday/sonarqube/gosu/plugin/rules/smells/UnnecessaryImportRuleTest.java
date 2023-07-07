@@ -17,6 +17,7 @@
 package de.friday.sonarqube.gosu.plugin.rules.smells;
 
 import org.junit.jupiter.api.Test;
+
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
 class UnnecessaryImportRuleTest {
@@ -32,6 +33,14 @@ class UnnecessaryImportRuleTest {
     void findsIssuesWhenUnnecessaryImportIsFound() {
         given("UnnecessaryImportRule/nok.gs")
                 .whenCheckedAgainst(UnnecessaryImportRule.class)
+                .then().issuesFound().hasSizeEqualTo(7);
+    }
+
+    @Test
+    void findsIssuesWhenUnnecessaryImportIsFoundAndAllowedExplicitImportNamespacesIsCustom() {
+        given("UnnecessaryImportRule/nok.gs")
+                .whenCheckedAgainst(UnnecessaryImportRule.class)
+                .withRuleProperty("AllowedExplicitImportNamespaces", "entity.windowed.")
                 .then().issuesFound().hasSizeEqualTo(6);
     }
 
