@@ -17,8 +17,10 @@
 package de.friday.sonarqube.gosu.plugin.rules.smells;
 
 import de.friday.test.support.rules.dsl.gosu.GosuIssueLocations;
-import java.util.Arrays;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
 class MagicNumbersRuleTest {
@@ -42,10 +44,18 @@ class MagicNumbersRuleTest {
                                 Arrays.asList(7, 8, 7, 9),
                                 Arrays.asList(7, 12, 7, 13),
                                 Arrays.asList(11, 20, 11, 22),
-                                Arrays.asList(11,15, 11, 17),
+                                Arrays.asList(11, 15, 11, 17),
                                 Arrays.asList(12, 30, 12, 34),
                                 Arrays.asList(12, 24, 12, 27)
                         )
                 );
+    }
+
+    @Test
+    void findsIssuesWhenMagicNumbersAreFoundButPropertiesSet() {
+        given("MagicNumbersRule/nok.gs")
+                .whenCheckedAgainst(MagicNumbersRule.class)
+                .withRuleProperty("Authorized numbers", "2,3,12")
+                .then().issuesFound().hasSizeEqualTo(4);
     }
 }

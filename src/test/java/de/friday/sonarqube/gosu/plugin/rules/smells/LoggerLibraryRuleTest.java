@@ -17,6 +17,7 @@
 package de.friday.sonarqube.gosu.plugin.rules.smells;
 
 import org.junit.jupiter.api.Test;
+
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
 class LoggerLibraryRuleTest {
@@ -29,9 +30,17 @@ class LoggerLibraryRuleTest {
     }
 
     @Test
-    void findsNoIssueWhenLoggerLibraryImplementationIsUsedDirectly() {
+    void findsIssueWhenLoggerLibraryImplementationIsUsedDirectly() {
         given("LoggerLibraryRule/nok.gs")
                 .whenCheckedAgainst(LoggerLibraryRule.class)
                 .then().issuesFound().hasSizeEqualTo(1);
+    }
+
+    @Test
+    void findsNoIssueWhenLoggerLibraryImplementationIsUsedDirectlyButPropertyIsSet() {
+        given("LoggerLibraryRule/nok.gs")
+                .whenCheckedAgainst(LoggerLibraryRule.class)
+                .withRuleProperty("libs", "org.apache")
+                .then().issuesFound().areEmpty();
     }
 }

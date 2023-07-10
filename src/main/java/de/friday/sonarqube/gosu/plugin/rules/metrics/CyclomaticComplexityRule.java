@@ -20,18 +20,19 @@ import com.google.inject.Inject;
 import de.friday.sonarqube.gosu.antlr.GosuParser;
 import de.friday.sonarqube.gosu.language.utils.GosuUtil;
 import de.friday.sonarqube.gosu.plugin.GosuFileProperties;
-import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
 import de.friday.sonarqube.gosu.plugin.issues.GosuIssue;
 import de.friday.sonarqube.gosu.plugin.issues.SecondaryIssue;
 import de.friday.sonarqube.gosu.plugin.measures.metrics.BaseMetric;
 import de.friday.sonarqube.gosu.plugin.measures.metrics.CyclomaticComplexityMetric;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.sonar.check.Rule;
 import org.sonar.check.RuleProperty;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Rule(key = CyclomaticComplexityRule.KEY)
 public class CyclomaticComplexityRule extends BaseGosuRule {
@@ -42,7 +43,7 @@ public class CyclomaticComplexityRule extends BaseGosuRule {
             key = "Threshold",
             description = "The maximum authorized complexity.",
             defaultValue = "" + DEFAULT_METHOD_THRESHOLD)
-    private int max = DEFAULT_METHOD_THRESHOLD;
+    private int methodThreshold = DEFAULT_METHOD_THRESHOLD;
     private List<SecondaryIssue> secondaryIssuesList = new ArrayList<>();
     private GosuFileProperties gosuFileProperties;
     private CyclomaticComplexityMetric metric;
@@ -128,12 +129,12 @@ public class CyclomaticComplexityRule extends BaseGosuRule {
             secondaryIssuesList.clear();
             return;
         }
-        if (metric.getMethodComplexity() > max) {
+        if (metric.getMethodComplexity() > methodThreshold) {
             secondaryIssuesList.add(new SecondaryIssue(token, "+1"));
             addIssue(new GosuIssue.GosuIssueBuilder(this)
                     .withSecondaryIssues(secondaryIssuesList)
                     .onToken(token)
-                    .withGap(metric.getMethodComplexity() - max)
+                    .withGap(metric.getMethodComplexity() - methodThreshold)
                     .withMessage(message)
                     .build());
             secondaryIssuesList.clear();
@@ -142,7 +143,7 @@ public class CyclomaticComplexityRule extends BaseGosuRule {
 
     private String buildMessage(String message) {
         return "The Cyclomatic Complexity of this " + message + " is " +
-                metric.getMethodComplexity() + " which is greater than " + max + " authorized.";
+                metric.getMethodComplexity() + " which is greater than " + methodThreshold + " authorized.";
     }
 
     private void addSecondariesInsideExpression(GosuParser.ExpressionContext context) {
