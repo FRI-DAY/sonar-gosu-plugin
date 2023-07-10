@@ -4,6 +4,7 @@ uses friday.cc.gdv.GdvInvoiceWrapper
 uses java.lang.Object
 uses typekey.SalvageStatus
 uses entity.Claim
+uses entity.windowed.ClaimOwner
 uses checks.OtherClass
 uses checks.nested.UnusedImport
 uses checks.nested.SomethingElse
@@ -20,6 +21,7 @@ class nok {
     final var claim = new Claim() {
       :SalvageStatus = SalvageStatus.FakeStatus,
       :Object = object
+      :ClaimOwner = new ClaimOwner()
     }
 
     return claim

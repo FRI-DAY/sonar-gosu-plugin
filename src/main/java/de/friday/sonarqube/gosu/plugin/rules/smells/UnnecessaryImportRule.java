@@ -20,6 +20,11 @@ import de.friday.sonarqube.gosu.antlr.GosuParser;
 import de.friday.sonarqube.gosu.language.statements.UsesStatement;
 import de.friday.sonarqube.gosu.plugin.issues.GosuIssue;
 import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.sonar.check.Rule;
+import org.sonar.check.RuleProperty;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -27,20 +32,26 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.sonar.check.Rule;
+import java.util.stream.Stream;
 
 @Rule(key = UnnecessaryImportRule.KEY)
 public class UnnecessaryImportRule extends BaseGosuRule {
 
     static final String KEY = "UnnecessaryImportRule";
 
+    private static final String DEFAULT_EXPLICIT_NAMESPACES = "";
+
     private final Set<UsesStatement> allImports = new HashSet<>();
     private final Set<String> allReferencedClasses = new HashSet<>();
+    @RuleProperty(
+            key = "AllowedExplicitImportNamespaces",
+            description = "Comma-separated list of explicit import namespaces allowed.",
+            defaultValue = DEFAULT_EXPLICIT_NAMESPACES
+    )
+    private String defaultExplicitNamespaces = DEFAULT_EXPLICIT_NAMESPACES;
+
     private String currentPackage;
     private boolean afterUsesStatements = false;
-    private GosuParser.UsesStatementListContext usesStatementContext;
 
     @Override
     protected String getKey() {
@@ -77,7 +88,6 @@ public class UnnecessaryImportRule extends BaseGosuRule {
 
     @Override
     public void exitUsesStatementList(GosuParser.UsesStatementListContext ctx) {
-        usesStatementContext = ctx;
         afterUsesStatements = true;
     }
 
@@ -95,7 +105,7 @@ public class UnnecessaryImportRule extends BaseGosuRule {
         allImports.stream()
                 .filter(this::isUnusedImport)
                 .forEach(unusedImport ->
-                        addIssueWithMessage("There is unused import of " + unusedImport.getValue() + ".", usesStatementContext)
+                        addIssueWithMessage("There is unused import of " + unusedImport.getValue() + ".", unusedImport.getContext())
                 );
     }
 
@@ -112,17 +122,24 @@ public class UnnecessaryImportRule extends BaseGosuRule {
         return !usesStatement.isWildcardImport();
     }
 
+    private Stream<String> explicitNamespaces() {
+        return Arrays.stream(
+                        defaultExplicitNamespaces.split(","))
+                .filter(s -> !s.isEmpty());
+    }
+
     private void checkUnnecessaryImports(UsesStatement usesStatement) {
         checkSamePackageImport(usesStatement);
         checkDuplicateImport(usesStatement);
 
+
         AlwaysAvailableTypes.forEach(
-                alwaysAvailableType -> checkUsageOfClassesAlwaysAvailable(alwaysAvailableType, usesStatement)
-        );
+                alwaysAvailableType -> checkUsageOfClassesAlwaysAvailable(alwaysAvailableType, usesStatement));
     }
 
     private void checkUsageOfClassesAlwaysAvailable(AlwaysAvailableTypes alwaysAvailableType, UsesStatement usesStatement) {
-        if (usesStatement.startsWith(alwaysAvailableType.packagePrefix)) {
+        if (usesStatement.startsWith(alwaysAvailableType.packagePrefix)
+                && explicitNamespaces().noneMatch(usesStatement::startsWith)) {
             addIssueWithMessage(
                     "Unnecessary import, " + alwaysAvailableType.description + " are always available.",
                     usesStatement.getContext()
