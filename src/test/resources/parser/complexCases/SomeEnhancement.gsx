@@ -67,4 +67,8 @@ enhancement SomeEnhancement : entity.TripExpenseDelegate {
     return usedToBeDenied
   }
 
+  static property get CurrentEffectiveTimedDate(): Date {
+    return Date.CurrentDate.asEffectiveTimedDate()
+  }
+
 }

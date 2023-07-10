@@ -194,11 +194,12 @@ class GosuGrammarTests {
                         .ifs(7)
                         .switchBlocks(4)
                         .lambdas(1)
-                        .returns(3)
-                        .methodCalls(24)
+                        .returns(4)
+                        .methodCalls(25)
                         .atIdentifiers(1)
                         .uses(2)
                         .functions(4)
+                        .properties(1)
                         .build().asArgument()
         );
     }

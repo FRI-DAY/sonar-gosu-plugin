@@ -19,6 +19,7 @@ package de.friday.sonarqube.gosu.plugin.tools.listeners;
 import de.friday.sonarqube.gosu.plugin.rules.bugs.SameConditionsInIfRule;
 import de.friday.sonarqube.gosu.plugin.rules.metrics.CognitiveComplexityRule;
 import de.friday.sonarqube.gosu.plugin.rules.metrics.LinesOfCodeRule;
+import de.friday.sonarqube.gosu.plugin.rules.smells.MagicNumbersRule;
 import de.friday.sonarqube.gosu.plugin.rules.smells.TODOsRule;
 import de.friday.sonarqube.gosu.plugin.rules.vulnerabilities.PublicStaticFieldRule;
 import org.junit.jupiter.api.Test;
@@ -105,6 +106,13 @@ class SuppressWarningsListenerTest {
     void shouldSuppressWarningsOnEnhancements() {
         given("SuppressWarningsListener/enhancementSuppressWarnings.gsx")
                 .whenCheckedAgainst(TODOsRule.class)
+                .then().issuesFound().areEmpty();
+    }
+
+    @Test
+    void shouldSuppressWarningsOnEnhancementsMethods() {
+        given("SuppressWarningsListener/enhancementSuppressWarnings-methods.gsx")
+                .whenCheckedAgainst(MagicNumbersRule.class)
                 .then().issuesFound().areEmpty();
     }
 
