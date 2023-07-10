@@ -52,7 +52,6 @@ public class UnnecessaryImportRule extends BaseGosuRule {
 
     private String currentPackage;
     private boolean afterUsesStatements = false;
-    private GosuParser.UsesStatementListContext usesStatementContext;
 
     @Override
     protected String getKey() {
@@ -89,7 +88,6 @@ public class UnnecessaryImportRule extends BaseGosuRule {
 
     @Override
     public void exitUsesStatementList(GosuParser.UsesStatementListContext ctx) {
-        usesStatementContext = ctx;
         afterUsesStatements = true;
     }
 
@@ -107,7 +105,7 @@ public class UnnecessaryImportRule extends BaseGosuRule {
         allImports.stream()
                 .filter(this::isUnusedImport)
                 .forEach(unusedImport ->
-                        addIssueWithMessage("There is unused import of " + unusedImport.getValue() + ".", usesStatementContext)
+                        addIssueWithMessage("There is unused import of " + unusedImport.getValue() + ".", unusedImport.getContext())
                 );
     }
 
