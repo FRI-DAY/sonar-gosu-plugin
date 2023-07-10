@@ -17,6 +17,10 @@
 package de.friday.sonarqube.gosu.plugin.rules.smells;
 
 import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
 
 class TooManyParamsRuleTest {
@@ -29,10 +33,29 @@ class TooManyParamsRuleTest {
     }
 
     @Test
-    void findsNoIssuesWhenNumberOfParametersIsAboveThreshold() {
+    void findsIssuesWhenNumberOfParametersIsAboveThreshold() {
         given("TooManyParamsRule/nok.gs")
                 .whenCheckedAgainst(TooManyParamsRule.class)
                 .then().issuesFound().hasSizeEqualTo(27);
+    }
+
+    @Test
+    void findsIssuesInConstructorWhenNumberOfParametersIsAboveThreshold() {
+        given("TooManyParamsRule/nok.gs")
+                .whenCheckedAgainst(TooManyParamsRule.class)
+                .withRuleProperty("Max", "100")
+                .then().issuesFound().hasSizeEqualTo(9);
+    }
+
+    @Test
+    void findsNoIssuesInConstructorWhenNumberOfParametersIsAboveThreshold() {
+        Map<String, String> ruleProperties = new HashMap<>();
+        ruleProperties.put("Max", "100");
+        ruleProperties.put("Constructor Max", "100");
+        given("TooManyParamsRule/nok.gs")
+                .whenCheckedAgainst(TooManyParamsRule.class)
+                .withRuleProperties(ruleProperties)
+                .then().issuesFound().areEmpty();
     }
 
 }

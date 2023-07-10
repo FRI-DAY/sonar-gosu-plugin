@@ -1,0 +1,99 @@
+name: SonarCloud
+
+# We run the SonarCloud on a specific workflow, triggered by the Build workflow completion,
+# to be able to safely use sensitive configuration (aka secrets) on the PRs triggered from fork repositories.
+# Ref.:
+# - https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
+# - https://community.sonarsource.com/t/how-to-use-sonarcloud-with-a-forked-repository-on-github/7363/30
+
+on:
+  workflow_run:
+    workflows: [Build]
+    types: [completed]
+
+jobs:
+  get-info:
+    name: "Get information about the workflow"
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
+    outputs:
+      sourceHeadBranch: ${{ steps.source-run-info.outputs.sourceHeadBranch }}
+      pullRequestNumber: ${{ steps.source-run-info.outputs.pullRequestNumber }}
+    steps:
+      - name: Fetch workflow origin
+        uses: potiuk/get-workflow-origin@v1_1
+        id: source-run-info
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          sourceRunId: ${{ github.event.workflow_run.id }}
+  sonar:
+    needs: [get-info]
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: ${{ github.event.workflow_run.head_repository.full_name }}
+          ref: ${{ github.event.workflow_run.head_branch }}
+          fetch-depth: 0
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: temurin
+          cache: 'gradle'
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Download Build Artifacts
+        uses: actions/github-script@v6
+        with:
+          script: |
+            let allArtifacts = await github.rest.actions.listWorkflowRunArtifacts({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               run_id: context.payload.workflow_run.id,
+            });
+            let matchArtifact = allArtifacts.data.artifacts.filter((artifact) => {
+              return artifact.name == "build-artifacts"
+            })[0];
+            let download = await github.rest.actions.downloadArtifact({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               artifact_id: matchArtifact.id,
+               archive_format: 'zip',
+            });
+            let fs = require('fs');
+            fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/build-artifacts.zip`, Buffer.from(download.data));
+      - name: Unzip Build Artifacts
+        run: unzip build-artifacts.zip -d build
+      - name: Run SonarCloud Scan
+        run: |
+          ./gradlew sonar --build-cache --no-daemon \
+            -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }} \
+            -Dsonar.organization=${{ env.SONAR_ORGANIZATION }} \
+            -Dsonar.host.url=${{ env.SONAR_HOST_URL }} \
+            -Dsonar.scm.revision=${{ github.event.workflow_run.head_sha }} \
+            -Dsonar.pullrequest.provider=github \
+            -Dsonar.pullrequest.github.repository=${{ github.repository }} \
+            -Dsonar.pullrequest.branch=${{ needs.get-info.outputs.sourceHeadBranch }} \
+            -Dsonar.pullrequest.key=${{ needs.get-info.outputs.pullRequestNumber }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+          SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}

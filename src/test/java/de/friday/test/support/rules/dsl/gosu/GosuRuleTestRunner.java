@@ -22,14 +22,16 @@ import de.friday.test.support.GosuSensorContextTester;
 import de.friday.test.support.rules.dsl.specification.RuleRunner;
 import de.friday.test.support.rules.dsl.specification.SourceCodeFile;
 import de.friday.test.support.sonar.scanner.FileLinesContextFactorySpy;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.sensor.internal.SensorContextTester;
 import org.sonar.api.batch.sensor.issue.Issue;
 import org.sonar.check.Rule;
 import org.sonar.plugins.surefire.data.UnitTestIndex;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Runner for Gosu rules that implements the BaseGosuRule class.
@@ -37,16 +39,19 @@ import org.sonar.plugins.surefire.data.UnitTestIndex;
 final class GosuRuleTestRunner implements RuleRunner<List<Issue>> {
     private final Class<? extends BaseGosuRule> rule;
     private final SourceCodeFile gosuSourceCodeFile;
+    private final Map<String, String> ruleProperties;
 
-    public GosuRuleTestRunner(Class<? extends BaseGosuRule> rule, SourceCodeFile gosuSourceCodeFile) {
+    public GosuRuleTestRunner(Class<? extends BaseGosuRule> rule, SourceCodeFile gosuSourceCodeFile,
+                              Map<String, String> ruleProperties) {
         this.rule = rule;
         this.gosuSourceCodeFile = gosuSourceCodeFile;
+        this.ruleProperties = ruleProperties;
     }
 
     @Override
     public List<Issue> executeRule() {
         final InputFile gosuInputFile = gosuSourceCodeFile.asInputFile();
-        final SensorContextTester context = new GosuSensorContextTester(GosuRulesTestResources.getBaseDir(), getRuleKey()).get();
+        final SensorContextTester context = new GosuSensorContextTester(GosuRulesTestResources.getBaseDir(), getRuleKey(), ruleProperties).get();
         final List<de.friday.sonarqube.gosu.plugin.issues.Issue> issues = analyse(gosuInputFile, context);
 
         issues.forEach(issue -> issue.createIssue(context, gosuInputFile));

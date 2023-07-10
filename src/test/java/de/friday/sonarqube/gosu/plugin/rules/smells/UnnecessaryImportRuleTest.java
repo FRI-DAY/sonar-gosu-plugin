@@ -16,10 +16,12 @@
  */
 package de.friday.sonarqube.gosu.plugin.rules.smells;
 
+import de.friday.test.support.rules.dsl.gosu.GosuIssueLocations;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+
 import static de.friday.test.support.rules.dsl.gosu.GosuRuleTestDsl.given;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class UnnecessaryImportRuleTest {
 
@@ -34,6 +36,33 @@ class UnnecessaryImportRuleTest {
     void findsIssuesWhenUnnecessaryImportIsFound() {
         given("UnnecessaryImportRule/nok.gs")
                 .whenCheckedAgainst(UnnecessaryImportRule.class)
+                .then()
+                .issuesFound()
+                .hasSizeEqualTo(7)
+                .areLocatedOn(
+                        GosuIssueLocations.of(
+                                // java.lang
+                                Arrays.asList(4, 6, 4, 22),
+                                // gw typekey
+                                Arrays.asList(5, 6, 5, 27),
+                                // gw entity
+                                Arrays.asList(6, 6, 6, 18),
+                                Arrays.asList(7, 6, 7, 32),
+                                // same package used
+                                Arrays.asList(8, 6, 8, 23),
+                                // duplicated imports
+                                Arrays.asList(11, 6, 11, 37),
+                                // unused imports
+                                Arrays.asList(9, 6, 9, 32)
+                        )
+                );
+    }
+
+    @Test
+    void findsIssuesWhenUnnecessaryImportIsFoundAndAllowedExplicitImportNamespacesIsCustom() {
+        given("UnnecessaryImportRule/nok.gs")
+                .whenCheckedAgainst(UnnecessaryImportRule.class)
+                .withRuleProperty("AllowedExplicitImportNamespaces", "entity.windowed.")
                 .then().issuesFound().hasSizeEqualTo(6);
     }
 
@@ -45,20 +74,16 @@ class UnnecessaryImportRuleTest {
     }
 
     @Test
-    void getClassNameThrowsExceptionWhenNoPackageIsProvided() {
-        //given
-        final UnnecessaryImportRule rule = new UnnecessaryImportRule();
-
-        //when //then
-        assertThatThrownBy(
-                () -> rule.getClassName("JustClassName")
-        ).isInstanceOf(IllegalArgumentException.class).hasMessage("No package found.");
-    }
-
-    @Test
-    void getClassNameReturnsClassNameWhenFullQualifiedClassNameIsProvided() {
-        assertThat(
-                new UnnecessaryImportRule().getClassName("de.friday.claims.SomeClass")
-        ).isEqualTo("SomeClass");
+    void findsIssuesWhenUnnecessaryImportIsFoundOnClassAndVerifyUnderlying() {
+        given("UnnecessaryImportRule/nokUnusedImport.gs")
+                .whenCheckedAgainst(UnnecessaryImportRule.class)
+                .then().issuesFound()
+                .hasSizeEqualTo(2)
+                .areLocatedOn(
+                        GosuIssueLocations.of(
+                                Arrays.asList(6, 6, 6, 25),
+                                Arrays.asList(3, 6, 3, 26)
+                        )
+                );
     }
 }

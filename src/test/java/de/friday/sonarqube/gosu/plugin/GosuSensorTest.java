@@ -22,12 +22,6 @@ import de.friday.test.support.TestResourcesDirectories;
 import de.friday.test.support.rules.dsl.gosu.GosuSourceCodeFile;
 import de.friday.test.support.rules.dsl.specification.SourceCodeFile;
 import de.friday.test.support.sonar.scanner.FileLinesContextFactorySpy;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.nio.charset.Charset;
-import java.nio.file.Path;
 import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Test;
 import org.sonar.api.batch.fs.InputFile;
@@ -37,6 +31,15 @@ import org.sonar.api.batch.fs.internal.DefaultTextPointer;
 import org.sonar.api.batch.sensor.internal.DefaultSensorDescriptor;
 import org.sonar.api.batch.sensor.internal.SensorContextTester;
 import org.sonar.api.scan.filesystem.PathResolver;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.util.Collections;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GosuSensorTest {
@@ -139,7 +142,9 @@ class GosuSensorTest {
     }
 
     private SensorContextTester createSensorContextTesterFor(InputFile inputFile, boolean isCancelled) {
-        final GosuSensorContextTester sensorContextTester = new GosuSensorContextTester(TestResourcesDirectories.SENSOR_RESOURCES_DIR.getPath(), "MagicNumbersRule");
+        final GosuSensorContextTester sensorContextTester =
+                new GosuSensorContextTester(TestResourcesDirectories.SENSOR_RESOURCES_DIR.getPath(),
+                        "MagicNumbersRule", Collections.emptyMap());
         final SensorContextTester sensorContext = sensorContextTester.get();
         sensorContext.setCancelled(isCancelled);
         sensorContext.fileSystem().add(inputFile);

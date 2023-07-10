@@ -17,27 +17,41 @@
 package de.friday.sonarqube.gosu.plugin.rules.smells;
 
 import de.friday.sonarqube.gosu.antlr.GosuParser;
-import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
+import de.friday.sonarqube.gosu.language.statements.UsesStatement;
 import de.friday.sonarqube.gosu.plugin.issues.GosuIssue;
+import de.friday.sonarqube.gosu.plugin.rules.BaseGosuRule;
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.sonar.check.Rule;
+import org.sonar.check.RuleProperty;
+
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.sonar.check.Rule;
+import java.util.stream.Stream;
 
 @Rule(key = UnnecessaryImportRule.KEY)
 public class UnnecessaryImportRule extends BaseGosuRule {
 
     static final String KEY = "UnnecessaryImportRule";
 
-    private final Set<String> allImports = new HashSet<>();
+    private static final String DEFAULT_EXPLICIT_NAMESPACES = "";
+
+    private final Set<UsesStatement> allImports = new HashSet<>();
     private final Set<String> allReferencedClasses = new HashSet<>();
+    @RuleProperty(
+            key = "AllowedExplicitImportNamespaces",
+            description = "Comma-separated list of explicit import namespaces allowed.",
+            defaultValue = DEFAULT_EXPLICIT_NAMESPACES
+    )
+    private String defaultExplicitNamespaces = DEFAULT_EXPLICIT_NAMESPACES;
+
     private String currentPackage;
     private boolean afterUsesStatements = false;
-    private GosuParser.UsesStatementListContext usesStatementContext;
 
     @Override
     protected String getKey() {
@@ -52,8 +66,8 @@ public class UnnecessaryImportRule extends BaseGosuRule {
     @Override
     public void exitUsesStatement(GosuParser.UsesStatementContext context) {
         if (isNamespaceAvailable(context)) {
-            final String usesStatement = context.namespace().getText();
-            checkUnnecessaryImport(usesStatement, context);
+            final UsesStatement usesStatement = new UsesStatement(context);
+            checkUnnecessaryImports(usesStatement);
             allImports.add(usesStatement);
         }
     }
@@ -74,7 +88,6 @@ public class UnnecessaryImportRule extends BaseGosuRule {
 
     @Override
     public void exitUsesStatementList(GosuParser.UsesStatementListContext ctx) {
-        usesStatementContext = ctx;
         afterUsesStatements = true;
     }
 
@@ -89,49 +102,68 @@ public class UnnecessaryImportRule extends BaseGosuRule {
 
     @Override
     public void exitStart(GosuParser.StartContext ctx) {
-        final Set<String> allImportedClasses = allImports.stream()
-                .map(this::getClassName)
-                .collect(Collectors.toSet());
-
-        allImportedClasses.removeAll(allReferencedClasses);
-        allImportedClasses.forEach(unusedImport ->
-                addIssueWithMessage("There is unused import of " + unusedImport + ".", usesStatementContext)
-        );
+        allImports.stream()
+                .filter(this::isUnusedImport)
+                .forEach(unusedImport ->
+                        addIssueWithMessage("There is unused import of " + unusedImport.getValue() + ".", unusedImport.getContext())
+                );
     }
 
-    private void checkUnnecessaryImport(String usesStatement, GosuParser.UsesStatementContext ctx) {
-        checkJavaLangImport(usesStatement, ctx);
-        checkGwPersistedObjectsImport(usesStatement, ctx);
-        checkSamePackageImport(usesStatement, ctx);
-        checkDuplicateImport(usesStatement, ctx);
+    private boolean isUnusedImport(UsesStatement usesStatement) {
+        return isNotWildcardImport(usesStatement)
+                && isUnreferencedClass(usesStatement);
     }
 
-    private void checkJavaLangImport(String usesStatement, GosuParser.UsesStatementContext ctx) {
-        if (usesStatement.startsWith("java.lang.")) {
-            addIssueWithMessage("Unnecessary import, java.lang classes are always available.", ctx);
+    private boolean isUnreferencedClass(UsesStatement usesStatement) {
+        return !allReferencedClasses.contains(usesStatement.getClassName());
+    }
+
+    private boolean isNotWildcardImport(UsesStatement usesStatement) {
+        return !usesStatement.isWildcardImport();
+    }
+
+    private Stream<String> explicitNamespaces() {
+        return Arrays.stream(
+                        defaultExplicitNamespaces.split(","))
+                .filter(s -> !s.isEmpty());
+    }
+
+    private void checkUnnecessaryImports(UsesStatement usesStatement) {
+        checkSamePackageImport(usesStatement);
+        checkDuplicateImport(usesStatement);
+
+
+        AlwaysAvailableTypes.forEach(
+                alwaysAvailableType -> checkUsageOfClassesAlwaysAvailable(alwaysAvailableType, usesStatement));
+    }
+
+    private void checkUsageOfClassesAlwaysAvailable(AlwaysAvailableTypes alwaysAvailableType, UsesStatement usesStatement) {
+        if (usesStatement.startsWith(alwaysAvailableType.packagePrefix)
+                && explicitNamespaces().noneMatch(usesStatement::startsWith)) {
+            addIssueWithMessage(
+                    "Unnecessary import, " + alwaysAvailableType.description + " are always available.",
+                    usesStatement.getContext()
+            );
         }
     }
 
-    private void checkGwPersistedObjectsImport(String usesStatement, GosuParser.UsesStatementContext ctx) {
-        if (usesStatement.startsWith("typekey.") || usesStatement.startsWith("entity.")) {
-            addIssueWithMessage("Unnecessary import, typekey and entity classes are always available.", ctx);
-        }
-    }
-
-    private void checkSamePackageImport(String usesStatement, GosuParser.UsesStatementContext ctx) {
+    private void checkSamePackageImport(UsesStatement usesStatement) {
         Objects.requireNonNull(currentPackage);
 
-        if (usesStatement.equals(currentPackage)
-                || (usesStatement.startsWith(currentPackage)
-                && usesStatement.charAt(currentPackage.length()) == '.'
-                && usesStatement.indexOf('.', currentPackage.length() + 1) == -1)) {
-            addIssueWithMessage("Unnecessary import, same package classes are always available.", ctx);
+        if (usesStatement.hasSamePackageAs(currentPackage)) {
+            addIssueWithMessage(
+                    "Unnecessary import, same package classes are always available.",
+                    usesStatement.getContext()
+            );
         }
     }
 
-    private void checkDuplicateImport(String usesStatement, GosuParser.UsesStatementContext ctx) {
+    private void checkDuplicateImport(UsesStatement usesStatement) {
         if (allImports.contains(usesStatement)) {
-            addIssueWithMessage("Unnecessary import, it is a duplicate.", ctx);
+            addIssueWithMessage(
+                    "Unnecessary import, it is a duplicate.",
+                    usesStatement.getContext()
+            );
         }
     }
 
@@ -143,13 +175,24 @@ public class UnnecessaryImportRule extends BaseGosuRule {
         );
     }
 
-    String getClassName(String usesStatement) {
-        int lastIndexOfDot = usesStatement.lastIndexOf('.');
-        if (lastIndexOfDot == -1) {
-            throw new IllegalArgumentException("No package found.");
+    /**
+     * Types that are always available and do not require import statements.
+     */
+    private enum AlwaysAvailableTypes {
+        JAVA_LANG("java.lang.", "Java Classes"),
+        GUIDEWIRE_ENTITIES("entity.", "Entity Classes"),
+        GUIDEWIRE_TYPE_KEYS("typekey.", "Typekey Classes");
+
+        private final String packagePrefix;
+        private final String description;
+
+        AlwaysAvailableTypes(String packagePrefix, String description) {
+            this.packagePrefix = packagePrefix;
+            this.description = description;
         }
 
-        return usesStatement.substring(lastIndexOfDot + 1);
+        static void forEach(Consumer<AlwaysAvailableTypes> action) {
+            Arrays.stream(AlwaysAvailableTypes.values()).forEach(action);
+        }
     }
-
 }
