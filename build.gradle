@@ -43,7 +43,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.9.3'
     testImplementation "org.sonarsource.sonarqube:sonar-scanner-engine:${sonarPluginApiVersion}"
     testImplementation "org.sonarsource.sonarqube:sonar-ws:${sonarqubeWsVersion}"
-    testImplementation 'com.google.protobuf:protobuf-java-util:3.23.3'
+    testImplementation 'com.google.protobuf:protobuf-java-util:3.23.4'
     testImplementation 'org.sonarsource.orchestrator:sonar-orchestrator-junit5:4.0.0.404'
     testImplementation 'org.mockito:mockito-core:5.+'
     testRuntimeOnly "org.sonarsource.sonarqube:sonar-plugin-api:${sonarPluginApiVersion}"
