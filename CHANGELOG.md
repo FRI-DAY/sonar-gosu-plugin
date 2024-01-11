@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Added support to exclude specific import namespaces on the `UnnecessaryImportRule` ([#55](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/88)).
+
+### Fixed
+- Fixed exception throw by `UnnecessaryImportRule` when analysing Gosu files with wildcard imports ([#54](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/97)).
+
 ### Removed
 - Removed deprecated `DuplicatedBlocks` rule from built-in profile [(#70)](https://github.com/FRI-DAY/sonar-gosu-plugin/pull/70).
 
