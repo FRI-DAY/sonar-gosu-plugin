@@ -29,7 +29,7 @@ The project contains the following issues:
 
 On the project root folder run:
 ```shell
-  ./gradlew sonar -Dsonar.host.url="[SONAR HOST URL]" -Dsonar.token="[AUTHORIZATION TOKEN]"
+  ./gradlew sonar -Dsonar.host.url="[SONAR HOST URL]" -Dsonar.login="[AUTHORIZATION TOKEN]"
 ```
 
 ### Running Scanner with Docker
