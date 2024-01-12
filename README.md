@@ -19,13 +19,13 @@ Please find below the compatibility matrix of the plugin:
 | SonarQube Version | Plugin Version               |
 |-------------------|------------------------------|
 | v8.9              | [1.0.0, 1.1.0, 1.2.0, 1.2.1] |
-| v9+               | [1.2.1]                      |
+| v9+               | [1.2.1, 1.2.2]               |
 
 ## Installation
 
 ### Sonarqube Marketplace
 
-Not yet available.
+Available in the marketplace since v1.2.1.
 
 ### Sonarqube On-premise
 
