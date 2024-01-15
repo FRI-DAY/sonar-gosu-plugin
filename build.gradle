@@ -31,7 +31,7 @@ dependencies {
     implementation "org.sonarsource.analyzer-commons:sonar-analyzer-commons:${sonarAnalyzerCommonsVersion}"
     implementation "org.sonarsource.java:java-surefire:${sonarJavaVersion}"
 
-    implementation "org.apache.commons:commons-lang3:3.13.0"
+    implementation "org.apache.commons:commons-lang3:3.14.0"
     implementation "org.reflections:reflections:0.10.2"
     implementation "com.google.inject:guice:7.0.0"
     implementation "commons-io:commons-io:2.15.1"
@@ -47,7 +47,7 @@ dependencies {
     testImplementation 'org.sonarsource.orchestrator:sonar-orchestrator-junit5:4.6.0.1748'
     testImplementation 'org.mockito:mockito-core:5.+'
     testRuntimeOnly "org.sonarsource.sonarqube:sonar-plugin-api:${sonarPluginApiVersion}"
-    testRuntimeOnly 'ch.qos.logback:logback-classic:1.4.11'
+    testRuntimeOnly 'ch.qos.logback:logback-classic:1.4.14'
 }
 
 def antlrGeneratedSourcesPath = ['de', 'friday', 'sonarqube', 'gosu', 'antlr']
