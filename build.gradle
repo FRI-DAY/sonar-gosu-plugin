@@ -47,7 +47,7 @@ dependencies {
     testImplementation 'org.sonarsource.orchestrator:sonar-orchestrator-junit5:4.6.0.1748'
     testImplementation 'org.mockito:mockito-core:5.+'
     testRuntimeOnly "org.sonarsource.sonarqube:sonar-plugin-api:${sonarPluginApiVersion}"
-    testRuntimeOnly 'ch.qos.logback:logback-classic:1.4.11'
+    testRuntimeOnly 'ch.qos.logback:logback-classic:1.4.14'
 }
 
 def antlrGeneratedSourcesPath = ['de', 'friday', 'sonarqube', 'gosu', 'antlr']
