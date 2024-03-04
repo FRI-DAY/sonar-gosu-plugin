@@ -44,7 +44,7 @@ dependencies {
     testImplementation "org.sonarsource.sonarqube:sonar-scanner-engine:${sonarPluginApiVersion}"
     testImplementation "org.sonarsource.sonarqube:sonar-ws:${sonarqubeWsVersion}"
     testImplementation 'com.google.protobuf:protobuf-java-util:3.25.2'
-    testImplementation 'org.sonarsource.orchestrator:sonar-orchestrator-junit5:4.7.1.1872'
+    testImplementation 'org.sonarsource.orchestrator:sonar-orchestrator-junit5:4.9.0.1920'
     testImplementation 'org.mockito:mockito-core:5.+'
     testRuntimeOnly "org.sonarsource.sonarqube:sonar-plugin-api:${sonarPluginApiVersion}"
     testRuntimeOnly 'ch.qos.logback:logback-classic:1.4.14'
