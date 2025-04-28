@@ -116,6 +116,8 @@ jobs:
             -PsonarqubeWsVersion=${{ matrix.SONAR_WS_VERSION }} \
             -PsonarPluginApiVersion=${{ matrix.SONAR_PLUGIN_API_VERSION }} \
             -PsonarJavaVersion=${{ matrix.SONAR_JAVA_VERSION }}
+        env:
+          ARTIFACTORY_URL: "https://repo1.maven.org/maven2"
   snapshot:
     needs: [fetch-version, integration-tests]
     if: needs.fetch-version.outputs.release == 'false'
