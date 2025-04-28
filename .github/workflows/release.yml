@@ -28,17 +28,14 @@ jobs:
           else
             echo "release=false" >> $GITHUB_OUTPUT
           fi
-  # Compiles all Gosu test projects using Java 11 beforehand.
-  # By leveraging Gradle cache, this enabled us to run integration tests of Gosu projects against Sonarqube Server
-  # with versions running on Java 17.
-  # This is necessary UNTIL Gosu supports Java 17.
+  # Compiles all Gosu test projects using Java 17 beforehand.
   prep-integration-tests:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         java:
-          - 11
+          - 17
     steps:
       - uses: actions/checkout@v4
         with:
@@ -79,7 +76,6 @@ jobs:
             SONAR_PLUGIN_API_VERSION: 6.7.7
             SONAR_JAVA_VERSION: 7.13.0.29990
             SONAR_SERVER_JAVA_VERSION: 11
-          # current LTS version
           - SONAR_SERVER_VERSION: 9.9.0
             SONAR_WS_VERSION: 8.9.9.56886
             SONAR_PLUGIN_API_VERSION: 6.7.7

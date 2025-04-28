@@ -23,7 +23,6 @@ jobs:
             SONAR_JAVA_VERSION: 7.13.0.29990
             SONAR_SERVER_JAVA_VERSION: 11
             UPLOAD_ARTIFACTS: true
-          # current LTS version
           - SONAR_SERVER_VERSION: 9.9.0.65466
             SONAR_PLUGIN_API_VERSION: 6.7.7
             SONAR_JAVA_VERSION: 7.13.0.29990
