@@ -15,32 +15,32 @@ jobs:
           - SONAR_SERVER_VERSION: 8.9.10
             SONAR_WS_VERSION: 8.9.9.56886
             SONAR_PLUGIN_API_VERSION: 6.7.7
-            SONAR_JAVA_VERSION: 7.11.0.29148
+            SONAR_JAVA_SUREFIRE_VERSION: 7.11.0.29148
             SONAR_SERVER_JAVA_VERSION: 11
             UPLOAD_ARTIFACTS: false
           - SONAR_SERVER_VERSION: 9.7.0
             SONAR_WS_VERSION: 8.9.9.56886
             SONAR_PLUGIN_API_VERSION: 6.7.7
-            SONAR_JAVA_VERSION: 7.13.0.29990
+            SONAR_JAVA_SUREFIRE_VERSION: 7.13.0.29990
             SONAR_SERVER_JAVA_VERSION: 11
             UPLOAD_ARTIFACTS: false
             # LTA Version
           - SONAR_SERVER_VERSION: 9.9.8.100196
             SONAR_WS_VERSION: 8.9.9.56886
             SONAR_PLUGIN_API_VERSION: 6.7.7
-            SONAR_JAVA_VERSION: 7.13.0.29990
+            SONAR_JAVA_SUREFIRE_VERSION: 7.13.0.29990
             SONAR_SERVER_JAVA_VERSION: 17
             UPLOAD_ARTIFACTS: true
           - SONAR_SERVER_VERSION: 10.0.0
             SONAR_WS_VERSION: 8.9.9.56886
             SONAR_PLUGIN_API_VERSION: 6.7.7
-            SONAR_JAVA_VERSION: 7.13.0.29990
+            SONAR_JAVA_SUREFIRE_VERSION: 7.13.0.29990
             SONAR_SERVER_JAVA_VERSION: 17
             # LTA Version
           - SONAR_SERVER_VERSION: 25.1.0.102122
             SONAR_WS_VERSION: 8.9.9.56886
             SONAR_PLUGIN_API_VERSION: 6.7.7
-            SONAR_JAVA_VERSION: 8.12.0.38599
+            SONAR_JAVA_SUREFIRE_VERSION: 8.12.0.38599
             SONAR_SERVER_JAVA_VERSION: 17
             UPLOAD_ARTIFACTS: false
     steps:
@@ -66,7 +66,7 @@ jobs:
         run: |
           ./gradlew build --build-cache --no-daemon \
             -PsonarPluginApiVersion=${{ matrix.SONAR_PLUGIN_API_VERSION }} \
-            -PsonarJavaVersion=${{ matrix.SONAR_JAVA_VERSION }}
+            -PsonarJavaSurefireVersion=${{ matrix.SONAR_JAVA_SUREFIRE_VERSION }}
       - name: Upload Build Artifacts
         if: success() && matrix.UPLOAD_ARTIFACTS == true
         uses: actions/upload-artifact@v4
