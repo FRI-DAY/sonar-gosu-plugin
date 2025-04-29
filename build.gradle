@@ -84,7 +84,7 @@ compileTestJava {
     dependsOn generateTestGrammarSource
 }
 
-tasks.licenseMain.shouldRunAfter generateGrammarSource
+tasks.licenseMain.mustRunAfter generateGrammarSource
 
 license {
     header = rootProject.file('LICENSE_HEADER')
