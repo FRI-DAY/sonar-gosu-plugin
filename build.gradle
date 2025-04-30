@@ -13,7 +13,7 @@ plugins {
     id('java')
     id('jacoco')
     id('maven-publish')
-    id('org.sonarqube') version('4.0.0.2929')
+    id('org.sonarqube') version('6.1.0.5360')
     id('org.jetbrains.changelog') version('2.0.0')
     id('org.kordamp.gradle.markdown') version('2.2.0')
     id('com.github.johnrengelman.shadow') version('7.1.2')
@@ -39,7 +39,7 @@ dependencies {
     implementation "org.sonarsource.analyzer-commons:sonar-analyzer-commons:${sonarAnalyzerCommonsVersion}"
     implementation "org.sonarsource.java:java-surefire:${sonarJavaVersion}"
 
-    implementation "org.apache.commons:commons-lang3:3.14.0"
+    implementation "org.apache.commons:commons-lang3:3.17.0"
     implementation "org.reflections:reflections:0.10.2"
     implementation "com.google.inject:guice:7.0.0"
     implementation "commons-io:commons-io:2.19.0"
@@ -52,10 +52,10 @@ dependencies {
     testImplementation "org.sonarsource.sonarqube:sonar-scanner-engine:${sonarPluginApiVersion}"
     testImplementation "org.sonarsource.sonarqube:sonar-ws:${sonarqubeWsVersion}"
     testImplementation 'com.google.protobuf:protobuf-java-util:4.26.1'
-    testImplementation 'org.sonarsource.orchestrator:sonar-orchestrator-junit5:4.9.0.1920'
+    testImplementation 'org.sonarsource.orchestrator:sonar-orchestrator-junit5:5.6.1.2597'
     testImplementation 'org.mockito:mockito-core:5.+'
     testRuntimeOnly "org.sonarsource.sonarqube:sonar-plugin-api:${sonarPluginApiVersion}"
-    testRuntimeOnly 'ch.qos.logback:logback-classic:1.4.14'
+    testRuntimeOnly 'ch.qos.logback:logback-classic:1.5.18'
 }
 
 def antlrGeneratedSourcesPath = ['de', 'friday', 'sonarqube', 'gosu', 'antlr']
@@ -84,7 +84,7 @@ compileTestJava {
     dependsOn generateTestGrammarSource
 }
 
-tasks.licenseMain.shouldRunAfter generateGrammarSource
+tasks.licenseMain.mustRunAfter generateGrammarSource
 
 license {
     header = rootProject.file('LICENSE_HEADER')
