@@ -47,7 +47,7 @@ dependencies {
     testImplementation "org.sonarsource.sonarqube:sonar-testing-harness:${sonarHarnessVersion}"
     testImplementation 'org.assertj:assertj-core:3.27.3'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.10.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.13.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.2'
     testImplementation "org.sonarsource.sonarqube:sonar-scanner-engine:${sonarPluginApiVersion}"
     testImplementation "org.sonarsource.sonarqube:sonar-ws:${sonarqubeWsVersion}"
