@@ -65,26 +65,32 @@ jobs:
     strategy:
       matrix:
         include:
-          # previous LTS version
           - SONAR_SERVER_VERSION: 8.9.10
             SONAR_WS_VERSION: 8.9.9.56886
             SONAR_PLUGIN_API_VERSION: 6.7.7
-            SONAR_JAVA_VERSION: 7.11.0.29148
+            SONAR_JAVA_SUREFIRE_VERSION: 7.11.0.29148
             SONAR_SERVER_JAVA_VERSION: 11
           - SONAR_SERVER_VERSION: 9.7.0
             SONAR_WS_VERSION: 8.9.9.56886
             SONAR_PLUGIN_API_VERSION: 6.7.7
-            SONAR_JAVA_VERSION: 7.13.0.29990
+            SONAR_JAVA_SUREFIRE_VERSION: 7.13.0.29990
             SONAR_SERVER_JAVA_VERSION: 11
-          - SONAR_SERVER_VERSION: 9.9.0
+            # LTA Version
+          - SONAR_SERVER_VERSION: 9.9.8.100196
             SONAR_WS_VERSION: 8.9.9.56886
             SONAR_PLUGIN_API_VERSION: 6.7.7
-            SONAR_JAVA_VERSION: 7.13.0.29990
+            SONAR_JAVA_SUREFIRE_VERSION: 7.13.0.29990
             SONAR_SERVER_JAVA_VERSION: 17
           - SONAR_SERVER_VERSION: 10.0.0
             SONAR_WS_VERSION: 8.9.9.56886
             SONAR_PLUGIN_API_VERSION: 6.7.7
-            SONAR_JAVA_VERSION: 7.13.0.29990
+            SONAR_JAVA_SUREFIRE_VERSION: 7.13.0.29990
+            SONAR_SERVER_JAVA_VERSION: 17
+            # LTA Version
+          - SONAR_SERVER_VERSION: 25.1.0.102122
+            SONAR_WS_VERSION: 8.9.9.56886
+            SONAR_PLUGIN_API_VERSION: 6.7.7
+            SONAR_JAVA_SUREFIRE_VERSION: 8.12.0.38599
             SONAR_SERVER_JAVA_VERSION: 17
     steps:
       - uses: actions/checkout@v4
@@ -111,7 +117,7 @@ jobs:
             -PsonarqubeServerVersion=${{ matrix.SONAR_SERVER_VERSION }} \
             -PsonarqubeWsVersion=${{ matrix.SONAR_WS_VERSION }} \
             -PsonarPluginApiVersion=${{ matrix.SONAR_PLUGIN_API_VERSION }} \
-            -PsonarJavaVersion=${{ matrix.SONAR_JAVA_VERSION }}
+            -PsonarJavaSurefireVersion=${{ matrix.SONAR_JAVA_SUREFIRE_VERSION }}
         env:
           ARTIFACTORY_URL: "https://repo1.maven.org/maven2"
   snapshot:
